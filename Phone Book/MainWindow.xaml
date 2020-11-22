@@ -1,0 +1,56 @@
+﻿<Window x:Class="Phone_Book.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Phone_Book"
+        mc:Ignorable="d"
+       Title="Телефонная книга предприятия" 
+        Height="840" 
+        Width="1370" 
+        ResizeMode="NoResize">
+    <Window.Resources>
+        <CollectionViewSource x:Key="UsersCollectionViewSource" Source="{Binding Users}"/>
+    </Window.Resources>
+    <Grid>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="25"/>
+            <RowDefinition Height="50" />
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="25"/>
+        </Grid.RowDefinitions>
+
+        <Menu Grid.Row="0" >
+            <MenuItem Header="Файл">
+                <MenuItem Header="Выйти" x:Name="MenuExit" Click="MenuExit_Click"/>
+            </MenuItem>
+            <MenuItem Header="Справочники">
+                <MenuItem Header="Подразделения"/>
+                <MenuItem Header="Местные номера"/>
+                <MenuItem Header="Городские номера"/>
+                <MenuItem Header="Мобильные номера"/>
+            </MenuItem>
+            <MenuItem Header="Справка" x:Name="MenuInfo" Click="MenuInfo_Click"/>
+        </Menu>
+
+        <TextBlock Grid.Row="1" Margin="0,0,425,0" Text="Строка поиска" FontSize="14" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+        <TextBox Grid.Row="1" Margin="0,0,150,0" Height="25" Width="260" TextWrapping="Wrap" x:Name="FindString" HorizontalAlignment="Right"/>
+        <Button Grid.Row="1" Margin="0,0,25,0" x:Name="ButtonFind" Content="Найти" Click="ButtonFind_Click" HorizontalAlignment="Right"/>
+        <Button Grid.Row="1" Margin="25,0,0,0" x:Name="NewUser" Content="Новый" Click="NewUser_Click" HorizontalAlignment="Left"/>
+
+        <DataGrid x:Name="MainTable" Margin="25,0,25,0" ItemsSource="{Binding Source={StaticResource UsersCollectionViewSource}}" MouseDoubleClick="MainTable_MouseDoubleClick" Grid.Row="2">
+            <DataGrid.Columns>
+                <DataGridTextColumn Width="2*" Header="Ф.И.О." x:Name="Name" Binding="{Binding Path=Name}" SortDirection="Ascending"/>
+                <DataGridTextColumn Width="*" Header="Подразделение" x:Name="Department" Binding="{Binding Path=Department.DepartmentName}"/>
+                <DataGridTextColumn Width="2*" Header="Должность" x:Name="Positon" Binding="{Binding Path=Positon}"/>
+                <DataGridTextColumn Width="*" Header="Местный номер" x:Name="LocalNumber" Binding="{Binding Path=LocalNumber.LocalNumber}"/>
+                <DataGridTextColumn Width="*" Header="Городской номер" x:Name="CityNumber" Binding="{Binding Path=CityNumber.CityNumber}"/>
+                <DataGridTextColumn Width="*" Header="Мобильный номер" x:Name="MobileNumber" Binding="{Binding Path=MobileNumber}"/>
+                <DataGridTextColumn Width="*" Header="Отсутствие" x:Name="Absense" Binding="{Binding Path=Absense}"/>
+            </DataGrid.Columns>
+        </DataGrid>
+
+    </Grid>
+</Window>
+
