@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -39,13 +39,13 @@ namespace Phone_Book
         public string Positon { get; set; }
 
         public int? DepartmentId { get; set; }
-        public virtual Department Department { get; set; }
+        public Department Department { get; set; }
 
         public int? LocalId { get; set; }
-        public virtual Local LocalNumber { get; set; }
+        public Local LocalNumber { get; set; }
 
         public int? CityId { get; set; }
-        public virtual City CityNumber { get; set; }
+        public City CityNumber { get; set; }
 
         public long MobileNumber { get; set; }
         public string Absense { get; set; }
@@ -57,15 +57,16 @@ namespace Phone_Book
         public DbSet<Local> Locals { get; set; }
         public DbSet<City> Cities { get; set; }
 
-        public ApplicationContext()
+        public ApplicationContext(DbContextOptions<ApplicationContext> options)
+            : base(options)
         {
             Database.EnsureCreated();
         }
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        /*protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=PhoneBook;Trusted_Connection=True;");
-        }
+        }*/
 
         protected override void OnModelCreating(ModelBuilder modelbuilder)
         {
@@ -96,10 +97,10 @@ namespace Phone_Book
                     new User
                     {
                         Name = "Петров Петр Петрович",
-                        Department = department,
+                        DepartmentId = 1,
                         Positon = "Начальник отдела",
-                        LocalNumber = localNumber,
-                        CityNumber = cityNumber,
+                        LocalId = 1,
+                        CityId = 1,
                         MobileNumber = 89099099090,
                         Absense = "Отпуск по 16.11.2020"
                     }
