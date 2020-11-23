@@ -62,12 +62,6 @@ namespace Phone_Book
         {
             Database.EnsureCreated();
         }
-
-        /*protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            optionsBuilder.UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=PhoneBook;Trusted_Connection=True;");
-        }*/
-
         protected override void OnModelCreating(ModelBuilder modelbuilder)
         {
             modelbuilder.Entity<Department>().HasData(
@@ -96,6 +90,7 @@ namespace Phone_Book
                 {
                     new User
                     {
+                        UserId = 1,
                         Name = "Петров Петр Петрович",
                         DepartmentId = 1,
                         Positon = "Начальник отдела",
@@ -104,7 +99,7 @@ namespace Phone_Book
                         MobileNumber = 89099099090,
                         Absense = "Отпуск по 16.11.2020"
                     }
-                    });
+                });
         }
     }
 }

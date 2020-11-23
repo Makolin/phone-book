@@ -24,10 +24,10 @@ namespace Phone_Book
         DbContextOptions<ApplicationContext> options;
         public ObservableCollection<User> GetData(string findString)
         {
-            ObservableCollection<User> taskUser = null; ;
+            ObservableCollection<User> taskUser = null;
             using (ApplicationContext db = new ApplicationContext(options))
             {
-                if (findString == "")
+                if (findString == string.Empty)
                 {
                     taskUser = new ObservableCollection<User>(db.Users
                         .Include(t => t.Department)
@@ -42,11 +42,10 @@ namespace Phone_Book
                         .Include(t => t.Department)
                         .Include(t => t.LocalNumber)
                         .Include(t => t.CityNumber)
-                        .Where(t => EF.Functions.Like(t.Name, findString))
+                        .Where(t => EF.Functions.Like(t.Name, $"%{findString}%"))
                         .ToList());
                 }
             }
-
             return taskUser;
         }
         public MainWindow()
@@ -65,14 +64,14 @@ namespace Phone_Book
 
             InitializeComponent();
             ObservableCollection<User> taskUser = GetData(string.Empty);
-            MainTable.DataContext = taskUser;
+            MainTable.ItemsSource = taskUser;
         }
 
         private void MainTable_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            /*User selectedUser = (User)MainTable.SelectedItem;
-            EditUserPage editUser = new EditUserPage(context, selectedUser);
-            editUser.Show();*/
+            User selectedUser = (User)MainTable.SelectedItem;
+            EditUserPage editUser = new EditUserPage(selectedUser);
+            editUser.Show();
         }
 
         private void MenuExit_Click(object sender, RoutedEventArgs e)
@@ -87,18 +86,15 @@ namespace Phone_Book
 
         private void ButtonFind_Click(object sender, RoutedEventArgs e)
         {
-            using (var context = new ApplicationContext(options))
-            {
-                var findString = FindString.Text;
-                ObservableCollection<User> taskUser = GetData(findString);
-                MainTable.DataContext = taskUser;
-            }
+            var findString = FindString.Text;
+            ObservableCollection<User> taskUser = GetData(findString);
+            MainTable.ItemsSource = taskUser;
         }
 
         private void NewUser_Click(object sender, RoutedEventArgs e)
         {
-            /*EditUserPage newUser = new EditUserPage(context, null);
-            newUser.Show();*/
+            EditUserPage newUser = new EditUserPage(null);
+            newUser.Show();
         }
     }
 }
