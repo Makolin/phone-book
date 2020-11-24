@@ -40,11 +40,11 @@
             <DataGrid.Columns>
                 <DataGridTextColumn Width="2*" Header="Ф.И.О." x:Name="Name" Binding="{Binding Path=Name}" SortDirection="Ascending"/>
                 <DataGridTextColumn Width="*" Header="Подразделение" x:Name="Department" Binding="{Binding Path=Department.DepartmentName}"/>
-                <DataGridTextColumn Width="2*" Header="Должность" x:Name="Positon" Binding="{Binding Path=Positon}"/>
+                <DataGridTextColumn Width="2*" Header="Должность" x:Name="Positon" Binding="{Binding Path=Position}"/>
                 <DataGridTextColumn Width="*" Header="Местный номер" x:Name="LocalNumber" Binding="{Binding Path=LocalNumber.LocalNumber}"/>
                 <DataGridTextColumn Width="*" Header="Городской номер" x:Name="CityNumber" Binding="{Binding Path=CityNumber.CityNumber}"/>
                 <DataGridTextColumn Width="*" Header="Мобильный номер" x:Name="MobileNumber" Binding="{Binding Path=MobileNumber}"/>
-                <DataGridTextColumn Width="*" Header="Отсутствие" x:Name="Absense" Binding="{Binding Path=Absense}"/>
+                <DataGridTextColumn Width="*" Header="Отсутствие" x:Name="Absense" Binding="{Binding Path=Absence}"/>
             </DataGrid.Columns>
         </DataGrid>
         

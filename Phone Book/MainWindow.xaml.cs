@@ -21,11 +21,11 @@ namespace Phone_Book
 {
     public partial class MainWindow : Window
     {
-        DbContextOptions<ApplicationContext> options;
-        public ObservableCollection<User> GetData(string findString)
+        // Создание коллекции для загрузки данных в DataGrid
+        public static ObservableCollection<User> GetData(string findString)
         {
             ObservableCollection<User> taskUser = null;
-            using (ApplicationContext db = new ApplicationContext(options))
+            using (ApplicationContext db = new ApplicationContext())
             {
                 if (findString == string.Empty)
                 {
@@ -50,23 +50,12 @@ namespace Phone_Book
         }
         public MainWindow()
         {
-            // Подключение к базе данных из файла
-            var builder = new ConfigurationBuilder();
-            builder.SetBasePath(Directory.GetCurrentDirectory());
-            builder.AddJsonFile("appsettings.json");
-            var config = builder.Build();
-            string connectionString = config.GetConnectionString("DefaultConnection");
-
-            var opetionsBuilder = new DbContextOptionsBuilder<ApplicationContext>();
-            options = opetionsBuilder
-                .UseSqlServer(connectionString)
-                .Options;
-
             InitializeComponent();
             ObservableCollection<User> taskUser = GetData(string.Empty);
             MainTable.ItemsSource = taskUser;
         }
 
+        // Открытие окна для редактирования выбранного из таблицы пользователя
         private void MainTable_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             User selectedUser = (User)MainTable.SelectedItem;
@@ -74,16 +63,19 @@ namespace Phone_Book
             editUser.Show();
         }
 
+        // Закрытие текущего кона приложения
         private void MenuExit_Click(object sender, RoutedEventArgs e)
         {
             Application.Current.Shutdown();
         }
 
+        // Вывод окна с отображением основной информации о приложении
         private void MenuInfo_Click(object sender, RoutedEventArgs e)
         {
             MessageBox.Show("Вывод информации о текущей версии приложения.");
         }
 
+        // Поиск по базе данных
         private void ButtonFind_Click(object sender, RoutedEventArgs e)
         {
             var findString = FindString.Text;
@@ -91,6 +83,7 @@ namespace Phone_Book
             MainTable.ItemsSource = taskUser;
         }
 
+        // Создание нового пользователя
         private void NewUser_Click(object sender, RoutedEventArgs e)
         {
             EditUserPage newUser = new EditUserPage(null);

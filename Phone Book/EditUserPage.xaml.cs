@@ -20,30 +20,16 @@ namespace Phone_Book
     public partial class EditUserPage : Window
     {
         User insertUser = null;
-        DbContextOptions<ApplicationContext> options;
-        // Основной метод страницы
         public EditUserPage(User currentUser)
         {
-            // Подключение к базе данных из файла
-            var builder = new ConfigurationBuilder();
-            builder.SetBasePath(Directory.GetCurrentDirectory());
-            builder.AddJsonFile("appsettings.json");
-            var config = builder.Build();
-            string connectionString = config.GetConnectionString("DefaultConnection");
-
-            var opetionsBuilder = new DbContextOptionsBuilder<ApplicationContext>();
-            options = opetionsBuilder
-                .UseSqlServer(connectionString)
-                .Options;
-
             InitializeComponent();
             InsertDataInComboBox(currentUser);
         }
 
-        // Метод для заполнения поле данными при загрузке
+        // Для заполнения полей данными у выбранного пользователя из базы данных
         private void InsertDataInComboBox(User user)
         {
-            using (ApplicationContext db = new ApplicationContext(options))
+            using (ApplicationContext db = new ApplicationContext())
             {
                 ComboBoxDepartment.ItemsSource = db.Deparments.ToList();
                 ComboBoxDepartment.DisplayMemberPath = "DepartmentName";
@@ -63,9 +49,9 @@ namespace Phone_Book
                     TextBoxName.Text = nameUser[1];
                     TextBoxMiddleName.Text = nameUser[2];
 
-                    TextBoxPosition.Text = user.Positon;
+                    TextBoxPosition.Text = user.Position;
                     TextBoxMobile.Text = user.MobileNumber.ToString();
-                    TextBoxAbsense.Text = user.Absense;
+                    TextBoxAbsense.Text = user.Absence;
 
                     if (user.Department != null)
                         ComboBoxDepartment.SelectedIndex = db.Deparments.ToList().FindIndex(t => t.DepartmentName.Equals(user.Department.DepartmentName));
@@ -78,6 +64,8 @@ namespace Phone_Book
                 }
             }
         }
+
+        // Для подтверждения сохранения внесенных изменений или создания нового пользователя
         private void Accept_Click(object sender, RoutedEventArgs e)
         {
             Topmost = true;
@@ -104,6 +92,7 @@ namespace Phone_Book
             }
         }
 
+        // Для подтверждения отмены сохранения изменений для текущего пользователя
         private void Cancel_Click(object sender, RoutedEventArgs e)
         {
             Topmost = true;
@@ -119,15 +108,16 @@ namespace Phone_Book
                 this.Close();
             }
         }
-        // Макрос для создания новых записей в базе данных, при условии, что таковых значений в базе нет
+
+        // Макрос для создания новых записей в базе данных, если значение было добавлено пользователем и не существует в базе данных
         private object CreatyStringInTable(object insertObject)
         {
-            using (ApplicationContext db = new ApplicationContext(options))
+            using (ApplicationContext db = new ApplicationContext())
             {
                 switch (insertObject)
                 {
                     case Department department:
-                        if (ComboBoxDepartment.SelectedIndex == -1)
+                        if (ComboBoxDepartment.SelectedIndex == -1 && ComboBoxDepartment.Text != string.Empty)
                         {
                             department = new Department { DepartmentName = ComboBoxDepartment.Text };
                             db.Deparments.Add(department);
@@ -140,7 +130,7 @@ namespace Phone_Book
                         return department;
 
                     case Local local:
-                        if (ComboBoxLocal.SelectedIndex == -1)
+                        if (ComboBoxLocal.SelectedIndex == -1 && ComboBoxLocal.Text != string.Empty)
                         {
                             local = new Local { LocalNumber = Int32.Parse(ComboBoxLocal.Text) };
                             db.Locals.Add(local);
@@ -154,7 +144,7 @@ namespace Phone_Book
                         return local;
 
                     case City city:
-                        if (ComboBoxCity.SelectedIndex == -1)
+                        if (ComboBoxCity.SelectedIndex == -1 && ComboBoxCity.Text != string.Empty)
                         {
                             city = new City { CityNumber = Int32.Parse(ComboBoxCity.Text) };
                             db.Cities.Add(city);
@@ -174,16 +164,19 @@ namespace Phone_Book
         // Метод для внесения изменений при сохранении изменений у пользователя
         private void EditCurrentUser()
         {
-            using (ApplicationContext db = new ApplicationContext(options))
+            using (ApplicationContext db = new ApplicationContext())
             {
                 string nameUser = $"{TextBoxSurname.Text} {TextBoxName.Text} {TextBoxMiddleName.Text}";
                 insertUser.Name = nameUser;
-                insertUser.Positon = TextBoxPosition.Text;
-                insertUser.MobileNumber = Convert.ToInt64(TextBoxMobile.Text);
+                insertUser.Position = TextBoxPosition.Text;
+
+                if (TextBoxMobile.Text != string.Empty)
+                    insertUser.MobileNumber = Convert.ToInt64(TextBoxMobile.Text);
+
                 insertUser.Department = (Department)CreatyStringInTable(new Department());
                 insertUser.LocalNumber = (Local)CreatyStringInTable(new Local());
                 insertUser.CityNumber = (City)CreatyStringInTable(new City());
-                insertUser.Absense = TextBoxAbsense.Text;
+                insertUser.Absence = TextBoxAbsense.Text;
                 db.Entry(insertUser).State = EntityState.Modified;
                 db.SaveChanges();
                 MessageBox.Show("Информация о пользователе обновлена");
@@ -191,12 +184,12 @@ namespace Phone_Book
         }
         private void CreatyNewUser()
         {
-            using (ApplicationContext db = new ApplicationContext(options))
+            using (ApplicationContext db = new ApplicationContext())
             {
                 User newUser = new User();
                 string nameUser = $"{TextBoxSurname.Text} {TextBoxName.Text} {TextBoxMiddleName.Text}";
                 newUser.Name = nameUser;
-                newUser.Positon = TextBoxPosition.Text;
+                newUser.Position = TextBoxPosition.Text;
 
                 if (ComboBoxDepartment.SelectedIndex == -1)
                 {
@@ -234,7 +227,7 @@ namespace Phone_Book
                     newUser.CityNumber = (City)ComboBoxCity.SelectedItem;
                 }
                 newUser.MobileNumber = Convert.ToInt64(TextBoxMobile.Text);
-                newUser.Absense = TextBoxAbsense.Text;
+                newUser.Absence = TextBoxAbsense.Text;
                 db.Entry(newUser).State = EntityState.Added;
                 db.SaveChanges();
                 MessageBox.Show("Новый сотрудник организации добавлен!");
