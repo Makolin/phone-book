@@ -88,6 +88,7 @@ namespace Phone_Book
                 {
                     EditCurrentUser();
                     this.Close();
+                    MainWindow.Get
                 }
             }
         }
@@ -135,7 +136,6 @@ namespace Phone_Book
                             local = new Local { LocalNumber = Int32.Parse(ComboBoxLocal.Text) };
                             db.Locals.Add(local);
                             db.SaveChanges();
-                            insertUser.LocalNumber = local;
                         }
                         else
                         {
@@ -149,7 +149,6 @@ namespace Phone_Book
                             city = new City { CityNumber = Int32.Parse(ComboBoxCity.Text) };
                             db.Cities.Add(city);
                             db.SaveChanges();
-                            insertUser.CityNumber = city;
                         }
                         else
                         {
@@ -191,42 +190,13 @@ namespace Phone_Book
                 newUser.Name = nameUser;
                 newUser.Position = TextBoxPosition.Text;
 
-                if (ComboBoxDepartment.SelectedIndex == -1)
-                {
-                    var l1 = new Department { DepartmentName = ComboBoxLocal.Text };
-                    db.Deparments.Add(l1);
-                    db.SaveChanges();
-                    newUser.Department = l1;
-                }
-                else
-                {
-                    newUser.Department = (Department)ComboBoxDepartment.SelectedItem;
-                }
+                newUser.Department = (Department)CreatyStringInTable(new Department());
+                newUser.LocalNumber = (Local)CreatyStringInTable(new Local());
+                newUser.CityNumber = (City)CreatyStringInTable(new City());
 
-                if (ComboBoxLocal.SelectedIndex == -1)
-                {
-                    var l1 = new Local { LocalNumber = Int32.Parse(ComboBoxLocal.Text) };
-                    db.Locals.Add(l1);
-                    db.SaveChanges();
-                    newUser.LocalNumber = l1;
-                }
-                else
-                {
-                    newUser.LocalNumber = (Local)ComboBoxLocal.SelectedItem;
-                }
+                if (TextBoxMobile.Text != string.Empty)
+                    newUser.MobileNumber = Convert.ToInt64(TextBoxMobile.Text);
 
-                if (ComboBoxCity.SelectedIndex == -1)
-                {
-                    var l1 = new City { CityNumber = Int32.Parse(ComboBoxCity.Text) };
-                    db.Cities.Add(l1);
-                    db.SaveChanges();
-                    newUser.CityNumber = l1;
-                }
-                else
-                {
-                    newUser.CityNumber = (City)ComboBoxCity.SelectedItem;
-                }
-                newUser.MobileNumber = Convert.ToInt64(TextBoxMobile.Text);
                 newUser.Absence = TextBoxAbsense.Text;
                 db.Entry(newUser).State = EntityState.Added;
                 db.SaveChanges();

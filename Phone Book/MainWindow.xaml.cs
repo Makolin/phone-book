@@ -22,7 +22,7 @@ namespace Phone_Book
     public partial class MainWindow : Window
     {
         // Создание коллекции для загрузки данных в DataGrid
-        public static ObservableCollection<User> GetData(string findString)
+        public ObservableCollection<User> MyData(string findString)
         {
             ObservableCollection<User> taskUser = null;
             using (ApplicationContext db = new ApplicationContext())
@@ -51,7 +51,7 @@ namespace Phone_Book
         public MainWindow()
         {
             InitializeComponent();
-            ObservableCollection<User> taskUser = GetData(string.Empty);
+            ObservableCollection<User> taskUser = MyData(string.Empty);
             MainTable.ItemsSource = taskUser;
         }
 
@@ -79,7 +79,7 @@ namespace Phone_Book
         private void ButtonFind_Click(object sender, RoutedEventArgs e)
         {
             var findString = FindString.Text;
-            ObservableCollection<User> taskUser = GetData(findString);
+            ObservableCollection<User> taskUser = MyData(findString);
             MainTable.ItemsSource = taskUser;
         }
 
