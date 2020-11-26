@@ -88,7 +88,6 @@ namespace Phone_Book
                 {
                     EditCurrentUser();
                     this.Close();
-                    MainWindow.Get
                 }
             }
         }
@@ -178,7 +177,6 @@ namespace Phone_Book
                 insertUser.Absence = TextBoxAbsense.Text;
                 db.Entry(insertUser).State = EntityState.Modified;
                 db.SaveChanges();
-                MessageBox.Show("Информация о пользователе обновлена");
             }
         }
         private void CreatyNewUser()
@@ -200,7 +198,6 @@ namespace Phone_Book
                 newUser.Absence = TextBoxAbsense.Text;
                 db.Entry(newUser).State = EntityState.Added;
                 db.SaveChanges();
-                MessageBox.Show("Новый сотрудник организации добавлен!");
             }
         }
     }

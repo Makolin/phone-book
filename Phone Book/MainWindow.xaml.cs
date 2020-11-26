@@ -16,51 +16,27 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.EntityFrameworkCore;
 using System.IO;
 using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 
 namespace Phone_Book
 {
     public partial class MainWindow : Window
     {
-        // Создание коллекции для загрузки данных в DataGrid
-        public ObservableCollection<User> MyData(string findString)
-        {
-            ObservableCollection<User> taskUser = null;
-            using (ApplicationContext db = new ApplicationContext())
-            {
-                if (findString == string.Empty)
-                {
-                    taskUser = new ObservableCollection<User>(db.Users
-                        .Include(t => t.Department)
-                        .Include(t => t.LocalNumber)
-                        .Include(t => t.CityNumber)
-                        .ToList());
-                }
-                else
-                {
-                    findString = findString.ToLower().Trim();
-                    taskUser = new ObservableCollection<User>(db.Users
-                        .Include(t => t.Department)
-                        .Include(t => t.LocalNumber)
-                        .Include(t => t.CityNumber)
-                        .Where(t => EF.Functions.Like(t.Name, $"%{findString}%"))
-                        .ToList());
-                }
-            }
-            return taskUser;
-        }
         public MainWindow()
         {
             InitializeComponent();
-            ObservableCollection<User> taskUser = MyData(string.Empty);
-            MainTable.ItemsSource = taskUser;
+            DataContext = new ViewModel("");
         }
 
         // Открытие окна для редактирования выбранного из таблицы пользователя
         private void MainTable_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            User selectedUser = (User)MainTable.SelectedItem;
-            EditUserPage editUser = new EditUserPage(selectedUser);
-            editUser.Show();
+            if (MainTable.SelectedItem != null)
+            {
+                User selectedUser = (User)MainTable.SelectedItem;
+                EditUserPage editUser = new EditUserPage(selectedUser);
+                editUser.Show();
+            }
         }
 
         // Закрытие текущего кона приложения
@@ -79,8 +55,7 @@ namespace Phone_Book
         private void ButtonFind_Click(object sender, RoutedEventArgs e)
         {
             var findString = FindString.Text;
-            ObservableCollection<User> taskUser = MyData(findString);
-            MainTable.ItemsSource = taskUser;
+            DataContext = new ViewModel(findString);
         }
 
         // Создание нового пользователя

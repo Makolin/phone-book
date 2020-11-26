@@ -9,6 +9,7 @@
         Height="840" 
         Width="1370" 
         ResizeMode="NoResize">
+
     <Grid>
 
         <Grid.RowDefinitions>
@@ -36,7 +37,7 @@
         <Button Grid.Row="1" Margin="0,0,25,0" x:Name="ButtonFind" Content="Найти" Click="ButtonFind_Click" HorizontalAlignment="Right"/>
         <Button Grid.Row="1" Margin="25,0,0,0" x:Name="NewUser" Content="Новый" Click="NewUser_Click" HorizontalAlignment="Left"/>
 
-        <DataGrid x:Name="MainTable" Margin="25,0,25,0" MouseDoubleClick="MainTable_MouseDoubleClick" Grid.Row="2">
+        <DataGrid x:Name="MainTable" Margin="25,0,25,0" MouseDoubleClick="MainTable_MouseDoubleClick" Grid.Row="2" ItemsSource="{Binding Users}">
             <DataGrid.Columns>
                 <DataGridTextColumn Width="2*" Header="Ф.И.О." x:Name="Name" Binding="{Binding Path=Name}" SortDirection="Ascending"/>
                 <DataGridTextColumn Width="*" Header="Подразделение" x:Name="Department" Binding="{Binding Path=Department.DepartmentName}"/>

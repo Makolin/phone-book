@@ -7,6 +7,8 @@ using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.Extensions.Configuration;
 using System.IO;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
 
 namespace Phone_Book
 {
@@ -34,24 +36,89 @@ namespace Phone_Book
     }
 
     // Таблица пользователей 
-    public class User
+    public class User : INotifyPropertyChanged
     {
         public int UserId { get; set; }
-        public string Name { get; set; }
-        public string Position { get; set; }
+
+        public string name;
+        public string Name
+        {
+            get { return name; }
+            set
+            {
+                name = value;
+                OnPropertyChanged("Name");
+            }
+        }
+
+        public string position;
+        public string Position
+        {
+            get { return position; }
+            set
+            {
+                position = value;
+                OnPropertyChanged("Position");
+            }
+        }
 
         public int? DepartmentId { get; set; }
-        public Department Department { get; set; }
+        public Department department;
+        public Department Department
+        {
+            get { return department; }
+            set
+            {
+                department = value;
+                OnPropertyChanged("Department");
+            }
+        }
 
         public int? LocalId { get; set; }
-        public Local LocalNumber { get; set; }
+        public Local localNumber;
+        public Local LocalNumber
+        {
+            get { return localNumber; }
+            set
+            {
+                localNumber = value;
+                OnPropertyChanged("LocalNumber");
+            }
+        }
 
         public int? CityId { get; set; }
-        public City CityNumber { get; set; }
+        public City cityNumber;
+        public City CityNumber
+        {
+            get { return cityNumber; }
+            set
+            {
+                cityNumber = value;
+                OnPropertyChanged("CityNumber");
+            }
+        }
 
         public long? MobileNumber { get; set; }
-        public string Absence { get; set; }
+
+        public string absence;
+        public string Absence
+        {
+            get { return absence; }
+            set
+            {
+                absence = value;
+                OnPropertyChanged("Absence");
+            }
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+        public void OnPropertyChanged([CallerMemberName] string prop = "")
+        {
+            if (PropertyChanged != null)
+                PropertyChanged(this, new PropertyChangedEventArgs(prop));
+        }
     }
+
     // Создание контекста для базы данных
     class ApplicationContext : DbContext
     {
