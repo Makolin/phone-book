@@ -12,6 +12,7 @@ using System.Runtime.CompilerServices;
 
 namespace Phone_Book
 {
+    // Таблица для подразделения
     public class Department
     {
         public int DepartmentId { get; set; }

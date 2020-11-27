@@ -25,18 +25,7 @@ namespace Phone_Book
         public MainWindow()
         {
             InitializeComponent();
-            DataContext = new ViewModel("");
-        }
-
-        // Открытие окна для редактирования выбранного из таблицы пользователя
-        private void MainTable_MouseDoubleClick(object sender, MouseButtonEventArgs e)
-        {
-            if (MainTable.SelectedItem != null)
-            {
-                User selectedUser = (User)MainTable.SelectedItem;
-                EditUserPage editUser = new EditUserPage(selectedUser);
-                editUser.Show();
-            }
+            DataContext = new UserViewModel("");
         }
 
         // Закрытие текущего кона приложения
@@ -55,7 +44,7 @@ namespace Phone_Book
         private void ButtonFind_Click(object sender, RoutedEventArgs e)
         {
             var findString = FindString.Text;
-            DataContext = new ViewModel(findString);
+            DataContext = new UserViewModel(findString);
         }
 
         // Создание нового пользователя
@@ -63,6 +52,24 @@ namespace Phone_Book
         {
             EditUserPage newUser = new EditUserPage(null);
             newUser.Show();
+        }
+
+        private void EditUser_Click(object sender, RoutedEventArgs e)
+        {
+            if (MainTable.SelectedItem != null)
+            {
+                User selectedUser = (User)MainTable.SelectedItem;
+                EditUserPage editUser = new EditUserPage(selectedUser);
+                editUser.Show();
+            }
+        }
+
+        private void DeleteUser_Click(object sender, RoutedEventArgs e)
+        {
+            if (MainTable.SelectedItem != null)
+            {
+                MessageBox.Show("Будет удаление пользователя!");
+            }
         }
     }
 }

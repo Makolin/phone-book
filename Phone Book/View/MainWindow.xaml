@@ -35,9 +35,8 @@
         <TextBlock Grid.Row="1" Margin="0,0,425,0" Text="Строка поиска" FontSize="14" HorizontalAlignment="Right" VerticalAlignment="Center"/>
         <TextBox Grid.Row="1" Margin="0,0,150,0" Height="25" Width="260" TextWrapping="Wrap" x:Name="FindString" HorizontalAlignment="Right"/>
         <Button Grid.Row="1" Margin="0,0,25,0" x:Name="ButtonFind" Content="Найти" Click="ButtonFind_Click" HorizontalAlignment="Right"/>
-        <Button Grid.Row="1" Margin="25,0,0,0" x:Name="NewUser" Content="Новый" Click="NewUser_Click" HorizontalAlignment="Left"/>
 
-        <DataGrid x:Name="MainTable" Margin="25,0,25,0" MouseDoubleClick="MainTable_MouseDoubleClick" Grid.Row="2" ItemsSource="{Binding Users}">
+        <DataGrid x:Name="MainTable" Margin="25,0,25,0" Grid.Row="2" ItemsSource="{Binding Users}" SelectionMode="Single" SelectedItem="{Binding SelectedUser}">
             <DataGrid.Columns>
                 <DataGridTextColumn Width="2*" Header="Ф.И.О." x:Name="Name" Binding="{Binding Path=Name}" SortDirection="Ascending"/>
                 <DataGridTextColumn Width="*" Header="Подразделение" x:Name="Department" Binding="{Binding Path=Department.DepartmentName}"/>
@@ -47,6 +46,13 @@
                 <DataGridTextColumn Width="*" Header="Мобильный номер" x:Name="MobileNumber" Binding="{Binding Path=MobileNumber}"/>
                 <DataGridTextColumn Width="*" Header="Отсутствие" x:Name="Absense" Binding="{Binding Path=Absence}"/>
             </DataGrid.Columns>
+            <DataGrid.ContextMenu>
+                <ContextMenu>
+                    <MenuItem Header="Новый" x:Name="NewUser" Click="NewUser_Click"/>
+                    <MenuItem Header="Редактировать" x:Name="EditUser" Click="EditUser_Click"/>
+                    <MenuItem Header="Удалить" x:Name="DeleteUser" Click="DeleteUser_Click"/>
+                </ContextMenu>
+            </DataGrid.ContextMenu>
         </DataGrid>
         
     </Grid>

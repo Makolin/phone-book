@@ -12,16 +12,28 @@ using System.Windows;
 
 namespace Phone_Book
 {
-    public class ViewModel : INotifyPropertyChanged
+    public class UserViewModel : INotifyPropertyChanged
     {
+        private User selectedUser;
         private ObservableCollection<User> users;
+
         public ObservableCollection<User> Users
         {
             get { return users; }
             set { users = value; }
         }
 
-        public ViewModel(string findString)
+        public User SelectedUser
+        {
+            get { return selectedUser; }
+            set
+            {
+                selectedUser = value;
+                OnPropertyChanged("SelectedUser");
+            }
+        }
+
+        public UserViewModel(string findString)
         {
             using (ApplicationContext db = new ApplicationContext())
             {

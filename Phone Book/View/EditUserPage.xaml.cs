@@ -172,9 +172,19 @@ namespace Phone_Book
                     insertUser.MobileNumber = Convert.ToInt64(TextBoxMobile.Text);
 
                 insertUser.Department = (Department)CreatyStringInTable(new Department());
+                if (insertUser.Department != null)
+                    insertUser.DepartmentId = insertUser.Department.DepartmentId;
+
                 insertUser.LocalNumber = (Local)CreatyStringInTable(new Local());
+                if (insertUser.LocalNumber != null)
+                    insertUser.LocalId = insertUser.LocalNumber.LocalId;
+
                 insertUser.CityNumber = (City)CreatyStringInTable(new City());
+                if(insertUser.CityNumber != null)
+                    insertUser.CityId = insertUser.CityNumber.CityId;
+
                 insertUser.Absence = TextBoxAbsense.Text;
+
                 db.Entry(insertUser).State = EntityState.Modified;
                 db.SaveChanges();
             }
