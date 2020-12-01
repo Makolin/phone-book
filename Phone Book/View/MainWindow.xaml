@@ -8,7 +8,7 @@
         Title="Телефонная книга предприятия" 
         Height="840" 
         Width="1370" 
-        ResizeMode="NoResize">
+        ResizeMode="CanMinimize">
 
     <Grid>
 

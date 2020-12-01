@@ -43,6 +43,7 @@ namespace Phone_Book
                         .Include(t => t.Department)
                         .Include(t => t.LocalNumber)
                         .Include(t => t.CityNumber)
+                        .OrderBy(t => t.Name)
                         .ToList());
                 }
                 else
@@ -53,6 +54,7 @@ namespace Phone_Book
                         .Include(t => t.LocalNumber)
                         .Include(t => t.CityNumber)
                         .Where(t => EF.Functions.Like(t.Name, $"%{findString}%"))
+                        .OrderBy(t => t.Name)
                         .ToList());
                 }
             }
