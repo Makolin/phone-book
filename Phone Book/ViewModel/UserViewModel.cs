@@ -17,6 +17,35 @@ namespace Phone_Book
         private User selectedUser;
         private ObservableCollection<User> users;
 
+        private RelayCommand addCommand;
+        private RelayCommand deleteCommand;
+        public RelayCommand AddCommad
+        {
+            get
+            {
+                return addCommand ??
+                    (addCommand = new RelayCommand(obj =>
+                    {
+                        User user = new User();
+                        Users.Insert(0, user);
+                        SelectedUser = user;
+                    }));
+            }
+        }
+        public RelayCommand DeleteCommand
+        {
+            get
+            {
+                return deleteCommand ??
+                    (deleteCommand = new RelayCommand(obj =>
+                    {
+                        User user = new User();
+                        Users.Remove(user);
+                        SelectedUser = user;
+                    }));
+            }
+        }
+
         public ObservableCollection<User> Users
         {
             get { return users; }

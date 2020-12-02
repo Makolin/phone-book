@@ -9,6 +9,7 @@ using Microsoft.Extensions.Configuration;
 using System.IO;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using System.ComponentModel.DataAnnotations;
 
 namespace Phone_Book
 {
@@ -24,6 +25,7 @@ namespace Phone_Book
     public class Local
     {
         public int LocalId { get; set; }
+        [MaxLength(3)]
         public int LocalNumber { get; set; }
         public List<User> Users { get; set; } = new List<User>();
     }
@@ -32,6 +34,7 @@ namespace Phone_Book
     public class City
     {
         public int CityId { get; set; }
+        [MaxLength(6)]
         public int CityNumber { get; set; }
         public List<User> Users { get; set; } = new List<User>();
     }
@@ -98,7 +101,7 @@ namespace Phone_Book
                 OnPropertyChanged("CityNumber");
             }
         }
-
+        [MaxLength(9)]
         public long? MobileNumber { get; set; }
 
         public string absence;

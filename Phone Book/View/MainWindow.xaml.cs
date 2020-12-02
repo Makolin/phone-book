@@ -68,7 +68,14 @@ namespace Phone_Book
         {
             if (MainTable.SelectedItem != null)
             {
-                MessageBox.Show("Будет удаление пользователя!");
+                using (ApplicationContext db = new ApplicationContext())
+                {
+                    User temp = (User)MainTable.SelectedItem;
+                    User deleteUser = db.Users.Find(temp.UserId);
+                    db.Users.Remove(deleteUser);
+                    db.SaveChanges();
+                    // DataContext = new UserViewModel("");
+                }
             }
         }
     }
