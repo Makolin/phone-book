@@ -4,6 +4,7 @@
              xmlns:local="clr-namespace:Phone_Book"
              StartupUri="View\MainWindow.xaml">
     <Application.Resources>
+        <local:UserViewModel x:Key="UserViewModel"/>
         <!--Стили для вывода все окон-->
         <Style TargetType="Window">
             <Setter Property="ResizeMode" Value="NoResize"/>

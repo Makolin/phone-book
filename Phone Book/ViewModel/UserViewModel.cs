@@ -15,34 +15,94 @@ namespace Phone_Book
     public class UserViewModel : INotifyPropertyChanged
     {
         private User selectedUser;
+        private string findString;
         private ObservableCollection<User> users;
 
         private RelayCommand addCommand;
+        private RelayCommand editCommand;
         private RelayCommand deleteCommand;
-        public RelayCommand AddCommad
+        private RelayCommand seachCommand;
+
+        public RelayCommand AddCommand
         {
             get
             {
-                return addCommand ??
-                    (addCommand = new RelayCommand(obj =>
+                return addCommand ??= new RelayCommand(obj =>
+                {
+                    EditUserPage newUserPage = new EditUserPage(null);
+                    newUserPage.Show();
+                });
+            }
+        }
+        public RelayCommand EditCommand
+        {
+            get
+            {
+                return editCommand ??= new RelayCommand(obj =>
+                {
+                    if (obj != null)
                     {
-                        User user = new User();
-                        Users.Insert(0, user);
-                        SelectedUser = user;
-                    }));
+                        var editUser = obj as User;
+                        EditUserPage editUserPage = new EditUserPage(editUser);
+                        editUserPage.Show();
+                    }
+                });
             }
         }
         public RelayCommand DeleteCommand
         {
             get
             {
-                return deleteCommand ??
-                    (deleteCommand = new RelayCommand(obj =>
+                return deleteCommand ??= new RelayCommand(obj =>
+                {
+                    if (obj != null)
                     {
-                        User user = new User();
-                        Users.Remove(user);
-                        SelectedUser = user;
-                    }));
+                        using (ApplicationContext db = new ApplicationContext())
+                        {
+                            var deleteUser = obj as User;
+                            Users.Remove(selectedUser);
+                            db.Users.Remove(deleteUser);
+                            db.SaveChanges();
+                        }
+                        OnPropertyChanged("DeleteUser");
+                    }
+                });
+            }
+        }
+        public RelayCommand SearchCommand
+        {
+            get
+            {
+                return seachCommand ??= new RelayCommand(obj =>
+                {
+                    using (ApplicationContext db = new ApplicationContext())
+                    {
+                        if (findString != null)
+                        {
+
+                            findString = findString.ToLower().Trim();
+                            Users = new ObservableCollection<User>(db.Users
+                                .Include(t => t.Department)
+                                .Include(t => t.LocalNumber)
+                                .Include(t => t.CityNumber)
+                                .Where(t => EF.Functions.Like(t.Name, $"%{findString}%"))
+                                .OrderBy(t => t.Name)
+                                .ToList());
+                            OnPropertyChanged("SearchUser");
+                        }
+                        else
+                        {
+                           /* Users = new ObservableCollection<User>(db.Users
+                                .Include(t => t.Department)
+                                .Include(t => t.LocalNumber)
+                                .Include(t => t.CityNumber)
+                                .OrderBy(t => t.Name)
+                                .ToList());*/
+                        }
+
+                    }
+
+                });
             }
         }
 
@@ -51,7 +111,17 @@ namespace Phone_Book
             get { return users; }
             set { users = value; }
         }
-
+        public string FindString
+        {
+            get
+            {
+                return findString;
+            }
+            set
+            {
+                findString = value;
+            }
+        }
         public User SelectedUser
         {
             get { return selectedUser; }
@@ -62,30 +132,16 @@ namespace Phone_Book
             }
         }
 
-        public UserViewModel(string findString)
+        public UserViewModel()
         {
             using (ApplicationContext db = new ApplicationContext())
             {
-                if (findString == string.Empty)
-                {
-                    users = new ObservableCollection<User>(db.Users
-                        .Include(t => t.Department)
-                        .Include(t => t.LocalNumber)
-                        .Include(t => t.CityNumber)
-                        .OrderBy(t => t.Name)
-                        .ToList());
-                }
-                else
-                {
-                    findString = findString.ToLower().Trim();
-                    users = new ObservableCollection<User>(db.Users
-                        .Include(t => t.Department)
-                        .Include(t => t.LocalNumber)
-                        .Include(t => t.CityNumber)
-                        .Where(t => EF.Functions.Like(t.Name, $"%{findString}%"))
-                        .OrderBy(t => t.Name)
-                        .ToList());
-                }
+                Users = new ObservableCollection<User>(db.Users
+                    .Include(t => t.Department)
+                    .Include(t => t.LocalNumber)
+                    .Include(t => t.CityNumber)
+                    .OrderBy(t => t.Name)
+                    .ToList());
             }
         }
         public event PropertyChangedEventHandler PropertyChanged;

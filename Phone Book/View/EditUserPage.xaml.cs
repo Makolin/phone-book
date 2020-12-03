@@ -180,7 +180,7 @@ namespace Phone_Book
                     insertUser.LocalId = insertUser.LocalNumber.LocalId;
 
                 insertUser.CityNumber = (City)CreatyStringInTable(new City());
-                if(insertUser.CityNumber != null)
+                if (insertUser.CityNumber != null)
                     insertUser.CityId = insertUser.CityNumber.CityId;
 
                 insertUser.Absence = TextBoxAbsense.Text;
