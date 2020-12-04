@@ -77,31 +77,37 @@ namespace Phone_Book
                 {
                     using (ApplicationContext db = new ApplicationContext())
                     {
-                        if (findString != null)
+                        if (findString != null && findString != string.Empty)
                         {
-
+                            Users.Clear();
                             findString = findString.ToLower().Trim();
-                            Users = new ObservableCollection<User>(db.Users
+                            foreach (var user in new ObservableCollection<User>(db.Users
                                 .Include(t => t.Department)
                                 .Include(t => t.LocalNumber)
                                 .Include(t => t.CityNumber)
                                 .Where(t => EF.Functions.Like(t.Name, $"%{findString}%"))
                                 .OrderBy(t => t.Name)
-                                .ToList());
-                            OnPropertyChanged("SearchUser");
+                                .ToList()))
+                            {
+                                Users.Add(user);
+                            }
                         }
                         else
                         {
-                           /* Users = new ObservableCollection<User>(db.Users
-                                .Include(t => t.Department)
-                                .Include(t => t.LocalNumber)
-                                .Include(t => t.CityNumber)
-                                .OrderBy(t => t.Name)
-                                .ToList());*/
+                            Users.Clear();
+                            foreach (var user in new ObservableCollection<User>(db.Users
+                                 .Include(t => t.Department)
+                                 .Include(t => t.LocalNumber)
+                                 .Include(t => t.CityNumber)
+                                 .OrderBy(t => t.Name)
+                                 .ToList()))
+                            {
+                                Users.Add(user);
+                            }
                         }
 
                     }
-
+                    OnPropertyChanged("SearchUser");
                 });
             }
         }
@@ -113,14 +119,8 @@ namespace Phone_Book
         }
         public string FindString
         {
-            get
-            {
-                return findString;
-            }
-            set
-            {
-                findString = value;
-            }
+            get { return findString; }
+            set { findString = value; }
         }
         public User SelectedUser
         {

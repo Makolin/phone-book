@@ -126,7 +126,7 @@ namespace Phone_Book
     // Создание контекста для базы данных
     class ApplicationContext : DbContext
     {
-        private string connectionString;
+        // private string connectionString;
         public DbSet<User> Users { get; set; }
         public DbSet<Department> Deparments { get; set; }
         public DbSet<Local> Locals { get; set; }
@@ -136,16 +136,18 @@ namespace Phone_Book
         public ApplicationContext()
             : base()
         {
-            var builder = new ConfigurationBuilder();
+            /*var builder = new ConfigurationBuilder();
             builder.SetBasePath(Directory.GetCurrentDirectory());
             builder.AddJsonFile("appsettings.json");
             var config = builder.Build();
             connectionString = config.GetConnectionString("DefaultConnection");
-            Database.EnsureCreated();
+            Database.EnsureCreated();*/
         }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(connectionString);
+            // Подключение к sql серверу
+            // optionsBuilder.UseSqlServer(connectionString);
+            optionsBuilder.UseSqlite("Filename=phonebook.db");
         }
 
         // Первичные данные при создании базы данных
