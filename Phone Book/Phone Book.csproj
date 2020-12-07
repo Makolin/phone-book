@@ -6,6 +6,7 @@
     <RootNamespace>Phone_Book</RootNamespace>
     <UseWPF>true</UseWPF>
     <ApplicationIcon>Resources\titleIco.ico</ApplicationIcon>
+    <StartupObject>Phone_Book.App</StartupObject>
   </PropertyGroup>
 
   <ItemGroup>

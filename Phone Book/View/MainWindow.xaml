@@ -7,8 +7,8 @@
         xmlns:local="clr-namespace:Phone_Book"
         mc:Ignorable="d"
         Title="Телефонная книга предприятия" 
-        Height="840" 
-        Width="1370" 
+        Height="900" 
+        Width="1600" 
         ResizeMode="CanMinimize">
 
     <Grid>
@@ -40,13 +40,13 @@
         <DataGrid x:Name="MainTable" Margin="25,0,25,0" Grid.Row="2" ItemsSource="{Binding Users}" SelectionMode="Single" SelectedItem="{Binding SelectedUser}"
                   RowBackground="LightGray" AlternatingRowBackground="White">
             <DataGrid.Columns>
-                <DataGridTextColumn Width="2*" Header="Ф.И.О." x:Name="Name" Binding="{Binding Path=Name}" SortDirection="Ascending"/>
-                <DataGridTextColumn Width="*" Header="Подразделение" x:Name="Department" Binding="{Binding Path=Department.DepartmentName}"/>
-                <DataGridTextColumn Width="3*" Header="Должность" x:Name="Positon" Binding="{Binding Path=Position}"/>
-                <DataGridTextColumn Width="0.9*" Header="Местный номер" x:Name="LocalNumber" Binding="{Binding Path=LocalNumber.LocalNumber}"/>
-                <DataGridTextColumn Width="0.9*" Header="Городской номер" x:Name="CityNumber" Binding="{Binding Path=CityNumber.CityNumber}"/>
-                <DataGridTextColumn Width="*" Header="Мобильный номер" x:Name="MobileNumber" Binding="{Binding Path=MobileNumber}"/>
-                <DataGridTextColumn Width="0.9*" Header="Отсутствие" x:Name="Absense" Binding="{Binding Path=Absence}"/>
+                <DataGridTextColumn Width="1.7*" Header="Ф.И.О." x:Name="Name" Binding="{Binding Path=Name}" SortDirection="Ascending" CellStyle="{StaticResource Main}"/>
+                <DataGridTextColumn Width="*" Header="Подразделение" x:Name="Department" Binding="{Binding Path=Department.DepartmentName}" CellStyle="{StaticResource Main}"/>
+                <DataGridTextColumn Width="3*" Header="Должность" x:Name="Positon" Binding="{Binding Path=Position}" CellStyle="{StaticResource Main}"/>
+                <DataGridTextColumn Width="0.7*" Header="Местный номер" x:Name="LocalNumber" Binding="{Binding Path=LocalNumber.LocalNumber}" CellStyle="{StaticResource Additional}"/>
+                <DataGridTextColumn Width="0.7*" Header="Городской номер" x:Name="CityNumber" Binding="{Binding Path=CityNumber.CityNumber}" CellStyle="{StaticResource Additional}"/>
+                <DataGridTextColumn Width="0.8*" Header="Мобильный номер" x:Name="MobileNumber" Binding="{Binding Path=MobileNumber}" CellStyle="{StaticResource Additional}"/>
+                <DataGridTextColumn Width="0.9*" Header="Отсутствие" x:Name="Absense" Binding="{Binding Path=Absence}" CellStyle="{StaticResource Additional}"/>
             </DataGrid.Columns>
             <DataGrid.ContextMenu>
                 <ContextMenu>
@@ -56,6 +56,7 @@
                 </ContextMenu>
             </DataGrid.ContextMenu>
         </DataGrid>
+        <Label Content="Многоканальный номер 344-154" HorizontalAlignment="Left" Margin="25,0,0,0" Grid.Row="1" VerticalAlignment="Center" />
 
     </Grid>
 </Window>

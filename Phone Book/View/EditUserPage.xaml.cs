@@ -31,13 +31,13 @@ namespace Phone_Book
         {
             using (ApplicationContext db = new ApplicationContext())
             {
-                ComboBoxDepartment.ItemsSource = db.Deparments.ToList();
+                ComboBoxDepartment.ItemsSource = db.Deparments.OrderBy(t => t.DepartmentName).ToList();
                 ComboBoxDepartment.DisplayMemberPath = "DepartmentName";
 
-                ComboBoxLocal.ItemsSource = db.Locals.ToList();
+                ComboBoxLocal.ItemsSource = db.Locals.OrderBy(t => t.LocalNumber).ToList();
                 ComboBoxLocal.DisplayMemberPath = "LocalNumber";
 
-                ComboBoxCity.ItemsSource = db.Cities.ToList();
+                ComboBoxCity.ItemsSource = db.Cities.OrderBy(t => t.CityNumber).ToList();
                 ComboBoxCity.DisplayMemberPath = "CityNumber";
 
                 if (user != null)
