@@ -80,12 +80,13 @@ namespace Phone_Book
                         if (findString != null && findString != string.Empty)
                         {
                             Users.Clear();
-                            findString = findString.ToLower().Trim();
+                            findString = findString.Trim();
                             foreach (var user in new ObservableCollection<User>(db.Users
+                                .Include(t=> t.Position)
                                 .Include(t => t.Department)
                                 .Include(t => t.LocalNumber)
                                 .Include(t => t.CityNumber)
-                                .Where(t => EF.Functions.Like(t.Name, $"%{findString}%"))
+                                .Where(t => EF.Functions.Like(t.Name.ToLower(), $"%{findString}%"))
                                 .OrderBy(t => t.Name)
                                 .ToList()))
                             {
@@ -96,6 +97,7 @@ namespace Phone_Book
                         {
                             Users.Clear();
                             foreach (var user in new ObservableCollection<User>(db.Users
+                                 .Include(t => t.Position)
                                  .Include(t => t.Department)
                                  .Include(t => t.LocalNumber)
                                  .Include(t => t.CityNumber)
@@ -137,6 +139,7 @@ namespace Phone_Book
             using (ApplicationContext db = new ApplicationContext())
             {
                 Users = new ObservableCollection<User>(db.Users
+                    .Include(t => t.Position)
                     .Include(t => t.Department)
                     .Include(t => t.LocalNumber)
                     .Include(t => t.CityNumber)

@@ -10,9 +10,19 @@ using System.IO;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.ComponentModel.DataAnnotations;
+using Microsoft.Data.Sqlite;
 
 namespace Phone_Book
 {
+    #region Таблицы базы данных
+    // Таблица с должностями сотрудников
+    public class Position
+    {
+        public int PositionId { get; set; }
+        public string PositionName { get; set; }
+        public List<User> Users { get; set; } = new List<User>();
+    }
+
     // Таблица для подразделения
     public class Department
     {
@@ -55,8 +65,9 @@ namespace Phone_Book
             }
         }
 
-        public string position;
-        public string Position
+        public int? PositionId { get; set; }
+        public Position position;
+        public Position Position
         {
             get { return position; }
             set
@@ -114,6 +125,7 @@ namespace Phone_Book
                 OnPropertyChanged("Absence");
             }
         }
+        
 
         public event PropertyChangedEventHandler PropertyChanged;
         public void OnPropertyChanged([CallerMemberName] string prop = "")
@@ -122,13 +134,15 @@ namespace Phone_Book
                 PropertyChanged(this, new PropertyChangedEventArgs(prop));
         }
     }
-
+    #endregion
     // Создание контекста для базы данных
     class ApplicationContext : DbContext
     {
-        // private string connectionString;
+        private string connectionString;
+
         public DbSet<User> Users { get; set; }
         public DbSet<Department> Deparments { get; set; }
+        public DbSet<Position> Positions { get; set; }
         public DbSet<Local> Locals { get; set; }
         public DbSet<City> Cities { get; set; }
 
@@ -136,25 +150,32 @@ namespace Phone_Book
         public ApplicationContext()
             : base()
         {
-            /*var builder = new ConfigurationBuilder();
+            var builder = new ConfigurationBuilder();
             builder.SetBasePath(Directory.GetCurrentDirectory());
             builder.AddJsonFile("appsettings.json");
             var config = builder.Build();
             connectionString = config.GetConnectionString("DefaultConnection");
-            Database.EnsureCreated();*/
+            Database.EnsureCreated();
         }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             // Подключение к sql серверу
-            // optionsBuilder.UseSqlServer(connectionString);
-            optionsBuilder.UseSqlite("Filename=phonebook.db");
+            optionsBuilder.UseSqlServer(connectionString);
+            //optionsBuilder.UseSqlite("Filename=phonebook.db");
         }
 
         // Первичные данные при создании базы данных
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<Position>().HasData(
+             new Position[]
+                {
+                     new Position { PositionId=1 ,PositionName = "Начальник отдела" },
+                     new Position { PositionId=2, PositionName = "Начальник бюро" }
+                });
+
             modelBuilder.Entity<Department>().HasData(
-                new Department[]
+            new Department[]
                 {
                     new Department { DepartmentId=1 ,DepartmentName = "Отдел №12" },
                     new Department { DepartmentId=2, DepartmentName = "Отдел №20" }
@@ -182,7 +203,7 @@ namespace Phone_Book
                         UserId = 1,
                         Name = "Петров Петр Петрович",
                         DepartmentId = 1,
-                        Position = "Начальник отдела",
+                        PositionId = 1,
                         LocalId = 1,
                         CityId = 1,
                         MobileNumber = 89099099090,
@@ -193,7 +214,7 @@ namespace Phone_Book
                         UserId = 2,
                         Name = "Иванов Иван Иванович",
                         DepartmentId = 2,
-                        Position = "Начальник бюро",
+                        PositionId = 2,
                         LocalId = 2
                     }
                 });

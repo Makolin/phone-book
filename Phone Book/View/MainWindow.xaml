@@ -8,7 +8,7 @@
         mc:Ignorable="d"
         Title="Телефонная книга предприятия" 
         Height="900" 
-        Width="1600" 
+        Width="1650" 
         ResizeMode="CanMinimize">
 
     <Grid>
@@ -41,8 +41,8 @@
                   RowBackground="LightGray" AlternatingRowBackground="White">
             <DataGrid.Columns>
                 <DataGridTextColumn Width="1.7*" Header="Ф.И.О." x:Name="Name" Binding="{Binding Path=Name}" SortDirection="Ascending" CellStyle="{StaticResource Main}"/>
-                <DataGridTextColumn Width="*" Header="Подразделение" x:Name="Department" Binding="{Binding Path=Department.DepartmentName}" CellStyle="{StaticResource Main}"/>
-                <DataGridTextColumn Width="3*" Header="Должность" x:Name="Positon" Binding="{Binding Path=Position}" CellStyle="{StaticResource Main}"/>
+                <DataGridTextColumn Width="1.4*" Header="Подразделение" x:Name="Department" Binding="{Binding Path=Department.DepartmentName}" CellStyle="{StaticResource Main}"/>
+                <DataGridTextColumn Width="3*" Header="Должность" x:Name="Positon" Binding="{Binding Path=Position.PositionName}" CellStyle="{StaticResource Main}"/>
                 <DataGridTextColumn Width="0.7*" Header="Местный номер" x:Name="LocalNumber" Binding="{Binding Path=LocalNumber.LocalNumber}" CellStyle="{StaticResource Additional}"/>
                 <DataGridTextColumn Width="0.7*" Header="Городской номер" x:Name="CityNumber" Binding="{Binding Path=CityNumber.CityNumber}" CellStyle="{StaticResource Additional}"/>
                 <DataGridTextColumn Width="0.8*" Header="Мобильный номер" x:Name="MobileNumber" Binding="{Binding Path=MobileNumber}" CellStyle="{StaticResource Additional}"/>
@@ -56,7 +56,8 @@
                 </ContextMenu>
             </DataGrid.ContextMenu>
         </DataGrid>
-        <Label Content="Многоканальный номер 344-154" HorizontalAlignment="Left" Margin="25,0,0,0" Grid.Row="1" VerticalAlignment="Center" />
+
+        <Label Content="Общий многоканальный номер 344-154" HorizontalAlignment="Left" Margin="25,0,0,0" Grid.Row="1" VerticalAlignment="Center" />
 
     </Grid>
 </Window>

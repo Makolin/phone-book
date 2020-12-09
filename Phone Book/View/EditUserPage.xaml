@@ -14,7 +14,7 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="20"/>
             <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="2.7*"/>
+            <ColumnDefinition Width="2.5*"/>
             <ColumnDefinition Width="20"/>
         </Grid.ColumnDefinitions>
 
@@ -44,7 +44,7 @@
         <TextBox Grid.Row="0" Grid.Column="2" x:Name="TextBoxSurname" Height="23" VerticalAlignment="Center"/>
         <TextBox Grid.Row="1" Grid.Column="2" x:Name="TextBoxName" Height="23" VerticalAlignment="Center"/>
         <TextBox Grid.Row="2" Grid.Column="2" x:Name="TextBoxMiddleName" Height="23" VerticalAlignment="Center"/>
-        <TextBox Grid.Row="3" Grid.Column="2" x:Name="TextBoxPosition" Height="23" VerticalAlignment="Center"/>
+        <ComboBox Grid.Row="3" Grid.Column="2" x:Name="ComboBoxPositoon" VerticalAlignment="Center"/>
         <ComboBox Grid.Row="4" Grid.Column="2" x:Name="ComboBoxDepartment" VerticalAlignment="Center"/>
         <ComboBox Grid.Row="5" Grid.Column="2" x:Name="ComboBoxLocal" VerticalAlignment="Center"/>
 
@@ -54,6 +54,7 @@
 
         <Button Grid.Row="9" Grid.Column="2" x:Name="Accept" Content="Применить" HorizontalAlignment="Right" Margin="0,0,150,0" Click="Accept_Click"/>
         <Button Grid.Row="9" Grid.Column="2" x:Name="Cancel" Content="Отменить" HorizontalAlignment="Right" Margin="0,0,0,0" Click="Cancel_Click"/>
+        
 
     </Grid>
 </Window>
