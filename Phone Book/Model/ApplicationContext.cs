@@ -50,89 +50,26 @@ namespace Phone_Book
     }
 
     // Таблица пользователей 
-    public class User : INotifyPropertyChanged
+    public class User 
     {
         public int UserId { get; set; }
-
-        public string name;
-        public string Name
-        {
-            get { return name; }
-            set
-            {
-                name = value;
-                OnPropertyChanged("Name");
-            }
-        }
+        public string Name { get; set; }
 
         public int? PositionId { get; set; }
-        public Position position;
-        public Position Position
-        {
-            get { return position; }
-            set
-            {
-                position = value;
-                OnPropertyChanged("Position");
-            }
-        }
+        public Position Position { get; set; }
 
         public int? DepartmentId { get; set; }
-        public Department department;
-        public Department Department
-        {
-            get { return department; }
-            set
-            {
-                department = value;
-                OnPropertyChanged("Department");
-            }
-        }
+        public Department Department { get; set; }
 
         public int? LocalId { get; set; }
-        public Local localNumber;
-        public Local LocalNumber
-        {
-            get { return localNumber; }
-            set
-            {
-                localNumber = value;
-                OnPropertyChanged("LocalNumber");
-            }
-        }
+        public Local LocalNumber { get; set; }
 
         public int? CityId { get; set; }
-        public City cityNumber;
-        public City CityNumber
-        {
-            get { return cityNumber; }
-            set
-            {
-                cityNumber = value;
-                OnPropertyChanged("CityNumber");
-            }
-        }
+        public City CityNumber { get; set; }
+
         [MaxLength(9)]
         public long? MobileNumber { get; set; }
-
-        public string absence;
-        public string Absence
-        {
-            get { return absence; }
-            set
-            {
-                absence = value;
-                OnPropertyChanged("Absence");
-            }
-        }
-        
-
-        public event PropertyChangedEventHandler PropertyChanged;
-        public void OnPropertyChanged([CallerMemberName] string prop = "")
-        {
-            if (PropertyChanged != null)
-                PropertyChanged(this, new PropertyChangedEventArgs(prop));
-        }
+        public string Absence { get; set; }
     }
     #endregion
     // Создание контекста для базы данных
@@ -152,7 +89,7 @@ namespace Phone_Book
         {
             var builder = new ConfigurationBuilder();
             builder.SetBasePath(Directory.GetCurrentDirectory());
-            builder.AddJsonFile("appsettings.json");
+            builder.AddJsonFile("Resources//appsettings.json");
             var config = builder.Build();
             connectionString = config.GetConnectionString("DefaultConnection");
             Database.EnsureCreated();
