@@ -31,16 +31,20 @@ namespace Phone_Book
         {
             using (ApplicationContext db = new ApplicationContext())
             {
-                ComboBoxPositoon.ItemsSource = db.Positions.OrderBy(t => t.PositionName).ToList();
-                ComboBoxPositoon.DisplayMemberPath = "PositionName";
+                var PositionList = db.Positions.OrderBy(t => t.PositionName).ToList();
+                ComboBoxPosition.ItemsSource = PositionList;
+                ComboBoxPosition.DisplayMemberPath = "PositionName";
 
-                ComboBoxDepartment.ItemsSource = db.Deparments.OrderBy(t => t.DepartmentName).ToList();
+                var DepartmentList = db.Deparments.OrderBy(t => t.DepartmentName).ToList();
+                ComboBoxDepartment.ItemsSource = DepartmentList;
                 ComboBoxDepartment.DisplayMemberPath = "DepartmentName";
 
-                ComboBoxLocal.ItemsSource = db.Locals.OrderBy(t => t.LocalNumber).ToList();
+                var LocalList = db.Locals.OrderBy(t => t.LocalNumber).ToList();
+                ComboBoxLocal.ItemsSource = LocalList;
                 ComboBoxLocal.DisplayMemberPath = "LocalNumber";
 
-                ComboBoxCity.ItemsSource = db.Cities.OrderBy(t => t.CityNumber).ToList();
+                var CityList = db.Cities.OrderBy(t => t.CityNumber).ToList();
+                ComboBoxCity.ItemsSource = CityList;
                 ComboBoxCity.DisplayMemberPath = "CityNumber";
 
                 if (user != null)
@@ -56,16 +60,16 @@ namespace Phone_Book
                     TextBoxAbsense.Text = user.Absence;
 
                     if (user.Position != null)
-                        ComboBoxPositoon.SelectedIndex = db.Positions.ToList().FindIndex(t => t.PositionName.Equals(user.Position.PositionName));
+                        ComboBoxPosition.SelectedIndex = PositionList.FindIndex(t => t.PositionId == user.PositionId);
 
                     if (user.Department != null)
-                        ComboBoxDepartment.SelectedIndex = db.Deparments.ToList().FindIndex(t => t.DepartmentName.Equals(user.Department.DepartmentName));
+                        ComboBoxDepartment.SelectedIndex = DepartmentList.FindIndex(t => t.DepartmentId == user.DepartmentId);
 
                     if (user.LocalNumber != null)
-                        ComboBoxLocal.SelectedIndex = db.Locals.ToList().FindIndex(t => t.LocalNumber.Equals(user.LocalNumber.LocalNumber));
+                        ComboBoxLocal.SelectedIndex = LocalList.FindIndex(t => t.LocalId == user.LocalId);
 
                     if (user.CityNumber != null)
-                        ComboBoxCity.SelectedIndex = db.Cities.ToList().FindIndex(t => t.CityNumber.Equals(user.CityNumber.CityNumber));
+                        ComboBoxCity.SelectedIndex = CityList.FindIndex(t => t.CityId == user.CityId);
                 }
             }
         }
@@ -122,15 +126,15 @@ namespace Phone_Book
                 switch (insertObject)
                 {
                     case Position position:
-                        if (ComboBoxPositoon.SelectedIndex == -1 && ComboBoxPositoon.Text != string.Empty)
+                        if (ComboBoxPosition.SelectedIndex == -1 && ComboBoxPosition.Text != string.Empty)
                         {
-                            position = new Position { PositionName = ComboBoxPositoon.Text };
+                            position = new Position { PositionName = ComboBoxPosition.Text };
                             db.Positions.Add(position);
                             db.SaveChanges();
                         }
                         else
                         {
-                            position = (Position)ComboBoxPositoon.SelectedItem;
+                            position = (Position)ComboBoxPosition.SelectedItem;
                         }
                         return position;
 

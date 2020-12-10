@@ -41,10 +41,10 @@
         <Label Grid.Row="7" Grid.Column="1" Content="Мобильный номер" VerticalAlignment="Center"/>
         <Label Grid.Row="8" Grid.Column="1" Content="Временное отсутствие" VerticalAlignment="Center"/>
 
-        <TextBox Grid.Row="0" Grid.Column="2" x:Name="TextBoxSurname" Height="23" VerticalAlignment="Center"/>
+        <TextBox Grid.Row="0" Grid.Column="2" x:Name="TextBoxSurname" Height="23" VerticalAlignment="Center" />
         <TextBox Grid.Row="1" Grid.Column="2" x:Name="TextBoxName" Height="23" VerticalAlignment="Center"/>
         <TextBox Grid.Row="2" Grid.Column="2" x:Name="TextBoxMiddleName" Height="23" VerticalAlignment="Center"/>
-        <ComboBox Grid.Row="3" Grid.Column="2" x:Name="ComboBoxPositoon" VerticalAlignment="Center"/>
+        <ComboBox Grid.Row="3" Grid.Column="2" x:Name="ComboBoxPosition" VerticalAlignment="Center"/>
         <ComboBox Grid.Row="4" Grid.Column="2" x:Name="ComboBoxDepartment" VerticalAlignment="Center"/>
         <ComboBox Grid.Row="5" Grid.Column="2" x:Name="ComboBoxLocal" VerticalAlignment="Center"/>
 
