@@ -10,7 +10,6 @@ using System.IO;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.ComponentModel.DataAnnotations;
-using Microsoft.Data.Sqlite;
 
 namespace Phone_Book
 {
@@ -94,11 +93,10 @@ namespace Phone_Book
             connectionString = config.GetConnectionString("DefaultConnection");
             Database.EnsureCreated();
         }
+        // Строка подключения к SQL серверу
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            // Подключение к sql серверу
             optionsBuilder.UseSqlServer(connectionString);
-            //optionsBuilder.UseSqlite("Filename=phonebook.db");
         }
 
         // Первичные данные при создании базы данных

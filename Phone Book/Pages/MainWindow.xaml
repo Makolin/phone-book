@@ -43,7 +43,6 @@
                 <DataGridTextColumn Width="2.1*" Header="Должность" x:Name="Positon" Binding="{Binding Path=Position.PositionName}" CellStyle="{StaticResource Main}"/>
                 <DataGridTextColumn Width="0.6*" Header="Местный номер" x:Name="LocalNumber" Binding="{Binding Path=LocalNumber.LocalNumber}" CellStyle="{StaticResource Additional}"/>
                 <DataGridTextColumn Width="0.7*" Header="Городской номер" x:Name="CityNumber" Binding="{Binding Path=CityNumber.CityNumber}" CellStyle="{StaticResource Additional}"/>
-                <DataGridTextColumn Width="0.7*" Header="Мобильный номер" x:Name="MobileNumber" Binding="{Binding Path=MobileNumber}" CellStyle="{StaticResource Additional}"/>
                 <DataGridTextColumn Width="*" Header="Отсутствие" x:Name="Absense" Binding="{Binding Path=Absence}" CellStyle="{StaticResource Additional}"/>
             </DataGrid.Columns>
             <DataGrid.ContextMenu>
