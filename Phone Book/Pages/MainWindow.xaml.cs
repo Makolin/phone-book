@@ -22,12 +22,12 @@ namespace Phone_Book
 {
     public partial class MainWindow : Window
     {
-        public ObservableCollection<User> GetData(string findString)
+        ObservableCollection<User> Users = new ObservableCollection<User>();
+        public void GetData(string findString)
         {
-            ObservableCollection<User> taskUser = null;
             using (ApplicationContext db = new ApplicationContext())
             {
-                taskUser = new ObservableCollection<User>(db.Users
+                Users = new ObservableCollection<User>(db.Users
                      .Include(t => t.Position)
                      .Include(t => t.Department)
                      .Include(t => t.LocalNumber)
@@ -37,26 +37,26 @@ namespace Phone_Book
                 if (findString != string.Empty)
                 {
                     findString = findString.ToLower().Trim();
-                    taskUser = taskUser = new ObservableCollection<User>(db.Users
+                    Users = new ObservableCollection<User>(db.Users
                      .Include(t => t.Position)
                      .Include(t => t.Department)
                      .Include(t => t.LocalNumber)
                      .Include(t => t.CityNumber)
-                     .Where(t => EF.Functions.Like(t.Name.ToLower(), $"%{findString}%"))
+                     .Where(t => EF.Functions.Like(t.Name.ToLower(), $"%{findString}%") 
+                        || EF.Functions.Like(t.LocalNumber.LocalNumber.ToString(), $"%{findString}%"))
                      .OrderBy(t => t.Name)
                      .ToList());
                 }
             }
             // Сделать условия по склонению
-            CountUser.Content = $"В базе данных найдено {taskUser.Count} записей";
-            return taskUser;
+            CountUser.Content = $"В базе данных найдено {Users.Count} записей";
         }
         public MainWindow()
         {
             InitializeComponent();
             CommonNumber.Content = "Общий многоканальный номер 344 - 154";
-            ObservableCollection<User> taskUser = GetData(string.Empty);
-            MainTable.ItemsSource = taskUser;
+            GetData("");
+            MainTable.ItemsSource = Users;
         }
 
         // Закрытие текущего кона приложения
@@ -80,26 +80,31 @@ namespace Phone_Book
         private void EditUser_Click(object sender, RoutedEventArgs e)
         {
             var editUser = (User)MainTable.SelectedItem;
-            EditUserPage editUserPage = new EditUserPage(editUser);
-            editUserPage.Show();
+            if (editUser != null)
+            {
+                EditUserPage editUserPage = new EditUserPage(editUser);
+                editUserPage.Show();
+            }
         }
 
         private void DeleteUser_Click(object sender, RoutedEventArgs e)
         {
-            MessageBoxResult result = MessageBox.Show(
-             "Вы действительно хотите удалить данного пользователя?",
-             "Удалить",
-             MessageBoxButton.YesNo,
-             MessageBoxImage.Warning);
-
-            if (result == MessageBoxResult.Yes)
+            var deleteUser = (User)MainTable.SelectedItem;
+            if (deleteUser != null)
             {
-                var deleteUser = (User)MainTable.SelectedItem;
-                using (ApplicationContext db = new ApplicationContext())
-                {
-                    db.Users.Remove(deleteUser);
-                    db.SaveChanges();
+                MessageBoxResult result = MessageBox.Show(
+                     $"Вы действительно хотите удалить пользователя с именем \"{deleteUser.Name}\" из базы данных?",
+                     "Удалить",
+                     MessageBoxButton.YesNo,
+                     MessageBoxImage.Warning);
 
+                if (result == MessageBoxResult.Yes)
+                {
+                    using (ApplicationContext db = new ApplicationContext())
+                    {
+                        db.Users.Remove(deleteUser);
+                        db.SaveChanges();
+                    }
                 }
             }
         }
@@ -107,8 +112,18 @@ namespace Phone_Book
         private void ButtonFind_Click(object sender, RoutedEventArgs e)
         {
             var findString = FindString.Text;
-            ObservableCollection<User> taskUser = GetData(findString);
-            MainTable.ItemsSource = taskUser;
+            GetData(findString);
+            MainTable.ItemsSource = Users;
+        }
+
+        private void FindString_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+            {
+                var findString = FindString.Text;
+                GetData(findString);
+                MainTable.ItemsSource = Users;
+            }
         }
     }
 }

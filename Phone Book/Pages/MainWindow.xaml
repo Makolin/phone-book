@@ -6,9 +6,8 @@
         xmlns:local="clr-namespace:Phone_Book"
         mc:Ignorable="d"
         Title="Телефонная книга предприятия" 
-        Height="900" 
-        Width="1700" 
-        ResizeMode="CanMinimize">
+        MinHeight="810"
+        MinWidth="1500">
 
     <Grid>
         <Grid.RowDefinitions>
@@ -32,7 +31,7 @@
         </Menu>
 
         <TextBlock Grid.Row="1" Margin="0,0,425,0" Text="Строка поиска" FontSize="14" HorizontalAlignment="Right" VerticalAlignment="Center"/>
-        <TextBox Grid.Row="1" Margin="0,0,150,0" Height="25" Width="260" TextWrapping="Wrap" x:Name="FindString" HorizontalAlignment="Right" />
+        <TextBox Grid.Row="1" Margin="0,0,150,0" Height="25" Width="260" TextWrapping="Wrap" x:Name="FindString" HorizontalAlignment="Right" KeyDown="FindString_KeyDown" />
         <Button Grid.Row="1" Margin="0,0,25,0" x:Name="ButtonFind" Content="Найти" HorizontalAlignment="Right" Click="ButtonFind_Click"/>
 
         <DataGrid x:Name="MainTable" Margin="25,0,25,0" Grid.Row="2" ItemsSource="{Binding Users}" SelectionMode="Single" SelectedItem="{Binding SelectedUser}"
