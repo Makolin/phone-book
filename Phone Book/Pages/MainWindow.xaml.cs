@@ -17,12 +17,18 @@ using Microsoft.EntityFrameworkCore;
 using System.IO;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
+using Phone_Book.Pages;
 
 namespace Phone_Book
 {
     public partial class MainWindow : Window
     {
-        ObservableCollection<User> Users = new ObservableCollection<User>();
+        static ObservableCollection<User> Users = new ObservableCollection<User>();
+
+        private static void Users_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        {
+
+        }
         public void GetData(string findString)
         {
             using (ApplicationContext db = new ApplicationContext())
@@ -53,6 +59,7 @@ namespace Phone_Book
         }
         public MainWindow()
         {
+            // Users.CollectionChanged += Users_CollectionChanged;
             InitializeComponent();
             CommonNumber.Content = "Общий многоканальный номер 344 - 154";
             GetData("");
@@ -68,13 +75,14 @@ namespace Phone_Book
         // Вывод окна с отображением основной информации о приложении
         private void MenuInfo_Click(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("Вывод информации о текущей версии приложения.");
+            AboutPage aboutPage = new AboutPage();
+            aboutPage.ShowDialog();
         }
 
         private void NewUser_Click(object sender, RoutedEventArgs e)
         {
             EditUserPage newUserPage = new EditUserPage(null);
-            newUserPage.Show();
+            newUserPage.ShowDialog();
         }
 
         private void EditUser_Click(object sender, RoutedEventArgs e)
@@ -83,7 +91,7 @@ namespace Phone_Book
             if (editUser != null)
             {
                 EditUserPage editUserPage = new EditUserPage(editUser);
-                editUserPage.Show();
+                editUserPage.ShowDialog();
             }
         }
 
@@ -102,6 +110,7 @@ namespace Phone_Book
                 {
                     using (ApplicationContext db = new ApplicationContext())
                     {
+                        Users.Remove(deleteUser);
                         db.Users.Remove(deleteUser);
                         db.SaveChanges();
                     }

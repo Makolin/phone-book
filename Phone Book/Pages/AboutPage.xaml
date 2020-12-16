@@ -1,0 +1,32 @@
+﻿<Window x:Class="Phone_Book.Pages.AboutPage"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Phone_Book.Pages"
+        mc:Ignorable="d"
+        Title="О программе Phone Book" Height="600" Width="800" ResizeMode="NoResize">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="2*"/>
+        </Grid.ColumnDefinitions>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="1.2*"/>
+        </Grid.RowDefinitions>
+
+        <Image Grid.Row="0" Grid.Column="0" HorizontalAlignment="Left" Height="200" Margin="25,25,0,0" VerticalAlignment="Top" Width="200" Source="/Pages/titleIco.ico"/>
+
+        <TextBlock Grid.Row="0" Grid.Column="1" Text="Phone Book" Margin="0,40,15,0" FontSize="32"/>
+        <TextBlock Grid.Row="0" Grid.Column="1"  Text="Версия приложения - 0.01" Margin="0,100,15,0" FontSize="16"/>
+
+        <TextBlock Grid.Row="0" Grid.Column="1" Margin="0,150,0,0" TextWrapping="Wrap" FontSize="16" HorizontalAlignment="Stretch" x:Name="MainText"/>
+        <TextBlock Grid.Row="0" Grid.Column="1"  Text="Описание всех изменений до текущей версии" Margin="0,230,15,0" FontSize="16"/>
+        <ScrollViewer Grid.Row="1" Grid.Column="1">
+            <TextBlock Grid.Column="1" Grid.Row="1" Margin="0,0,10,10" x:Name="Versions" Loaded="Versions_Loaded" FontSize="14"/>
+        </ScrollViewer>
+        
+    </Grid>
+</Window>

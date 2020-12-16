@@ -14,6 +14,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using Phone_Book.Pages;
 
 namespace Phone_Book
 {
@@ -209,7 +210,6 @@ namespace Phone_Book
                     insertUser.CityId = insertUser.CityNumber.CityId;
 
                 insertUser.Absence = TextBoxAbsense.Text;
-
                 db.Entry(insertUser).State = EntityState.Modified;
                 db.SaveChanges();
             }

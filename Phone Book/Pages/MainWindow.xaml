@@ -25,9 +25,13 @@
                 <MenuItem Header="Подразделения"/>
                 <MenuItem Header="Местные номера"/>
                 <MenuItem Header="Городские номера"/>
-                <MenuItem Header="Мобильные номера"/>
             </MenuItem>
-            <MenuItem Header="Справка" x:Name="MenuInfo" Click="MenuInfo_Click"/>
+            <MenuItem Header="Списки сотрудников">
+                <MenuItem Header="Техническая поддержка"/>
+            </MenuItem>
+            <MenuItem Header="Справка">
+                <MenuItem Header="О приложении" x:Name="MenuInfo" Click="MenuInfo_Click"/>
+            </MenuItem>
         </Menu>
 
         <TextBlock Grid.Row="1" Margin="0,0,425,0" Text="Строка поиска" FontSize="14" HorizontalAlignment="Right" VerticalAlignment="Center"/>
