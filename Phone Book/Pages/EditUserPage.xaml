@@ -5,10 +5,11 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Phone_Book"
         mc:Ignorable="d"
-        Title="Редактирование пользователя" 
-        Height="450" 
+        Title="Абонент"
+        Height="470" 
         Width="650"
-        ResizeMode="NoResize">
+        ResizeMode="NoResize"
+        WindowStartupLocation="CenterScreen">
     <Grid>
 
         <Grid.ColumnDefinitions>
@@ -19,6 +20,7 @@
         </Grid.ColumnDefinitions>
 
         <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
@@ -39,7 +41,9 @@
         <Label Grid.Row="5" Grid.Column="1" Content="Местный номер" VerticalAlignment="Center"/>
         <Label Grid.Row="6" Grid.Column="1" Content="Городской номер" VerticalAlignment="Center"/>
         <Label Grid.Row="7" Grid.Column="1" Content="Мобильный номер" VerticalAlignment="Center"/>
-        <Label Grid.Row="8" Grid.Column="1" Content="Временное отсутствие" VerticalAlignment="Center"/>
+        <Label Grid.Row="8" Grid.Column="1" Content="Имя компьютера" VerticalAlignment="Center"/>
+        <Label Grid.Row="9" Grid.Column="1" Content="Временное отсутствие" VerticalAlignment="Center"/>
+
 
         <TextBox Grid.Row="0" Grid.Column="2" x:Name="TextBoxSurname" Height="23" VerticalAlignment="Center" />
         <TextBox Grid.Row="1" Grid.Column="2" x:Name="TextBoxName" Height="23" VerticalAlignment="Center"/>
@@ -50,11 +54,12 @@
 
         <ComboBox Grid.Row="6" Grid.Column="2" x:Name="ComboBoxCity" VerticalAlignment="Center"/>
         <TextBox  Grid.Row="7" Grid.Column="2" x:Name="TextBoxMobile" Height="23" VerticalAlignment="Center"/>
-        <TextBox  Grid.Row="8" Grid.Column="2" x:Name="TextBoxAbsense" Height="23" VerticalAlignment="Center"/>
+        <TextBox  Grid.Row="8" Grid.Column="2" x:Name="TextBoxNameComputer" Height="23" VerticalAlignment="Center"/>
+        <TextBox  Grid.Row="9" Grid.Column="2" x:Name="TextBoxAbsense" Height="23" VerticalAlignment="Center"/>
 
-        <Button Grid.Row="9" Grid.Column="2" x:Name="Accept" Content="Применить" HorizontalAlignment="Right" Margin="0,0,150,0" Click="Accept_Click"/>
-        <Button Grid.Row="9" Grid.Column="2" x:Name="Cancel" Content="Отменить" HorizontalAlignment="Right" Margin="0,0,0,0" Click="Cancel_Click"/>
-        
+        <Button Grid.Row="10" Grid.Column="2" x:Name="Accept" Content="Применить" HorizontalAlignment="Right" Margin="0,0,150,0" Click="Accept_Click"/>
+        <Button Grid.Row="10" Grid.Column="2" x:Name="Cancel" Content="Отменить" HorizontalAlignment="Right" Margin="0,0,0,0" Click="Cancel_Click"/>
+
 
     </Grid>
 </Window>

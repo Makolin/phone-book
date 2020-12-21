@@ -1,23 +1,10 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using Microsoft.Extensions.Configuration;
 using Microsoft.EntityFrameworkCore;
-using System.IO;
+using Phone_Book.Pages;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
-using Phone_Book.Pages;
+using System.Linq;
+using System.Windows;
+using System.Windows.Input;
 
 namespace Phone_Book
 {
@@ -90,8 +77,16 @@ namespace Phone_Book
             var editUser = (User)MainTable.SelectedItem;
             if (editUser != null)
             {
-                EditUserPage editUserPage = new EditUserPage(editUser);
-                editUserPage.ShowDialog();
+                if (!editUser.Common)
+                {
+                    EditUserPage editUserPage = new EditUserPage(editUser);
+                    editUserPage.ShowDialog();
+                }
+                else
+                {
+                    EditCommonPage editCommonPage = new EditCommonPage(editUser);
+                    editCommonPage.ShowDialog();
+                }
             }
         }
 
@@ -133,6 +128,12 @@ namespace Phone_Book
                 GetData(findString);
                 MainTable.ItemsSource = Users;
             }
+        }
+
+        private void NewCommon_Click(object sender, RoutedEventArgs e)
+        {
+            EditCommonPage newCommonPage = new EditCommonPage(null);
+            newCommonPage.ShowDialog();
         }
     }
 }

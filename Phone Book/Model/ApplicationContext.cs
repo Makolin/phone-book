@@ -18,6 +18,7 @@ namespace Phone_Book
     public class Position
     {
         public int PositionId { get; set; }
+        [Required]
         public string PositionName { get; set; }
         public List<User> Users { get; set; } = new List<User>();
     }
@@ -26,6 +27,7 @@ namespace Phone_Book
     public class Department
     {
         public int DepartmentId { get; set; }
+        [Required]
         public string DepartmentName { get; set; }
         public List<User> Users { get; set; } = new List<User>();
     }
@@ -34,6 +36,7 @@ namespace Phone_Book
     public class Local
     {
         public int LocalId { get; set; }
+        [Required]
         [MaxLength(3)]
         public int LocalNumber { get; set; }
         public List<User> Users { get; set; } = new List<User>();
@@ -43,6 +46,7 @@ namespace Phone_Book
     public class City
     {
         public int CityId { get; set; }
+        [Required]
         [MaxLength(6)]
         public int CityNumber { get; set; }
         public List<User> Users { get; set; } = new List<User>();
@@ -52,7 +56,9 @@ namespace Phone_Book
     public class User 
     {
         public int UserId { get; set; }
+        [Required]
         public string Name { get; set; }
+        public bool Common { get; set; }
 
         public int? PositionId { get; set; }
         public Position Position { get; set; }
@@ -68,6 +74,7 @@ namespace Phone_Book
 
         [MaxLength(9)]
         public long? MobileNumber { get; set; }
+        public string NameComputer { get; set; }
         public string Absence { get; set; }
     }
     #endregion
@@ -142,6 +149,7 @@ namespace Phone_Book
                         LocalId = 1,
                         CityId = 1,
                         MobileNumber = 89099099090,
+                        NameComputer = "otd12-04",
                         Absence = "Отпуск по 16.11.2020"
                     },
                     new User
@@ -150,7 +158,8 @@ namespace Phone_Book
                         Name = "Иванов Иван Иванович",
                         DepartmentId = 2,
                         PositionId = 2,
-                        LocalId = 2
+                        LocalId = 2,
+                        NameComputer = "otd12-08"
                     }
                 });
         }

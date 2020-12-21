@@ -5,7 +5,11 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Phone_Book.Pages"
         mc:Ignorable="d"
-        Title="О программе Phone Book" Height="600" Width="800" ResizeMode="NoResize">
+        Title="О программе Phone Book" 
+        Height="600" 
+        Width="800" 
+        ResizeMode="NoResize"
+        WindowStartupLocation="CenterScreen">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>

@@ -1,8 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -14,14 +12,16 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
-using Phone_Book.Pages;
 
-namespace Phone_Book
+namespace Phone_Book.Pages
 {
-    public partial class EditUserPage : Window
+    /// <summary>
+    /// Логика взаимодействия для EditCommonPage.xaml
+    /// </summary>
+    public partial class EditCommonPage : Window
     {
         User insertUser = null;
-        public EditUserPage(User currentUser)
+        public EditCommonPage(User currentUser)
         {
             InitializeComponent();
             InsertDataInComboBox(currentUser);
@@ -32,9 +32,6 @@ namespace Phone_Book
         {
             using (ApplicationContext db = new ApplicationContext())
             {
-                var PositionList = db.Positions.OrderBy(t => t.PositionName).ToList();
-                ComboBoxPosition.ItemsSource = PositionList;
-                ComboBoxPosition.DisplayMemberPath = "PositionName";
 
                 var DepartmentList = db.Deparments.OrderBy(t => t.DepartmentName).ToList();
                 ComboBoxDepartment.ItemsSource = DepartmentList;
@@ -52,17 +49,7 @@ namespace Phone_Book
                 {
                     insertUser = user;
 
-                    string[] nameUser = user.Name.Split(' ');
-                    TextBoxSurname.Text = nameUser[0];
-                    TextBoxName.Text = nameUser[1];
-                    TextBoxMiddleName.Text = nameUser[2];
-
-                    TextBoxMobile.Text = user.MobileNumber.ToString();
-                    TextBoxAbsense.Text = user.Absence;
-                    TextBoxNameComputer.Text = user.NameComputer;
-
-                    if (user.Position != null)
-                        ComboBoxPosition.SelectedIndex = PositionList.FindIndex(t => t.PositionId == user.PositionId);
+                    TextBoxSurname.Text = user.Name;
 
                     if (user.Department != null)
                         ComboBoxDepartment.SelectedIndex = DepartmentList.FindIndex(t => t.DepartmentId == user.DepartmentId);
@@ -127,19 +114,6 @@ namespace Phone_Book
             {
                 switch (insertObject)
                 {
-                    case Position position:
-                        if (ComboBoxPosition.SelectedIndex == -1 && ComboBoxPosition.Text != string.Empty)
-                        {
-                            position = new Position { PositionName = ComboBoxPosition.Text };
-                            db.Positions.Add(position);
-                            db.SaveChanges();
-                        }
-                        else
-                        {
-                            position = (Position)ComboBoxPosition.SelectedItem;
-                        }
-                        return position;
-
                     case Department department:
                         if (ComboBoxDepartment.SelectedIndex == -1 && ComboBoxDepartment.Text != string.Empty)
                         {
@@ -188,15 +162,7 @@ namespace Phone_Book
         {
             using (ApplicationContext db = new ApplicationContext())
             {
-                string nameUser = $"{TextBoxSurname.Text} {TextBoxName.Text} {TextBoxMiddleName.Text}";
-                insertUser.Name = nameUser;
-
-                if (TextBoxMobile.Text != string.Empty)
-                    insertUser.MobileNumber = Convert.ToInt64(TextBoxMobile.Text);
-
-                insertUser.Position = (Position)CreatyStringInTable(new Position());
-                if (insertUser.Position != null)
-                    insertUser.PositionId = insertUser.Position.PositionId;
+                insertUser.Name = TextBoxSurname.Text;
 
                 insertUser.Department = (Department)CreatyStringInTable(new Department());
                 if (insertUser.Department != null)
@@ -210,8 +176,6 @@ namespace Phone_Book
                 if (insertUser.CityNumber != null)
                     insertUser.CityId = insertUser.CityNumber.CityId;
 
-                insertUser.NameComputer = TextBoxNameComputer.Text;
-                insertUser.Absence = TextBoxAbsense.Text;
                 db.Entry(insertUser).State = EntityState.Modified;
                 db.SaveChanges();
             }
@@ -221,19 +185,14 @@ namespace Phone_Book
             using (ApplicationContext db = new ApplicationContext())
             {
                 User newUser = new User();
-                string nameUser = $"{TextBoxSurname.Text} {TextBoxName.Text} {TextBoxMiddleName.Text}";
+                string nameUser = TextBoxSurname.Text;
                 newUser.Name = nameUser;
+                newUser.Common = true;
 
-                newUser.Position = (Position)CreatyStringInTable(new Position());
                 newUser.Department = (Department)CreatyStringInTable(new Department());
                 newUser.LocalNumber = (Local)CreatyStringInTable(new Local());
                 newUser.CityNumber = (City)CreatyStringInTable(new City());
 
-                if (TextBoxMobile.Text != string.Empty)
-                    newUser.MobileNumber = Convert.ToInt64(TextBoxMobile.Text);
-
-                newUser.NameComputer = TextBoxNameComputer.Text;
-                newUser.Absence = TextBoxAbsense.Text;
                 db.Entry(newUser).State = EntityState.Added;
                 db.SaveChanges();
             }
