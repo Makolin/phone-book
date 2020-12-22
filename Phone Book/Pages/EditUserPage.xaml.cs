@@ -59,7 +59,7 @@ namespace Phone_Book
 
                     TextBoxMobile.Text = user.MobileNumber.ToString();
                     TextBoxAbsense.Text = user.Absence;
-                    TextBoxNameComputer.Text = user.NameComputer;
+                    //TextBoxNameComputer.Text = user.NameComputer;
 
                     if (user.Position != null)
                         ComboBoxPosition.SelectedIndex = PositionList.FindIndex(t => t.PositionId == user.PositionId);
@@ -210,7 +210,7 @@ namespace Phone_Book
                 if (insertUser.CityNumber != null)
                     insertUser.CityId = insertUser.CityNumber.CityId;
 
-                insertUser.NameComputer = TextBoxNameComputer.Text;
+                //insertUser.NameComputer = TextBoxNameComputer.Text;
                 insertUser.Absence = TextBoxAbsense.Text;
                 db.Entry(insertUser).State = EntityState.Modified;
                 db.SaveChanges();
@@ -232,7 +232,7 @@ namespace Phone_Book
                 if (TextBoxMobile.Text != string.Empty)
                     newUser.MobileNumber = Convert.ToInt64(TextBoxMobile.Text);
 
-                newUser.NameComputer = TextBoxNameComputer.Text;
+                //newUser.NameComputer = TextBoxNameComputer.Text;
                 newUser.Absence = TextBoxAbsense.Text;
                 db.Entry(newUser).State = EntityState.Added;
                 db.SaveChanges();

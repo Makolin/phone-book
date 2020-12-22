@@ -52,6 +52,17 @@ namespace Phone_Book
         public List<User> Users { get; set; } = new List<User>();
     }
 
+    // Таблица для хранения данных об онлайне пользователя
+    public class Online
+    {
+        public int OnlineId { get; set; }
+        [Required]
+        public string NameComputer { get; set; }
+        public bool? OnlineStatus { get; set; }
+        public DateTime? LastOnline { get; set; }
+        public List<User> Users { get; set; } = new List<User>();
+    }
+
     // Таблица пользователей 
     public class User 
     {
@@ -72,9 +83,10 @@ namespace Phone_Book
         public int? CityId { get; set; }
         public City CityNumber { get; set; }
 
+        public int? OnlineId { get; set; }
+        public Online OnlineStatus { get; set; }
         [MaxLength(9)]
         public long? MobileNumber { get; set; }
-        public string NameComputer { get; set; }
         public string Absence { get; set; }
     }
     #endregion
@@ -88,6 +100,7 @@ namespace Phone_Book
         public DbSet<Position> Positions { get; set; }
         public DbSet<Local> Locals { get; set; }
         public DbSet<City> Cities { get; set; }
+        public DbSet<Online> Onlines { get; set; }
 
         // Создание конструктора, который загружает строку подключения из json файла
         public ApplicationContext()
@@ -110,14 +123,14 @@ namespace Phone_Book
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Position>().HasData(
-             new Position[]
+                new Position[]
                 {
-                     new Position { PositionId=1 ,PositionName = "Начальник отдела" },
-                     new Position { PositionId=2, PositionName = "Начальник бюро" }
+                    new Position { PositionId=1 ,PositionName = "Начальник отдела" },
+                    new Position { PositionId=2, PositionName = "Начальник бюро" }
                 });
 
             modelBuilder.Entity<Department>().HasData(
-            new Department[]
+                new Department[] 
                 {
                     new Department { DepartmentId=1 ,DepartmentName = "Отдел №12" },
                     new Department { DepartmentId=2, DepartmentName = "Отдел №20" }
@@ -137,6 +150,12 @@ namespace Phone_Book
                     new City {CityId = 1, CityNumber = 344154 }
                 });
 
+            modelBuilder.Entity<Online>().HasData(
+                new Online[]
+                {
+                    new Online {OnlineId = 1, NameComputer = "DESKTOP-MAKOLIN" }
+                });
+
             modelBuilder.Entity<User>().HasData(
                 new User[]
                 {
@@ -149,7 +168,7 @@ namespace Phone_Book
                         LocalId = 1,
                         CityId = 1,
                         MobileNumber = 89099099090,
-                        NameComputer = "otd12-04",
+                        OnlineId = 1,
                         Absence = "Отпуск по 16.11.2020"
                     },
                     new User
@@ -158,8 +177,7 @@ namespace Phone_Book
                         Name = "Иванов Иван Иванович",
                         DepartmentId = 2,
                         PositionId = 2,
-                        LocalId = 2,
-                        NameComputer = "otd12-08"
+                        LocalId = 2
                     }
                 });
         }

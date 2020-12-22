@@ -12,25 +12,8 @@ namespace Phone_Book.Converts
         {
             if (value != null)
             {
-                try
-                {
-                    Ping ping = new Ping();
-                    PingReply pingReply = ping.Send(value.ToString());
-                    if (pingReply.Status.ToString().Equals("Success"))
-                    {
-                        // Пользователь в сети
-                        return "В сети";
-                    }
-                    else
-                    {
-                        // Пользователь отключен
-                        return string.Empty;
-                    }
-                }
-                catch
-                {
-                    // Проблемы с подключением
-                }
+                if ((bool)value) return "Да";
+                else return "Нет";
             }
 
             // Иначе просто вернуть пустое значение

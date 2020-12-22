@@ -49,6 +49,7 @@ namespace Phone_Book
             // Users.CollectionChanged += Users_CollectionChanged;
             InitializeComponent();
             CommonNumber.Content = "Общий многоканальный номер 344 - 154";
+            CheckOnline.SetStatus();
             GetData("");
             MainTable.ItemsSource = Users;
         }

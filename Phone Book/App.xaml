@@ -6,7 +6,7 @@
              StartupUri="Pages\MainWindow.xaml">
     <Application.Resources>
         <!--Стили для конвертеров-->
-        <convert:DisplayNumber x:Key="DisplayNumver"/>
+        <convert:DisplayNumber x:Key="DisplayNumber"/>
         <convert:DisplayStatus x:Key="DisplayStatus"/>
 
         <!--Стили для вывода все окон-->
