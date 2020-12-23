@@ -1,23 +1,32 @@
 ﻿using System;
 using System.Globalization;
-using System.Net.NetworkInformation;
 using System.Windows;
 using System.Windows.Data;
+using System.Windows.Media.Imaging;
 
 namespace Phone_Book.Converts
 {
+    // Превращает строковый статус текущего онлайна пользователя в графический. Подставляю картинку определенного цвета.
     public class DisplayStatus : IValueConverter
     {
         public object Convert(object value, Type TargetType, object parametr, CultureInfo culture)
         {
+            BitmapImage bitmap = null;
             if (value != null)
             {
-                if ((bool)value) return "Да";
-                else return "Нет";
+                if ((bool)value)
+                {
+                    bitmap = new BitmapImage(new Uri("pack://application:,,,/Resources/GreenCircle.png"));
+                    return bitmap;
+                }
+                else
+                {
+                    bitmap = new BitmapImage(new Uri("pack://application:,,,/Resources/RedCircle.png"));
+                    return bitmap;
+                }
             }
-
-            // Иначе просто вернуть пустое значение
-            return string.Empty;
+            bitmap = new BitmapImage(new Uri("pack://application:,,,/Resources/GrayCircle.png"));
+            return bitmap;
         }
         public object ConvertBack(object value, Type TargetType, object parametr, CultureInfo culture)
         {

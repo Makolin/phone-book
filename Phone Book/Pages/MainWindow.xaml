@@ -42,7 +42,13 @@
         <DataGrid x:Name="MainTable" Margin="25,0,25,0" Grid.Row="2" ItemsSource="{Binding Users}" SelectionMode="Single" SelectedItem="{Binding SelectedUser}"
                   RowBackground="LightGray" AlternatingRowBackground="White">
             <DataGrid.Columns>
-                <DataGridTextColumn Width="0.1*" x:Name="Status" Binding="{Binding Path=OnlineStatus.OnlineStatus, Converter={StaticResource DisplayStatus}}"/>
+                <DataGridTemplateColumn Width="0.1*">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Image Source="{Binding Path=ComputerStatus.Status, Converter={StaticResource DisplayStatus}}"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
                 <DataGridTextColumn Width="1.3*" Header="Абонент" x:Name="Name" Binding="{Binding Path=Name}" SortDirection="Ascending" CellStyle="{StaticResource Main}"/>
                 <DataGridTextColumn Width="1.3*" Header="Подразделение" x:Name="Department" Binding="{Binding Path=Department.DepartmentName}" CellStyle="{StaticResource Main}"/>
                 <DataGridTextColumn Width="2.1*" Header="Должность" x:Name="Positon" Binding="{Binding Path=Position.PositionName}" CellStyle="{StaticResource Main}"/>

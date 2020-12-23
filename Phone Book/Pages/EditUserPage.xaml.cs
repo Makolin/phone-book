@@ -1,26 +1,14 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using System;
-using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
-using Phone_Book.Pages;
 
 namespace Phone_Book
 {
     public partial class EditUserPage : Window
     {
-        User insertUser = null;
+        User insertUser;
         public EditUserPage(User currentUser)
         {
             InitializeComponent();
@@ -48,6 +36,10 @@ namespace Phone_Book
                 ComboBoxCity.ItemsSource = CityList;
                 ComboBoxCity.DisplayMemberPath = "CityNumber";
 
+                var ComputerNameList = db.Computers.OrderBy(t => t.ComputerId).ToList();
+                ComboBoxNameComputer.ItemsSource = ComputerNameList;
+                ComboBoxNameComputer.DisplayMemberPath = "NameComputer";
+
                 if (user != null)
                 {
                     insertUser = user;
@@ -59,7 +51,6 @@ namespace Phone_Book
 
                     TextBoxMobile.Text = user.MobileNumber.ToString();
                     TextBoxAbsense.Text = user.Absence;
-                    //TextBoxNameComputer.Text = user.NameComputer;
 
                     if (user.Position != null)
                         ComboBoxPosition.SelectedIndex = PositionList.FindIndex(t => t.PositionId == user.PositionId);
@@ -72,6 +63,9 @@ namespace Phone_Book
 
                     if (user.CityNumber != null)
                         ComboBoxCity.SelectedIndex = CityList.FindIndex(t => t.CityId == user.CityId);
+
+                    if (user.ComputerStatus != null)
+                        ComboBoxNameComputer.SelectedIndex = ComputerNameList.FindIndex(t => t.ComputerId == user.ComputerId);
                 }
             }
         }
@@ -79,7 +73,6 @@ namespace Phone_Book
         // Для подтверждения сохранения внесенных изменений или создания нового пользователя
         private void Accept_Click(object sender, RoutedEventArgs e)
         {
-            Topmost = true;
             MessageBoxResult result = MessageBox.Show(
                 "Вы действительно хотите сохранять изменения?",
                 "Сохранение",
@@ -88,36 +81,22 @@ namespace Phone_Book
 
             if (result == MessageBoxResult.Yes)
             {
-                Topmost = false;
-
-                if (insertUser == null)
-                {
-                    CreatyNewUser();
-                    this.Close();
-                }
-                else
-                {
-                    EditCurrentUser();
-                    this.Close();
-                }
+                if (insertUser == null) CreatyNewUser();
+                else EditCurrentUser();
+                this.Close();
             }
         }
 
         // Для подтверждения отмены сохранения изменений для текущего пользователя
         private void Cancel_Click(object sender, RoutedEventArgs e)
         {
-            Topmost = true;
             MessageBoxResult result = MessageBox.Show(
                 "Вы действительно хотите не сохранять изменения?",
                 "Сохранение",
                 MessageBoxButton.YesNo,
                 MessageBoxImage.Exclamation);
 
-            if (result == MessageBoxResult.Yes)
-            {
-                Topmost = false;
-                this.Close();
-            }
+            if (result == MessageBoxResult.Yes) this.Close();
         }
 
         // Макрос для создания новых записей в базе данных, если значение было добавлено пользователем и не существует в базе данных
@@ -128,7 +107,7 @@ namespace Phone_Book
                 switch (insertObject)
                 {
                     case Position position:
-                        if (ComboBoxPosition.SelectedIndex == -1 && ComboBoxPosition.Text != string.Empty)
+                        if (ComboBoxPosition.SelectedIndex == -1 && !string.IsNullOrEmpty(ComboBoxPosition.Text))
                         {
                             position = new Position { PositionName = ComboBoxPosition.Text };
                             db.Positions.Add(position);
@@ -141,7 +120,7 @@ namespace Phone_Book
                         return position;
 
                     case Department department:
-                        if (ComboBoxDepartment.SelectedIndex == -1 && ComboBoxDepartment.Text != string.Empty)
+                        if (ComboBoxDepartment.SelectedIndex == -1 && !string.IsNullOrEmpty(ComboBoxDepartment.Text))
                         {
                             department = new Department { DepartmentName = ComboBoxDepartment.Text };
                             db.Deparments.Add(department);
@@ -154,9 +133,9 @@ namespace Phone_Book
                         return department;
 
                     case Local local:
-                        if (ComboBoxLocal.SelectedIndex == -1 && ComboBoxLocal.Text != string.Empty)
+                        if (ComboBoxLocal.SelectedIndex == -1 && !string.IsNullOrEmpty(ComboBoxLocal.Text))
                         {
-                            local = new Local { LocalNumber = Int32.Parse(ComboBoxLocal.Text) };
+                            local = new Local { LocalNumber = int.Parse(ComboBoxLocal.Text) };
                             db.Locals.Add(local);
                             db.SaveChanges();
                         }
@@ -167,9 +146,9 @@ namespace Phone_Book
                         return local;
 
                     case City city:
-                        if (ComboBoxCity.SelectedIndex == -1 && ComboBoxCity.Text != string.Empty)
+                        if (ComboBoxCity.SelectedIndex == -1 && !string.IsNullOrEmpty(ComboBoxCity.Text))
                         {
-                            city = new City { CityNumber = Int32.Parse(ComboBoxCity.Text) };
+                            city = new City { CityNumber = int.Parse(ComboBoxCity.Text) };
                             db.Cities.Add(city);
                             db.SaveChanges();
                         }
@@ -178,6 +157,18 @@ namespace Phone_Book
                             city = (City)ComboBoxCity.SelectedItem;
                         }
                         return city;
+                    case Computer online:
+                        if (ComboBoxNameComputer.SelectedIndex == -1 && !string.IsNullOrEmpty(ComboBoxNameComputer.Text))
+                        {
+                            online = new Computer { NameComputer = ComboBoxNameComputer.Text };
+                            db.Computers.Add(online);
+                            db.SaveChanges();
+                        }
+                        else
+                        {
+                            online = (Computer)ComboBoxNameComputer.SelectedItem;
+                        }
+                        return online;
                     default:
                         throw new Exception();
                 }
@@ -191,26 +182,24 @@ namespace Phone_Book
                 string nameUser = $"{TextBoxSurname.Text} {TextBoxName.Text} {TextBoxMiddleName.Text}";
                 insertUser.Name = nameUser;
 
-                if (TextBoxMobile.Text != string.Empty)
+                if (!string.IsNullOrEmpty(TextBoxMobile.Text))
                     insertUser.MobileNumber = Convert.ToInt64(TextBoxMobile.Text);
 
                 insertUser.Position = (Position)CreatyStringInTable(new Position());
-                if (insertUser.Position != null)
-                    insertUser.PositionId = insertUser.Position.PositionId;
+                insertUser.PositionId = insertUser.Position?.PositionId;
 
                 insertUser.Department = (Department)CreatyStringInTable(new Department());
-                if (insertUser.Department != null)
-                    insertUser.DepartmentId = insertUser.Department.DepartmentId;
+                insertUser.DepartmentId = insertUser.Department?.DepartmentId;
 
                 insertUser.LocalNumber = (Local)CreatyStringInTable(new Local());
-                if (insertUser.LocalNumber != null)
-                    insertUser.LocalId = insertUser.LocalNumber.LocalId;
+                insertUser.LocalId = insertUser.LocalNumber?.LocalId;
 
                 insertUser.CityNumber = (City)CreatyStringInTable(new City());
-                if (insertUser.CityNumber != null)
-                    insertUser.CityId = insertUser.CityNumber.CityId;
+                insertUser.CityId = insertUser.CityNumber?.CityId;
 
-                //insertUser.NameComputer = TextBoxNameComputer.Text;
+                insertUser.ComputerStatus = (Computer)CreatyStringInTable(new Computer());
+                insertUser.ComputerId = insertUser.ComputerStatus?.ComputerId;
+
                 insertUser.Absence = TextBoxAbsense.Text;
                 db.Entry(insertUser).State = EntityState.Modified;
                 db.SaveChanges();
@@ -228,11 +217,11 @@ namespace Phone_Book
                 newUser.Department = (Department)CreatyStringInTable(new Department());
                 newUser.LocalNumber = (Local)CreatyStringInTable(new Local());
                 newUser.CityNumber = (City)CreatyStringInTable(new City());
+                newUser.ComputerStatus = (Computer)CreatyStringInTable(new Computer());
 
-                if (TextBoxMobile.Text != string.Empty)
+                if (!string.IsNullOrEmpty(TextBoxMobile.Text))
                     newUser.MobileNumber = Convert.ToInt64(TextBoxMobile.Text);
 
-                //newUser.NameComputer = TextBoxNameComputer.Text;
                 newUser.Absence = TextBoxAbsense.Text;
                 db.Entry(newUser).State = EntityState.Added;
                 db.SaveChanges();

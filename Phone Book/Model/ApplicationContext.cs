@@ -1,15 +1,9 @@
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
-using System.ComponentModel.DataAnnotations.Schema;
-using Microsoft.Extensions.Configuration;
-using System.IO;
-using System.ComponentModel;
-using System.Runtime.CompilerServices;
 using System.ComponentModel.DataAnnotations;
+using System.IO;
 
 namespace Phone_Book
 {
@@ -52,19 +46,19 @@ namespace Phone_Book
         public List<User> Users { get; set; } = new List<User>();
     }
 
-    // Таблица для хранения данных об онлайне пользователя
-    public class Online
+    // Таблица для хранения данных об онлайне компьютера пользователя
+    public class Computer
     {
-        public int OnlineId { get; set; }
+        public int ComputerId { get; set; }
         [Required]
         public string NameComputer { get; set; }
-        public bool? OnlineStatus { get; set; }
+        public bool? Status { get; set; }
         public DateTime? LastOnline { get; set; }
         public List<User> Users { get; set; } = new List<User>();
     }
 
     // Таблица пользователей 
-    public class User 
+    public class User
     {
         public int UserId { get; set; }
         [Required]
@@ -83,8 +77,9 @@ namespace Phone_Book
         public int? CityId { get; set; }
         public City CityNumber { get; set; }
 
-        public int? OnlineId { get; set; }
-        public Online OnlineStatus { get; set; }
+        public int? ComputerId { get; set; }
+        public Computer ComputerStatus { get; set; }
+
         [MaxLength(9)]
         public long? MobileNumber { get; set; }
         public string Absence { get; set; }
@@ -100,7 +95,7 @@ namespace Phone_Book
         public DbSet<Position> Positions { get; set; }
         public DbSet<Local> Locals { get; set; }
         public DbSet<City> Cities { get; set; }
-        public DbSet<Online> Onlines { get; set; }
+        public DbSet<Computer> Computers { get; set; }
 
         // Создание конструктора, который загружает строку подключения из json файла
         public ApplicationContext()
@@ -130,7 +125,7 @@ namespace Phone_Book
                 });
 
             modelBuilder.Entity<Department>().HasData(
-                new Department[] 
+                new Department[]
                 {
                     new Department { DepartmentId=1 ,DepartmentName = "Отдел №12" },
                     new Department { DepartmentId=2, DepartmentName = "Отдел №20" }
@@ -150,10 +145,10 @@ namespace Phone_Book
                     new City {CityId = 1, CityNumber = 344154 }
                 });
 
-            modelBuilder.Entity<Online>().HasData(
-                new Online[]
+            modelBuilder.Entity<Computer>().HasData(
+                new Computer[]
                 {
-                    new Online {OnlineId = 1, NameComputer = "DESKTOP-MAKOLIN" }
+                    new Computer {ComputerId = 1, NameComputer = "DESKTOP-MAKOLIN" }
                 });
 
             modelBuilder.Entity<User>().HasData(
@@ -168,7 +163,7 @@ namespace Phone_Book
                         LocalId = 1,
                         CityId = 1,
                         MobileNumber = 89099099090,
-                        OnlineId = 1,
+                        ComputerId = 1,
                         Absence = "Отпуск по 16.11.2020"
                     },
                     new User

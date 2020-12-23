@@ -10,12 +10,8 @@ namespace Phone_Book
 {
     public partial class MainWindow : Window
     {
-        static ObservableCollection<User> Users = new ObservableCollection<User>();
+        public static ObservableCollection<User> Users = new ObservableCollection<User>();
 
-        private static void Users_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
-        {
-
-        }
         public void GetData(string findString)
         {
             using (ApplicationContext db = new ApplicationContext())
@@ -25,6 +21,7 @@ namespace Phone_Book
                      .Include(t => t.Department)
                      .Include(t => t.LocalNumber)
                      .Include(t => t.CityNumber)
+                     .Include(t => t.ComputerStatus)
                      .OrderBy(t => t.Name)
                      .ToList());
                 if (findString != string.Empty)
@@ -35,7 +32,8 @@ namespace Phone_Book
                      .Include(t => t.Department)
                      .Include(t => t.LocalNumber)
                      .Include(t => t.CityNumber)
-                     .Where(t => EF.Functions.Like(t.Name.ToLower(), $"%{findString}%") 
+                     .Include(t => t.ComputerStatus)
+                     .Where(t => EF.Functions.Like(t.Name.ToLower(), $"%{findString}%")
                         || EF.Functions.Like(t.LocalNumber.LocalNumber.ToString(), $"%{findString}%"))
                      .OrderBy(t => t.Name)
                      .ToList());
@@ -46,7 +44,6 @@ namespace Phone_Book
         }
         public MainWindow()
         {
-            // Users.CollectionChanged += Users_CollectionChanged;
             InitializeComponent();
             CommonNumber.Content = "Общий многоканальный номер 344 - 154";
             CheckOnline.SetStatus();
@@ -54,7 +51,7 @@ namespace Phone_Book
             MainTable.ItemsSource = Users;
         }
 
-        // Закрытие текущего кона приложения
+        // Закрытие текущего окна приложения
         private void MenuExit_Click(object sender, RoutedEventArgs e)
         {
             Application.Current.Shutdown();

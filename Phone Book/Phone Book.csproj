@@ -5,12 +5,15 @@
     <TargetFramework>net5.0-windows</TargetFramework>
     <RootNamespace>Phone_Book</RootNamespace>
     <UseWPF>true</UseWPF>
-    <ApplicationIcon>Resources\titleIco.ico</ApplicationIcon>
+    <ApplicationIcon>Resources\Title.ico</ApplicationIcon>
     <StartupObject>Phone_Book.App</StartupObject>
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="Pages\titleIco.ico" />
+    <None Remove="Resources\About.png" />
+    <None Remove="Resources\GrayCircle.png" />
+    <None Remove="Resources\GreenCircle.png" />
+    <None Remove="Resources\RedCircle.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -19,11 +22,25 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Resource Include="Pages\titleIco.ico" />
+    <Resource Include="Resources\About.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\GrayCircle.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\GreenCircle.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\RedCircle.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
   </ItemGroup>
 
   <ItemGroup>
     <None Update="Resources\appsettings.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\Title.ico">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="Resources\Versions.txt">

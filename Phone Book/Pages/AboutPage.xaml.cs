@@ -1,17 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace Phone_Book.Pages
 {
@@ -23,16 +13,21 @@ namespace Phone_Book.Pages
         public AboutPage()
         {
             InitializeComponent();
-            MainText.Text = "Phone Book создан @makolin и распространяется по MIT License. " +
-                "Все пожелания по внесению изменений в приложение просьба отправлять на почтовый адрес makolin@bk.ru";
         }
-        private void Versions_Loaded(object sender, RoutedEventArgs e)
-        {
-            //Versions.IsReadOnly = true;
-            Versions.TextWrapping = TextWrapping.Wrap;
 
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            // Загрузка переменных в окно
+            Versions.TextWrapping = TextWrapping.Wrap;
+            Version.Text = "Версия приложения - 0.02";
+            MainText.Text = "Phone Book разработан @makolin и распространяется по MIT License. " +
+                "Все пожелания по внесению изменений в приложение просьба отправлять на почтовый адрес makolin@bk.ru";
+
+            ImageAbout.Source = new BitmapImage(new Uri("pack://application:,,,/Resources/About.png"));
+
+            // Загрузка описания версий приложения
             StreamReader streamReader = new StreamReader(Directory.GetCurrentDirectory() + @"\Resources\Versions.txt");
-            string stringInsert = "";
+            string stringInsert = string.Empty;
 
             while (!streamReader.EndOfStream)
             {
