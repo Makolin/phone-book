@@ -10,9 +10,9 @@ namespace Phone_Book
 {
     public partial class MainWindow : Window
     {
-        public static ObservableCollection<User> Users = new ObservableCollection<User>();
+        public ObservableCollection<User> Users = new ObservableCollection<User>();
 
-        public void GetData(string findString)
+        private void GetData(string findString)
         {
             using (ApplicationContext db = new ApplicationContext())
             {
@@ -46,9 +46,8 @@ namespace Phone_Book
         {
             InitializeComponent();
             CommonNumber.Content = "Общий многоканальный номер 344 - 154";
-            CheckOnline.SetStatus();
             GetData("");
-            MainTable.ItemsSource = Users;
+            UsersGrid.ItemsSource = Users;
         }
 
         // Закрытие текущего окна приложения
@@ -72,7 +71,7 @@ namespace Phone_Book
 
         private void EditUser_Click(object sender, RoutedEventArgs e)
         {
-            var editUser = (User)MainTable.SelectedItem;
+            var editUser = (User)UsersGrid.SelectedItem;
             if (editUser != null)
             {
                 if (!editUser.Common)
@@ -90,7 +89,7 @@ namespace Phone_Book
 
         private void DeleteUser_Click(object sender, RoutedEventArgs e)
         {
-            var deleteUser = (User)MainTable.SelectedItem;
+            var deleteUser = (User)UsersGrid.SelectedItem;
             if (deleteUser != null)
             {
                 MessageBoxResult result = MessageBox.Show(
@@ -115,7 +114,7 @@ namespace Phone_Book
         {
             var findString = FindString.Text;
             GetData(findString);
-            MainTable.ItemsSource = Users;
+            UsersGrid.ItemsSource = Users;
         }
 
         private void FindString_KeyDown(object sender, KeyEventArgs e)
@@ -124,7 +123,7 @@ namespace Phone_Book
             {
                 var findString = FindString.Text;
                 GetData(findString);
-                MainTable.ItemsSource = Users;
+                UsersGrid.ItemsSource = Users;
             }
         }
 
@@ -132,6 +131,27 @@ namespace Phone_Book
         {
             EditCommonPage newCommonPage = new EditCommonPage(null);
             newCommonPage.ShowDialog();
+        }
+
+        private void UpdateStatus_Click(object sender, RoutedEventArgs e)
+        {
+            CheckOnline.SetStatus();
+        }
+
+        private void EditDepartment_Click(object sender, RoutedEventArgs e)
+        {
+            EditDepartment EditDepartment = new EditDepartment();
+            EditDepartment.ShowDialog();
+        }
+
+        private void AbcenseUser_Click(object sender, RoutedEventArgs e)
+        {
+            var editUser = (User)UsersGrid.SelectedItem;
+            if (editUser != null)
+            {
+                EditAbsence editAbsence = new EditAbsence(editUser);
+                editAbsence.ShowDialog();
+            }
         }
     }
 }

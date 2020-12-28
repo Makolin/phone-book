@@ -29,8 +29,7 @@
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="2*"/>
+            <RowDefinition Height="1.7*"/>
         </Grid.RowDefinitions>
 
         <Label Grid.Row="0" Grid.Column="1" Content="Фамилия пользователя" VerticalAlignment="Center"/>
@@ -42,23 +41,20 @@
         <Label Grid.Row="6" Grid.Column="1" Content="Городской номер" VerticalAlignment="Center"/>
         <Label Grid.Row="7" Grid.Column="1" Content="Мобильный номер" VerticalAlignment="Center"/>
         <Label Grid.Row="8" Grid.Column="1" Content="Имя компьютера" VerticalAlignment="Center"/>
-        <Label Grid.Row="9" Grid.Column="1" Content="Временное отсутствие" VerticalAlignment="Center"/>
 
+        <TextBox Grid.Row="0" Grid.Column="2" x:Name="TextBoxSurname" Height="23" VerticalAlignment="Center" PreviewTextInput="ValidatonOnlyText"/>
+        <TextBox Grid.Row="1" Grid.Column="2" x:Name="TextBoxName" Height="23" VerticalAlignment="Center" PreviewTextInput="ValidatonOnlyText"/>
+        <TextBox Grid.Row="2" Grid.Column="2" x:Name="TextBoxMiddleName" Height="23" VerticalAlignment="Center" PreviewTextInput="ValidatonOnlyText"/>
+        <ComboBox Grid.Row="3" Grid.Column="2" x:Name="ComboBoxPosition" VerticalAlignment="Center" PreviewTextInput="ValidatonOnlyText"/>
+        <ComboBox Grid.Row="4" Grid.Column="2" x:Name="ComboBoxDepartment" VerticalAlignment="Center" PreviewTextInput="ValidatonOnlyText"/>
+        <ComboBox Grid.Row="5" Grid.Column="2" x:Name="ComboBoxLocal" VerticalAlignment="Center" PreviewTextInput="ValidatonOnlyNumber"/>
 
-        <TextBox Grid.Row="0" Grid.Column="2" x:Name="TextBoxSurname" Height="23" VerticalAlignment="Center" />
-        <TextBox Grid.Row="1" Grid.Column="2" x:Name="TextBoxName" Height="23" VerticalAlignment="Center"/>
-        <TextBox Grid.Row="2" Grid.Column="2" x:Name="TextBoxMiddleName" Height="23" VerticalAlignment="Center"/>
-        <ComboBox Grid.Row="3" Grid.Column="2" x:Name="ComboBoxPosition" VerticalAlignment="Center"/>
-        <ComboBox Grid.Row="4" Grid.Column="2" x:Name="ComboBoxDepartment" VerticalAlignment="Center"/>
-        <ComboBox Grid.Row="5" Grid.Column="2" x:Name="ComboBoxLocal" VerticalAlignment="Center"/>
-
-        <ComboBox Grid.Row="6" Grid.Column="2" x:Name="ComboBoxCity" VerticalAlignment="Center"/>
-        <TextBox Grid.Row="7" Grid.Column="2" x:Name="TextBoxMobile" Height="23" VerticalAlignment="Center"/>
+        <ComboBox Grid.Row="6" Grid.Column="2" x:Name="ComboBoxCity" VerticalAlignment="Center" PreviewTextInput="ValidatonOnlyNumber"/>
+        <TextBox Grid.Row="7" Grid.Column="2" x:Name="TextBoxMobile" Height="23" VerticalAlignment="Center" MaxLength="9" PreviewTextInput="ValidatonOnlyNumber"/>
         <ComboBox Grid.Row="8" Grid.Column="2" x:Name="ComboBoxNameComputer" Height="23" VerticalAlignment="Center"/>
-        <TextBox Grid.Row="9" Grid.Column="2" x:Name="TextBoxAbsense" Height="23" VerticalAlignment="Center"/>
 
-        <Button Grid.Row="10" Grid.Column="2" x:Name="Accept" Content="Применить" HorizontalAlignment="Right" Margin="0,0,150,0" Click="Accept_Click"/>
-        <Button Grid.Row="10" Grid.Column="2" x:Name="Cancel" Content="Отменить" HorizontalAlignment="Right" Margin="0,0,0,0" Click="Cancel_Click"/>
+        <Button Grid.Row="9" Grid.Column="2" x:Name="Accept" Content="Применить" HorizontalAlignment="Right" Margin="0,0,150,0" Click="Accept_Click"/>
+        <Button Grid.Row="9" Grid.Column="2" x:Name="Cancel" Content="Отменить" HorizontalAlignment="Right" Margin="0,0,0,0" Click="Cancel_Click"/>
 
 
     </Grid>

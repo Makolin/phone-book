@@ -21,8 +21,10 @@ namespace Phone_Book
     public class Department
     {
         public int DepartmentId { get; set; }
+        public int DepartmentNumber { get; set; }
         [Required]
-        public string DepartmentName { get; set; }
+        public string DepartmentFullName { get; set; }
+        public string DepartmentShortName { get; set; }
         public List<User> Users { get; set; } = new List<User>();
     }
 
@@ -57,6 +59,20 @@ namespace Phone_Book
         public List<User> Users { get; set; } = new List<User>();
     }
 
+    // Таблица об отсутствие пользователей
+    public class Absence
+    {
+        public int AbsenceId { get; set; }
+        [Required]
+        public int UserId { get; set; }
+        [Required]
+        public User UserAbsence { get; set; }
+        [Required]
+        public string Reason { get; set; }
+        public DateTime DateFrom { get; set; }
+        public DateTime DateBefore { get; set; }
+    }
+
     // Таблица пользователей 
     public class User
     {
@@ -82,7 +98,7 @@ namespace Phone_Book
 
         [MaxLength(9)]
         public long? MobileNumber { get; set; }
-        public string Absence { get; set; }
+        public List<Absence> Absences { get; set; } = new List<Absence>();
     }
     #endregion
     // Создание контекста для базы данных
@@ -96,6 +112,7 @@ namespace Phone_Book
         public DbSet<Local> Locals { get; set; }
         public DbSet<City> Cities { get; set; }
         public DbSet<Computer> Computers { get; set; }
+        public DbSet<Absence> Absences { get; set; }
 
         // Создание конструктора, который загружает строку подключения из json файла
         public ApplicationContext()
@@ -120,23 +137,35 @@ namespace Phone_Book
             modelBuilder.Entity<Position>().HasData(
                 new Position[]
                 {
-                    new Position { PositionId=1 ,PositionName = "Начальник отдела" },
-                    new Position { PositionId=2, PositionName = "Начальник бюро" }
+                    new Position { PositionId = 1, PositionName = "Начальник отдела" },
+                    new Position { PositionId = 2, PositionName = "Начальник бюро" }
                 });
 
             modelBuilder.Entity<Department>().HasData(
                 new Department[]
                 {
-                    new Department { DepartmentId=1 ,DepartmentName = "Отдел №12" },
-                    new Department { DepartmentId=2, DepartmentName = "Отдел №20" }
+                    new Department
+                    {
+                        DepartmentId = 1,
+                        DepartmentNumber = 20,
+                        DepartmentFullName = "Отдел информационных технологий",
+                        DepartmentShortName = "Отдел ИТ"
+                    },
+                    new Department
+                    {
+                        DepartmentId = 2,
+                        DepartmentNumber = 12,
+                        DepartmentFullName = "Отдел организации труда и заработной платы",
+                        DepartmentShortName = "Отдел организации труда и ЗП"
+                    }
                 });
 
             modelBuilder.Entity<Local>().HasData(
                 new Local[]
                 {
-                    new Local { LocalId=1, LocalNumber = 238 },
-                    new Local { LocalId=2, LocalNumber = 228 },
-                    new Local { LocalId=3, LocalNumber = 140 }
+                    new Local { LocalId = 1, LocalNumber = 238 },
+                    new Local { LocalId = 2, LocalNumber = 228 },
+                    new Local { LocalId = 3, LocalNumber = 140 }
                 });
 
             modelBuilder.Entity<City>().HasData(
@@ -163,8 +192,7 @@ namespace Phone_Book
                         LocalId = 1,
                         CityId = 1,
                         MobileNumber = 89099099090,
-                        ComputerId = 1,
-                        Absence = "Отпуск по 16.11.2020"
+                        ComputerId = 1
                     },
                     new User
                     {
@@ -173,6 +201,19 @@ namespace Phone_Book
                         DepartmentId = 2,
                         PositionId = 2,
                         LocalId = 2
+                    }
+                });
+
+            modelBuilder.Entity<Absence>().HasData(
+                new Absence[]
+                {
+                    new Absence
+                    {
+                        AbsenceId = 1,
+                        UserId = 1,
+                        Reason = "Отпуск",
+                        DateFrom = new DateTime(2020,12,24),
+                        DateBefore = new DateTime(2020,12,31)
                     }
                 });
         }

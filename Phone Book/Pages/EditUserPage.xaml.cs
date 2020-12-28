@@ -2,7 +2,10 @@
 using Microsoft.Extensions.Configuration;
 using System;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Windows;
+using System.Windows.Input;
+using System.Windows.Media;
 
 namespace Phone_Book
 {
@@ -24,9 +27,9 @@ namespace Phone_Book
                 ComboBoxPosition.ItemsSource = PositionList;
                 ComboBoxPosition.DisplayMemberPath = "PositionName";
 
-                var DepartmentList = db.Deparments.OrderBy(t => t.DepartmentName).ToList();
+                var DepartmentList = db.Deparments.OrderBy(t => t.DepartmentFullName).ToList();
                 ComboBoxDepartment.ItemsSource = DepartmentList;
-                ComboBoxDepartment.DisplayMemberPath = "DepartmentName";
+                ComboBoxDepartment.DisplayMemberPath = "DepartmentFullName";
 
                 var LocalList = db.Locals.OrderBy(t => t.LocalNumber).ToList();
                 ComboBoxLocal.ItemsSource = LocalList;
@@ -50,7 +53,6 @@ namespace Phone_Book
                     TextBoxMiddleName.Text = nameUser[2];
 
                     TextBoxMobile.Text = user.MobileNumber.ToString();
-                    TextBoxAbsense.Text = user.Absence;
 
                     if (user.Position != null)
                         ComboBoxPosition.SelectedIndex = PositionList.FindIndex(t => t.PositionId == user.PositionId);
@@ -70,21 +72,41 @@ namespace Phone_Book
             }
         }
 
+        // Проверка ввода значений в поле
+        private bool CheckTextInsert()
+        {
+            if (ComboBoxLocal.Text.Length != 3)
+            {
+                ComboBoxLocal.Background = Brushes.Yellow;
+                ComboBoxLocal.Foreground = Brushes.Blue;
+                return false;
+            }
+            else
+            {
+                ComboBoxLocal.Background = Brushes.Green;
+                return true;
+            }
+
+        }
         // Для подтверждения сохранения внесенных изменений или создания нового пользователя
         private void Accept_Click(object sender, RoutedEventArgs e)
         {
-            MessageBoxResult result = MessageBox.Show(
-                "Вы действительно хотите сохранять изменения?",
-                "Сохранение",
-                MessageBoxButton.YesNo,
-                MessageBoxImage.Question);
-
-            if (result == MessageBoxResult.Yes)
+            if (CheckTextInsert())
             {
-                if (insertUser == null) CreatyNewUser();
-                else EditCurrentUser();
-                this.Close();
+                MessageBoxResult result = MessageBox.Show(
+                    "Вы действительно хотите сохранять изменения?",
+                    "Сохранение",
+                    MessageBoxButton.YesNo,
+                    MessageBoxImage.Question);
+
+                if (result == MessageBoxResult.Yes)
+                {
+                    if (insertUser == null) CreatyNewUser();
+                    else EditCurrentUser();
+                    this.Close();
+                }
             }
+
         }
 
         // Для подтверждения отмены сохранения изменений для текущего пользователя
@@ -122,7 +144,7 @@ namespace Phone_Book
                     case Department department:
                         if (ComboBoxDepartment.SelectedIndex == -1 && !string.IsNullOrEmpty(ComboBoxDepartment.Text))
                         {
-                            department = new Department { DepartmentName = ComboBoxDepartment.Text };
+                            department = new Department { DepartmentFullName = ComboBoxDepartment.Text };
                             db.Deparments.Add(department);
                             db.SaveChanges();
                         }
@@ -200,7 +222,6 @@ namespace Phone_Book
                 insertUser.ComputerStatus = (Computer)CreatyStringInTable(new Computer());
                 insertUser.ComputerId = insertUser.ComputerStatus?.ComputerId;
 
-                insertUser.Absence = TextBoxAbsense.Text;
                 db.Entry(insertUser).State = EntityState.Modified;
                 db.SaveChanges();
             }
@@ -222,10 +243,21 @@ namespace Phone_Book
                 if (!string.IsNullOrEmpty(TextBoxMobile.Text))
                     newUser.MobileNumber = Convert.ToInt64(TextBoxMobile.Text);
 
-                newUser.Absence = TextBoxAbsense.Text;
                 db.Entry(newUser).State = EntityState.Added;
                 db.SaveChanges();
             }
+        }
+
+        private void ValidatonOnlyNumber(object sender, TextCompositionEventArgs e)
+        {
+            Regex regex = new Regex("[^0-9]+");
+            e.Handled = regex.IsMatch(e.Text);
+        }
+
+        private void ValidatonOnlyText(object sender, TextCompositionEventArgs e)
+        {
+            Regex regex = new Regex("[^а-яА-Я]");
+            e.Handled = regex.IsMatch(e.Text);
         }
     }
 }

@@ -20,9 +20,9 @@ namespace Phone_Book.Pages
             using (ApplicationContext db = new ApplicationContext())
             {
 
-                var DepartmentList = db.Deparments.OrderBy(t => t.DepartmentName).ToList();
+                var DepartmentList = db.Deparments.OrderBy(t => t.DepartmentFullName).ToList();
                 ComboBoxDepartment.ItemsSource = DepartmentList;
-                ComboBoxDepartment.DisplayMemberPath = "DepartmentName";
+                ComboBoxDepartment.DisplayMemberPath = "DepartmentFullName";
 
                 var LocalList = db.Locals.OrderBy(t => t.LocalNumber).ToList();
                 ComboBoxLocal.ItemsSource = LocalList;
@@ -89,7 +89,7 @@ namespace Phone_Book.Pages
                     case Department department:
                         if (ComboBoxDepartment.SelectedIndex == -1 && !string.IsNullOrEmpty(ComboBoxDepartment.Text))
                         {
-                            department = new Department { DepartmentName = ComboBoxDepartment.Text };
+                            department = new Department { DepartmentFullName = ComboBoxDepartment.Text };
                             db.Deparments.Add(department);
                             db.SaveChanges();
                         }

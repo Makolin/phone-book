@@ -1,0 +1,36 @@
+﻿<Window x:Class="Phone_Book.Pages.EditAbsence"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Phone_Book.Pages"
+        mc:Ignorable="d"
+        Title="Отсутсвие пользователя" 
+        Height="450" 
+        Width="1000"
+        ResizeMode="NoResize"
+        WindowStartupLocation="CenterScreen">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="20"/>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="40"/>
+        </Grid.RowDefinitions>
+
+        <Label x:Name="NameUser" HorizontalAlignment="Left" Margin="20,0,0,0" Grid.Row="1" VerticalAlignment="Center"/>
+
+        <DataGrid x:Name="DepartmentGrid" ItemsSource="{Binding AbcensesCollection}" SelectionMode="Single" Grid.Row="2" Margin="20,0,20,0"
+                  RowBackground="LightGray" AlternatingRowBackground="White" IsReadOnly="False">
+            <DataGrid.Columns>
+                <DataGridTextColumn Width="*" Header="Причина отсутствия" Binding="{Binding Reason}" CellStyle="{StaticResource Main}"/>
+                <DataGridTextColumn Width="*" Header="Дата начала отсутствия" Binding="{Binding DateFrom}" SortDirection="Ascending" CellStyle="{StaticResource Main}"/>
+                <DataGridTextColumn Width="*" Header="Дата окончания отсутствия" Binding="{Binding DateBefore}" CellStyle="{StaticResource Main}"/>
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <Button Grid.Row="3" x:Name="Accept" Content="Применить" HorizontalAlignment="Right" Margin="0,0,170,0" Click="Accept_Click"/>
+        <Button Grid.Row="4" x:Name="Cancel" Content="Отменить" HorizontalAlignment="Right" Margin="0,0,20,0" Click="Cancel_Click"/>
+
+    </Grid>
+</Window>
