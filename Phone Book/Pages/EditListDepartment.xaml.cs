@@ -5,27 +5,26 @@ using System.Windows;
 
 namespace Phone_Book.Pages
 {
-    public partial class EditDepartment : Window
+    public partial class EditListDepartment : Window
     {
         public static ObservableCollection<Department> Departments = new ObservableCollection<Department>();
 
-        public void GetData()
+        public void GetDataInDataBase()
         {
             using (ApplicationContext db = new ApplicationContext())
             {
                 Departments = new ObservableCollection<Department>(db.Deparments.ToList());
             }
         }
-        public EditDepartment()
+        public EditListDepartment()
         {
             InitializeComponent();
-            GetData();
+            GetDataInDataBase();
             DepartmentGrid.ItemsSource = Departments;
         }
 
         private void Accept_Click(object sender, RoutedEventArgs e)
         {
-
             MessageBoxResult result = MessageBox.Show(
                 "Вы действительно хотите сохранять изменения?",
                 "Сохранение",
@@ -42,7 +41,6 @@ namespace Phone_Book.Pages
                         db.SaveChanges();
                     }
                 }
-
             }
             this.Close();
         }

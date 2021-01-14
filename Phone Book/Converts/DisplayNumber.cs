@@ -5,6 +5,7 @@ using System.Windows.Data;
 
 namespace Phone_Book.Converts
 {
+    // Разбивает городской номер телефона на три блока с помощью дефисов
     public class DisplayNumber : IValueConverter
     {
         public object Convert(object value, Type TargetType, object parametr, CultureInfo culture)

@@ -1,8 +1,7 @@
 ﻿<Application x:Class="Phone_Book.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:convert="clr-namespace:Phone_Book.Converts"
-             StartupUri="Pages\MainWindow.xaml">
+             xmlns:convert="clr-namespace:Phone_Book.Converts">
     <Application.Resources>
         <!--Стили для конвертеров-->
         <convert:DisplayNumber x:Key="DisplayNumber"/>
@@ -11,17 +10,22 @@
         <convert:DisplayAbsence x:Key="DisplayAbsence"/>
 
         <!--Стили для вывода информации в DataGrid-->
-        <Style TargetType="DataGrid">
+        <Style TargetType="DataGrid" x:Key="MainDataGrid">
             <Setter Property="HorizontalContentAlignment" Value="Center"/>
             <Setter Property="AutoGenerateColumns" Value="False"/>
-            <Setter Property="CanUserAddRows" Value="False"/>
-            <Setter Property="IsReadOnly" Value="True"/>
             <Setter Property="VerticalScrollBarVisibility" Value="Auto"/>
+            <Setter Property="SelectionMode" Value="Single"/>
+            <Setter Property="CanUserAddRows" Value="False"/>
+        </Style>
+
+        <Style TargetType="DataGrid" x:Key="UserDataGrid" BasedOn="{StaticResource MainDataGrid}">
+            <Setter Property="IsReadOnly" Value="True"/>
+            <Setter Property="RowBackground" Value="#FFECE8E8"/>
+            <Setter Property="AlternatingRowBackground" Value="White"/>
         </Style>
 
         <Style TargetType="DataGridColumnHeader">
             <Setter Property="FontSize" Value="15"/>
-            <Setter Property="FontFamily" Value="Times New Roman"/>
             <Setter Property="HorizontalContentAlignment" Value="Center"/>
         </Style>
 
@@ -33,15 +37,20 @@
             <Setter Property="Width" Value="0"/>
         </Style>
 
-        <Style TargetType="DataGridCell" x:Key="Main">
+        <!--Стили для ячеек основной таблицы-->
+        <Style TargetType="DataGridCell" x:Key="MainDataGridCell">
             <Setter Property="FontSize" Value="14"/>
         </Style>
 
-        <Style TargetType="DataGridCell" x:Key="Additional" BasedOn="{StaticResource Main}">
+        <Style TargetType="DataGridCell" x:Key="CenterDataGridCell" BasedOn="{StaticResource MainDataGridCell}">
             <Setter Property="TextBlock.TextAlignment" Value="Center"/>
         </Style>
 
         <!--Стили для вывода меню-->
+        <Style TargetType="Menu">
+            <Setter Property="VerticalAlignment" Value="Center"/>
+        </Style>
+
         <Style TargetType="MenuItem">
             <Setter Property="FontSize" Value="16"/>
             <Setter Property="VerticalAlignment" Value="Center"/>
@@ -51,23 +60,59 @@
         <!--Стили для вывода всех полей вывода-->
         <Style TargetType="Label">
             <Setter Property="FontSize" Value="15"/>
-        </Style>
-
-        <!--Стили для вывода всех кнопок-->
-        <Style TargetType="Button">
-            <Setter Property="Width" Value="100"/>
-            <Setter Property="Height" Value="25"/>
-            <Setter Property="FontSize" Value="14"/>
             <Setter Property="VerticalAlignment" Value="Center"/>
         </Style>
 
-        <Style TargetType="TextBox">
-            <Setter Property="FontSize" Value="14"/>
+        <!--Стили для вывода всех кнопок-->
+        <Style TargetType="Button" x:Key="MainStyleButton">
+            <Setter Property="Width" Value="100"/>
+            <Setter Property="Height" Value="25"/>
+            <Setter Property="FontSize" Value="15"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="BorderBrush" Value="DarkGray"/>
         </Style>
 
-        <Style TargetType="ComboBox">
+        <Style TargetType="Button" x:Key="AcceptButton" BasedOn="{StaticResource MainStyleButton}">
+            <Setter Property="Content" Value="Применить"/>
+            <Setter Property="ToolTip" Value="Применить внесенные изменения"/>
+        </Style>
+
+        <Style TargetType="Button" x:Key="CancelButton" BasedOn="{StaticResource MainStyleButton}">
+            <Setter Property="Content" Value="Отменить"/>
+            <Setter Property="ToolTip" Value="Отменить внесенные изменения"/>
+        </Style>
+
+        <Style TargetType="Button" x:Key="FindButton" BasedOn="{StaticResource MainStyleButton}">
+            <Setter Property="Content" Value="Найти"/>
+            <Setter Property="ToolTip" Value="Найти значение из строки поиска"/>
+        </Style>
+
+        <Style TargetType="Button" x:Key="ClearButton" BasedOn="{StaticResource MainStyleButton}">
+            <Setter Property="Content" Value="X"/>
+            <Setter Property="Width" Value="25"/>
+            <Setter Property="ToolTip" Value="Очистить текущее заполненое поле"/>
+        </Style>
+
+        <!--Стили для полей для ввода-->
+        <Style TargetType="TextBox">
             <Setter Property="FontSize" Value="14"/>
+            <Setter Property="Height" Value="25"/>
+        </Style>
+
+        <!--Стили для комбобоксов-->
+        <Style TargetType="ComboBox" x:Key="MainStyleCombobox">
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="Height" Value="25"/>
+        </Style>
+
+        <Style TargetType="ComboBox" x:Key="NotReadOnlyCombobox" BasedOn="{StaticResource MainStyleCombobox}">
             <Setter Property="IsEditable" Value="True"/>
+        </Style>
+
+        <Style TargetType="ComboBox" x:Key="ReadOnlyCombobox" BasedOn="{StaticResource MainStyleCombobox}">
+            <Setter Property="Background" Value="LightGray"/>
+            <Setter Property="IsReadOnly" Value="True"/>
         </Style>
 
     </Application.Resources>

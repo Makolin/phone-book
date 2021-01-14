@@ -1,14 +1,17 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Windows;
+using System.Windows.Input;
+using Phone_Book.Model;
 
 namespace Phone_Book.Pages
 {
-    public partial class EditCommonPage : Window
+    public partial class EditCommonUserPage : Window
     {
         User insertUser;
-        public EditCommonPage(User currentUser)
+        public EditCommonUserPage(User currentUser)
         {
             InitializeComponent();
             InsertDataInComboBox(currentUser);
@@ -129,6 +132,7 @@ namespace Phone_Book.Pages
                 }
             }
         }
+
         // Метод для внесения изменений при сохранении изменений у пользователя
         private void EditCurrentUser()
         {
@@ -149,6 +153,8 @@ namespace Phone_Book.Pages
                 db.SaveChanges();
             }
         }
+
+        // Создание нового пользователя
         private void CreatyNewUser()
         {
             using (ApplicationContext db = new ApplicationContext())
@@ -162,9 +168,23 @@ namespace Phone_Book.Pages
                 newUser.LocalNumber = (Local)CreatyStringInTable(new Local());
                 newUser.CityNumber = (City)CreatyStringInTable(new City());
 
+                UserCollection.Users.Add(newUser);
                 db.Entry(newUser).State = EntityState.Added;
                 db.SaveChanges();
             }
+        }
+
+        // Проверка на ввод только чисел
+        private void ValidatonOnlyNumber(object sender, TextCompositionEventArgs e)
+        {
+            Regex regex = new Regex("[^0-9]+");
+            e.Handled = regex.IsMatch(e.Text);
+        }
+
+        // Очистка combobox при неверном выборе значения
+        private void ClearDepartment_Click(object sender, RoutedEventArgs e)
+        {
+            ComboBoxDepartment.SelectedItem = null;
         }
     }
 }

@@ -7,6 +7,7 @@ using System.Windows.Data;
 
 namespace Phone_Book.Converts
 {
+    // Если у пользователя есть отсутствие или скоро будет, то выводит его в основной DataGrid
     public class DisplayAbsence : IValueConverter
     {
         public object Convert(object value, Type TargetType, object parametr, CultureInfo culture)

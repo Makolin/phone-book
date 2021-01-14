@@ -1,53 +1,16 @@
-using Microsoft.EntityFrameworkCore;
-using Phone_Book.Pages;
-using System.Collections.ObjectModel;
-using System.Collections.Specialized;
-using System.Linq;
+using Phone_Book.Model;
 using System.Windows;
 using System.Windows.Input;
 
-namespace Phone_Book
+namespace Phone_Book.Pages
 {
     public partial class MainWindow : Window
     {
-        public ObservableCollection<User> Users = new ObservableCollection<User>();
-
-        private void GetData(string findString)
-        {
-            using (ApplicationContext db = new ApplicationContext())
-            {
-                Users = new ObservableCollection<User>(db.Users
-                     .Include(t => t.Position)
-                     .Include(t => t.Department)
-                     .Include(t => t.LocalNumber)
-                     .Include(t => t.CityNumber)
-                     .Include(t => t.ComputerStatus)
-                     .OrderBy(t => t.Name)
-                     .ToList());
-                if (findString != string.Empty)
-                {
-                    findString = findString.ToLower().Trim();
-                    Users = new ObservableCollection<User>(db.Users
-                     .Include(t => t.Position)
-                     .Include(t => t.Department)
-                     .Include(t => t.LocalNumber)
-                     .Include(t => t.CityNumber)
-                     .Include(t => t.ComputerStatus)
-                     .Where(t => EF.Functions.Like(t.Name.ToLower(), $"%{findString}%")
-                        || EF.Functions.Like(t.LocalNumber.LocalNumber.ToString(), $"%{findString}%"))
-                     .OrderBy(t => t.Name)
-                     .ToList());
-                }
-            }
-            // Сделать условия по склонению
-            CountUser.Content = $"В базе данных найдено {Users.Count} записей";
-        }
         public MainWindow()
         {
             InitializeComponent();
             CommonNumber.Content = "Общий многоканальный номер 344 - 154";
-            GetData("");
-            UsersGrid.ItemsSource = Users;
+            DataContext = new UserCollection();
         }
 
         // Закрытие текущего окна приложения
@@ -63,12 +26,14 @@ namespace Phone_Book
             aboutPage.ShowDialog();
         }
 
+        // Создание нового пользователя
         private void NewUser_Click(object sender, RoutedEventArgs e)
         {
             EditUserPage newUserPage = new EditUserPage(null);
             newUserPage.ShowDialog();
         }
 
+        // Редактирование выбранного из списка пользователя
         private void EditUser_Click(object sender, RoutedEventArgs e)
         {
             var editUser = (User)UsersGrid.SelectedItem;
@@ -81,12 +46,13 @@ namespace Phone_Book
                 }
                 else
                 {
-                    EditCommonPage editCommonPage = new EditCommonPage(editUser);
+                    EditCommonUserPage editCommonPage = new EditCommonUserPage(editUser);
                     editCommonPage.ShowDialog();
                 }
             }
         }
 
+        // Удаление выбранного из списка пользователя
         private void DeleteUser_Click(object sender, RoutedEventArgs e)
         {
             var deleteUser = (User)UsersGrid.SelectedItem;
@@ -102,7 +68,7 @@ namespace Phone_Book
                 {
                     using (ApplicationContext db = new ApplicationContext())
                     {
-                        Users.Remove(deleteUser);
+                        UserCollection.Users.Remove(deleteUser);
                         db.Users.Remove(deleteUser);
                         db.SaveChanges();
                     }
@@ -110,47 +76,51 @@ namespace Phone_Book
             }
         }
 
+        // Поиск пользователя после нажатия кнопки "Найти"
         private void ButtonFind_Click(object sender, RoutedEventArgs e)
         {
             var findString = FindString.Text;
-            GetData(findString);
-            UsersGrid.ItemsSource = Users;
+            DataContext = new UserCollection(findString);
         }
 
+        // Поиск пользователя после нажатия определенных клавиш в строке ввода 
         private void FindString_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Enter)
             {
                 var findString = FindString.Text;
-                GetData(findString);
-                UsersGrid.ItemsSource = Users;
+                DataContext = new UserCollection(findString);
             }
         }
 
+        // Создание нового абонента (общего номера телефона)
         private void NewCommon_Click(object sender, RoutedEventArgs e)
         {
-            EditCommonPage newCommonPage = new EditCommonPage(null);
+            EditCommonUserPage newCommonPage = new EditCommonUserPage(null);
             newCommonPage.ShowDialog();
         }
 
+        // Обновление статуса онлайна пользователя
         private void UpdateStatus_Click(object sender, RoutedEventArgs e)
         {
             CheckOnline.SetStatus();
         }
 
+        // Редактирование подразделений в базе данных
         private void EditDepartment_Click(object sender, RoutedEventArgs e)
         {
-            EditDepartment EditDepartment = new EditDepartment();
+            EditListDepartment EditDepartment = new EditListDepartment();
             EditDepartment.ShowDialog();
         }
 
-        private void AbcenseUser_Click(object sender, RoutedEventArgs e)
+        // Отображение основной информации о пользователе
+        private void UsersGrid_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             var editUser = (User)UsersGrid.SelectedItem;
             if (editUser != null)
             {
-                EditAbsence editAbsence = new EditAbsence(editUser);
-                editAbsence.ShowDialog();
+                /*ViewUser editAbsence = new ViewUser(editUser);
+                editAbsence.ShowDialog();*/
             }
         }
     }

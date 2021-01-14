@@ -1,13 +1,13 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
 using System;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
+using Phone_Book.Model;
 
-namespace Phone_Book
+namespace Phone_Book.Pages
 {
     public partial class EditUserPage : Window
     {
@@ -101,7 +101,7 @@ namespace Phone_Book
 
                 if (result == MessageBoxResult.Yes)
                 {
-                    if (insertUser == null) CreatyNewUser();
+                    if (insertUser == null) CreateNewUser();
                     else EditCurrentUser();
                     this.Close();
                 }
@@ -196,11 +196,14 @@ namespace Phone_Book
                 }
             }
         }
-        // Метод для внесения изменений при сохранении изменений у пользователя
+
+        // Для внесения изменений при сохранении изменений у пользователя
         private void EditCurrentUser()
         {
             using (ApplicationContext db = new ApplicationContext())
             {
+                UserCollection.Users.Remove(insertUser);
+
                 string nameUser = $"{TextBoxSurname.Text} {TextBoxName.Text} {TextBoxMiddleName.Text}";
                 insertUser.Name = nameUser;
 
@@ -222,11 +225,14 @@ namespace Phone_Book
                 insertUser.ComputerStatus = (Computer)CreatyStringInTable(new Computer());
                 insertUser.ComputerId = insertUser.ComputerStatus?.ComputerId;
 
+                UserCollection.Users.Add(insertUser);
                 db.Entry(insertUser).State = EntityState.Modified;
                 db.SaveChanges();
             }
         }
-        private void CreatyNewUser()
+
+        // Создание нового пользователя
+        private void CreateNewUser()
         {
             using (ApplicationContext db = new ApplicationContext())
             {
@@ -243,21 +249,29 @@ namespace Phone_Book
                 if (!string.IsNullOrEmpty(TextBoxMobile.Text))
                     newUser.MobileNumber = Convert.ToInt64(TextBoxMobile.Text);
 
+                UserCollection.Users.Add(newUser);
                 db.Entry(newUser).State = EntityState.Added;
                 db.SaveChanges();
             }
         }
 
+        // Проверка на ввод только чисел
         private void ValidatonOnlyNumber(object sender, TextCompositionEventArgs e)
         {
             Regex regex = new Regex("[^0-9]+");
             e.Handled = regex.IsMatch(e.Text);
         }
 
+        // Проверка на ввод только кириллицы 
         private void ValidatonOnlyText(object sender, TextCompositionEventArgs e)
         {
             Regex regex = new Regex("[^а-яА-Я]");
             e.Handled = regex.IsMatch(e.Text);
+        }
+        // Очистка combobox при неверном выборе значения
+        private void ClearDepartment_Click(object sender, RoutedEventArgs e)
+        {
+            ComboBoxDepartment.SelectedItem = null;
         }
     }
 }

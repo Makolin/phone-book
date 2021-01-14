@@ -6,7 +6,7 @@ using System.Windows.Media.Imaging;
 
 namespace Phone_Book.Converts
 {
-    // Превращает строковый статус текущего онлайна пользователя в графический. Подставляю картинку определенного цвета.
+    // Превращает строковый статус текущего онлайна пользователя в графический, подставляя при этом картинку определенного цвета.
     public class DisplayStatus : IValueConverter
     {
         public object Convert(object value, Type TargetType, object parametr, CultureInfo culture)

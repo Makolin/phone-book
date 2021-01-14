@@ -17,7 +17,7 @@ namespace Phone_Book
         public List<User> Users { get; set; } = new List<User>();
     }
 
-    // Таблица для подразделения
+    // Таблица подразделений предприятия
     public class Department
     {
         public int DepartmentId { get; set; }
@@ -59,7 +59,7 @@ namespace Phone_Book
         public List<User> Users { get; set; } = new List<User>();
     }
 
-    // Таблица об отсутствие пользователей
+    // Таблица об отсутствии пользователей
     public class Absence
     {
         public int AbsenceId { get; set; }
@@ -101,6 +101,7 @@ namespace Phone_Book
         public List<Absence> Absences { get; set; } = new List<Absence>();
     }
     #endregion
+
     // Создание контекста для базы данных
     class ApplicationContext : DbContext
     {
@@ -125,6 +126,7 @@ namespace Phone_Book
             connectionString = config.GetConnectionString("DefaultConnection");
             Database.EnsureCreated();
         }
+
         // Строка подключения к SQL серверу
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -147,14 +149,14 @@ namespace Phone_Book
                     new Department
                     {
                         DepartmentId = 1,
-                        DepartmentNumber = 20,
+                        DepartmentNumber = 12,
                         DepartmentFullName = "Отдел информационных технологий",
                         DepartmentShortName = "Отдел ИТ"
                     },
                     new Department
                     {
                         DepartmentId = 2,
-                        DepartmentNumber = 12,
+                        DepartmentNumber = 20,
                         DepartmentFullName = "Отдел организации труда и заработной платы",
                         DepartmentShortName = "Отдел организации труда и ЗП"
                     }

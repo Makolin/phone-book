@@ -5,9 +5,7 @@ using System.Windows.Media.Imaging;
 
 namespace Phone_Book.Pages
 {
-    /// <summary>
-    /// Логика взаимодействия для AboutPage.xaml
-    /// </summary>
+    // Страница для справки о приложении. Отображает основную информацию и список все произведенных в изменений в текущей версии.
     public partial class AboutPage : Window
     {
         public AboutPage()
