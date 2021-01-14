@@ -9,4 +9,6 @@ Structure:
 - Local phone;
 - City phone;
 - Position;
-- Department.
+- Department,
+- Online;
+- Abcense.
