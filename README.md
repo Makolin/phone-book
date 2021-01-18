@@ -4,7 +4,7 @@ Simple directory of phone numbers
 
 DataBase on MSSQL, created using the EntityFramework
 
-Structure:
+Structure database
 - User;
 - Local phone;
 - City phone;
