@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:Phone_Book.Pages"
         mc:Ignorable="d"
         Title="Абонент"
-        Height="470" 
+        Height="500" 
         Width="650"
         ResizeMode="NoResize"
         WindowStartupLocation="CenterScreen">
@@ -14,11 +14,12 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="20"/>
             <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="2.5*"/>
+            <ColumnDefinition Width="2.3*"/>
             <ColumnDefinition Width="35"/>
         </Grid.ColumnDefinitions>
 
         <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
@@ -34,28 +35,29 @@
         <Label Grid.Row="0" Grid.Column="1" Content="Фамилия пользователя"/>
         <Label Grid.Row="1" Grid.Column="1" Content="Имя пользователя"/>
         <Label Grid.Row="2" Grid.Column="1" Content="Отчество пользователя"/>
-        <Label Grid.Row="3" Grid.Column="1" Content="Должность"/>
-        <Label Grid.Row="4" Grid.Column="1" Content="Подразделение"/>
-        <Label Grid.Row="5" Grid.Column="1" Content="Местный номер"/>
-        <Label Grid.Row="6" Grid.Column="1" Content="Городской номер"/>
-        <Label Grid.Row="7" Grid.Column="1" Content="Мобильный номер"/>
-        <Label Grid.Row="8" Grid.Column="1" Content="Имя компьютера"/>
+        <Label Grid.Row="3" Grid.Column="1" Content="Дата рождения"/>
+        <Label Grid.Row="4" Grid.Column="1" Content="Должность"/>
+        <Label Grid.Row="5" Grid.Column="1" Content="Подразделение"/>
+        <Label Grid.Row="6" Grid.Column="1" Content="Местный номер"/>
+        <Label Grid.Row="7" Grid.Column="1" Content="Городской номер"/>
+        <Label Grid.Row="8" Grid.Column="1" Content="Мобильный номер"/>
+        <Label Grid.Row="9" Grid.Column="1" Content="Имя компьютера"/>
 
         <TextBox Grid.Row="0" Grid.Column="2" x:Name="TextBoxSurname" PreviewTextInput="ValidatonOnlyText"/>
         <TextBox Grid.Row="1" Grid.Column="2" x:Name="TextBoxName" PreviewTextInput="ValidatonOnlyText"/>
         <TextBox Grid.Row="2" Grid.Column="2" x:Name="TextBoxMiddleName" PreviewTextInput="ValidatonOnlyText"/>
-        <ComboBox Grid.Row="3" Grid.Column="2" x:Name="ComboBoxPosition" PreviewTextInput="ValidatonOnlyText" Style="{StaticResource NotReadOnlyCombobox}"/>
+        <ComboBox Grid.Row="4" Grid.Column="2" x:Name="ComboBoxPosition" PreviewTextInput="ValidatonOnlyText" Style="{StaticResource NotReadOnlyCombobox}"/>
 
-        <ComboBox Grid.Row="4" Grid.Column="2" x:Name="ComboBoxDepartment" PreviewTextInput="ValidatonOnlyText" Style="{StaticResource ReadOnlyCombobox}" />
-        <Button Grid.Row="4" Grid.Column="3" x:Name="ClearDepartment" Click="ClearDepartment_Click" Style="{StaticResource ClearButton}"/>
+        <ComboBox Grid.Row="5" Grid.Column="2" x:Name="ComboBoxDepartment" PreviewTextInput="ValidatonOnlyText" Style="{StaticResource ReadOnlyCombobox}" />
+        <Button Grid.Row="5" Grid.Column="3" x:Name="ClearDepartment" Click="ClearDepartment_Click" Style="{StaticResource ClearButton}"/>
 
-        <ComboBox Grid.Row="5" Grid.Column="2" x:Name="ComboBoxLocal" PreviewTextInput="ValidatonOnlyNumber" Style="{StaticResource NotReadOnlyCombobox}"/>
+        <ComboBox Grid.Row="6" Grid.Column="2" x:Name="ComboBoxLocal" PreviewTextInput="ValidatonOnlyNumber" Style="{StaticResource NotReadOnlyCombobox}"/>
 
-        <ComboBox Grid.Row="6" Grid.Column="2" x:Name="ComboBoxCity" PreviewTextInput="ValidatonOnlyNumber" Style="{StaticResource NotReadOnlyCombobox}"/>
-        <TextBox Grid.Row="7" Grid.Column="2" x:Name="TextBoxMobile" PreviewTextInput="ValidatonOnlyNumber" MaxLength="9"/>
-        <ComboBox Grid.Row="8" Grid.Column="2" x:Name="ComboBoxNameComputer" Style="{StaticResource NotReadOnlyCombobox}"/>
+        <ComboBox Grid.Row="7" Grid.Column="2" x:Name="ComboBoxCity" PreviewTextInput="ValidatonOnlyNumber" Style="{StaticResource NotReadOnlyCombobox}"/>
+        <TextBox Grid.Row="8" Grid.Column="2" x:Name="TextBoxMobile" PreviewTextInput="ValidatonOnlyNumber" MaxLength="9"/>
+        <ComboBox Grid.Row="9" Grid.Column="2" x:Name="ComboBoxNameComputer" Style="{StaticResource NotReadOnlyCombobox}"/>
 
-        <Button Grid.Row="9" Grid.Column="2" x:Name="Accept" HorizontalAlignment="Right" Margin="0,0,150,0" Click="Accept_Click" Style="{StaticResource AcceptButton}"/>
-        <Button Grid.Row="9" Grid.Column="2" x:Name="Cancel" HorizontalAlignment="Right" Margin="0,0,0,0" Click="Cancel_Click" Style="{StaticResource CancelButton}"/>
+        <Button Grid.Row="10" Grid.Column="2" x:Name="Accept" HorizontalAlignment="Right" Margin="0,0,150,0" Click="Accept_Click" Style="{StaticResource AcceptButton}"/>
+        <Button Grid.Row="10" Grid.Column="2" x:Name="Cancel" HorizontalAlignment="Right" Margin="0,0,0,0" Click="Cancel_Click" Style="{StaticResource CancelButton}"/>
     </Grid>
 </Window>

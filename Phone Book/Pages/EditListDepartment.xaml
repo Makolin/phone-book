@@ -23,6 +23,13 @@
                 <DataGridTextColumn Width="*" Header="Полное наименование" Binding="{Binding DepartmentFullName}" SortDirection="Ascending" CellStyle="{StaticResource MainDataGridCell}"/>
                 <DataGridTextColumn Width="*" Header="Сокращенное наименование" Binding="{Binding DepartmentShortName}" CellStyle="{StaticResource MainDataGridCell}"/>
             </DataGrid.Columns>
+            <DataGrid.ContextMenu>
+                <ContextMenu>
+                    <MenuItem Header="Новое подразделение" x:Name="NewUser"/>
+                    <MenuItem Header="Редактировать" x:Name="EditUser"/>
+                    <MenuItem Header="Удалить" x:Name="DeleteUser"/>
+                </ContextMenu>
+            </DataGrid.ContextMenu>
         </DataGrid>
 
         <Button Grid.Row="2" x:Name="Accept" HorizontalAlignment="Right" Margin="0,0,170,0" Click="Accept_Click" Style="{StaticResource AcceptButton}"/>
