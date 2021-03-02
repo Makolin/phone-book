@@ -52,6 +52,7 @@ namespace Phone_Book.Pages
                     TextBoxName.Text = nameUser[1];
                     TextBoxMiddleName.Text = nameUser[2];
 
+                    TextBoxDataBirthday.Text = user.BirtheyDay.ToShortDateString();
                     TextBoxMobile.Text = user.MobileNumber.ToString();
 
                     if (user.Position != null)
@@ -75,19 +76,77 @@ namespace Phone_Book.Pages
         // Проверка ввода значений в поле
         private bool CheckTextInsert()
         {
+            var hasMistake = false;
+            if (TextBoxSurname.Text == string.Empty)
+            {
+                TextBoxSurname.Background = Brushes.LightCoral;
+                hasMistake = true;
+            }
+            else
+            {
+                TextBoxSurname.Background = Brushes.LightGreen;
+            } 
+
+            if (TextBoxName.Text == string.Empty)
+            {
+                TextBoxName.Background = Brushes.LightCoral;
+                hasMistake = true;
+            }
+            else
+            {
+                TextBoxName.Background = Brushes.LightGreen;
+            }
+
+            if (TextBoxMiddleName.Text == string.Empty)
+            {
+                TextBoxMiddleName.Background = Brushes.LightCoral;
+                hasMistake = true;
+            }
+            else
+            {
+                TextBoxMiddleName.Background = Brushes.LightGreen;
+            }
+
+            if (!string.IsNullOrEmpty(ComboBoxPosition.Text))
+            {
+                ComboBoxPosition.Background = Brushes.LightCoral;
+                hasMistake = true;
+            }
+            else
+            {
+                ComboBoxPosition.Background = Brushes.LightGreen;
+            }
+
+            if (!string.IsNullOrEmpty(ComboBoxDepartment.Text))
+            {
+                ComboBoxDepartment.Background = Brushes.LightCoral;
+                hasMistake = true;
+            }
+            else
+            {
+                ComboBoxDepartment.Background = Brushes.LightGreen;
+            }
+
             if (ComboBoxLocal.Text.Length != 3)
             {
-                ComboBoxLocal.Background = Brushes.Yellow;
-                ComboBoxLocal.Foreground = Brushes.Blue;
+                ComboBoxLocal.Background = Brushes.LightCoral;
+                hasMistake = true;
+            }
+            else
+            {
+                ComboBoxLocal.Background = Brushes.LightGreen;
+            }
+
+            if (hasMistake)
+            {
                 return false;
             }
             else
             {
-                ComboBoxLocal.Background = Brushes.Green;
                 return true;
-            }
-
+            }    
         }
+
         // Для подтверждения сохранения внесенных изменений или создания нового пользователя
         private void Accept_Click(object sender, RoutedEventArgs e)
         {
@@ -106,7 +165,10 @@ namespace Phone_Book.Pages
                     this.Close();
                 }
             }
+            else
+            {
 
+            }
         }
 
         // Для подтверждения отмены сохранения изменений для текущего пользователя
@@ -135,7 +197,7 @@ namespace Phone_Book.Pages
                             db.Positions.Add(position);
                             db.SaveChanges();
                         }
-                        else
+                        else 
                         {
                             position = (Position)ComboBoxPosition.SelectedItem;
                         }
@@ -197,7 +259,7 @@ namespace Phone_Book.Pages
             }
         }
 
-        // Для внесения изменений при сохранении изменений у пользователя
+        // Для внесения изменений для редактируемого пользователя
         private void EditCurrentUser()
         {
             using (ApplicationContext db = new ApplicationContext())
@@ -209,6 +271,9 @@ namespace Phone_Book.Pages
 
                 if (!string.IsNullOrEmpty(TextBoxMobile.Text))
                     insertUser.MobileNumber = Convert.ToInt64(TextBoxMobile.Text);
+
+                if (!string.IsNullOrEmpty(TextBoxDataBirthday.Text))
+                    insertUser.BirtheyDay = DateTime.Parse(TextBoxDataBirthday.Text);
 
                 insertUser.Position = (Position)CreatyStringInTable(new Position());
                 insertUser.PositionId = insertUser.Position?.PositionId;
@@ -248,6 +313,9 @@ namespace Phone_Book.Pages
 
                 if (!string.IsNullOrEmpty(TextBoxMobile.Text))
                     newUser.MobileNumber = Convert.ToInt64(TextBoxMobile.Text);
+
+                if (!string.IsNullOrEmpty(TextBoxDataBirthday.Text))
+                    insertUser.BirtheyDay = DateTime.Parse(TextBoxDataBirthday.Text);
 
                 UserCollection.Users.Add(newUser);
                 db.Entry(newUser).State = EntityState.Added;

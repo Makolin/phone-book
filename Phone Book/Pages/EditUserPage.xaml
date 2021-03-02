@@ -7,14 +7,14 @@
         mc:Ignorable="d"
         Title="Абонент"
         Height="500" 
-        Width="650"
+        Width="680"
         ResizeMode="NoResize"
         WindowStartupLocation="CenterScreen">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="20"/>
             <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="2.3*"/>
+            <ColumnDefinition Width="2.2*"/>
             <ColumnDefinition Width="35"/>
         </Grid.ColumnDefinitions>
 
@@ -32,13 +32,13 @@
             <RowDefinition Height="1.7*"/>
         </Grid.RowDefinitions>
 
-        <Label Grid.Row="0" Grid.Column="1" Content="Фамилия пользователя"/>
-        <Label Grid.Row="1" Grid.Column="1" Content="Имя пользователя"/>
-        <Label Grid.Row="2" Grid.Column="1" Content="Отчество пользователя"/>
+        <Label Grid.Row="0" Grid.Column="1" Content="Фамилия пользователя" FontWeight="Bold"/>
+        <Label Grid.Row="1" Grid.Column="1" Content="Имя пользователя" FontWeight="Bold"/>
+        <Label Grid.Row="2" Grid.Column="1" Content="Отчество пользователя" FontWeight="Bold"/>
         <Label Grid.Row="3" Grid.Column="1" Content="Дата рождения"/>
-        <Label Grid.Row="4" Grid.Column="1" Content="Должность"/>
-        <Label Grid.Row="5" Grid.Column="1" Content="Подразделение"/>
-        <Label Grid.Row="6" Grid.Column="1" Content="Местный номер"/>
+        <Label Grid.Row="4" Grid.Column="1" Content="Должность" FontWeight="Bold"/>
+        <Label Grid.Row="5" Grid.Column="1" Content="Подразделение" FontWeight="Bold"/>
+        <Label Grid.Row="6" Grid.Column="1" Content="Местный номер" FontWeight="Bold"/>
         <Label Grid.Row="7" Grid.Column="1" Content="Городской номер"/>
         <Label Grid.Row="8" Grid.Column="1" Content="Мобильный номер"/>
         <Label Grid.Row="9" Grid.Column="1" Content="Имя компьютера"/>
@@ -46,6 +46,7 @@
         <TextBox Grid.Row="0" Grid.Column="2" x:Name="TextBoxSurname" PreviewTextInput="ValidatonOnlyText"/>
         <TextBox Grid.Row="1" Grid.Column="2" x:Name="TextBoxName" PreviewTextInput="ValidatonOnlyText"/>
         <TextBox Grid.Row="2" Grid.Column="2" x:Name="TextBoxMiddleName" PreviewTextInput="ValidatonOnlyText"/>
+        <TextBox Grid.Row="3" Grid.Column="2" x:Name="TextBoxDataBirthday"/>
         <ComboBox Grid.Row="4" Grid.Column="2" x:Name="ComboBoxPosition" PreviewTextInput="ValidatonOnlyText" Style="{StaticResource NotReadOnlyCombobox}"/>
 
         <ComboBox Grid.Row="5" Grid.Column="2" x:Name="ComboBoxDepartment" PreviewTextInput="ValidatonOnlyText" Style="{StaticResource ReadOnlyCombobox}" />
@@ -59,5 +60,6 @@
 
         <Button Grid.Row="10" Grid.Column="2" x:Name="Accept" HorizontalAlignment="Right" Margin="0,0,150,0" Click="Accept_Click" Style="{StaticResource AcceptButton}"/>
         <Button Grid.Row="10" Grid.Column="2" x:Name="Cancel" HorizontalAlignment="Right" Margin="0,0,0,0" Click="Cancel_Click" Style="{StaticResource CancelButton}"/>
+       
     </Grid>
 </Window>
