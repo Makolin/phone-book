@@ -26,9 +26,9 @@
             <RowDefinition Height="2*"/>
         </Grid.RowDefinitions>
 
-        <Label Grid.Row="0" Grid.Column="1" Content="Абонент"/>
-        <Label Grid.Row="1" Grid.Column="1" Content="Подразделение"/>
-        <Label Grid.Row="2" Grid.Column="1" Content="Местный номер"/>
+        <Label Grid.Row="0" Grid.Column="1" Content="Абонент" FontWeight="Bold"/>
+        <Label Grid.Row="1" Grid.Column="1" Content="Подразделение" FontWeight="Bold"/>
+        <Label Grid.Row="2" Grid.Column="1" Content="Местный номер" FontWeight="Bold"/>
         <Label Grid.Row="3" Grid.Column="1" Content="Городской номер"/>
 
         <TextBox Grid.Row="0" Grid.Column="2" x:Name="TextBoxSurname"/>

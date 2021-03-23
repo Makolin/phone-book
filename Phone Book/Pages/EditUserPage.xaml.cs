@@ -73,7 +73,8 @@ namespace Phone_Book.Pages
             }
         }
 
-        // Проверка ввода значений в поле
+        // Проверка ввода значений в полях для ввода
+        // Не окрашивает ComboBox
         private bool CheckTextInsert()
         {
             var hasMistake = false;
@@ -85,7 +86,7 @@ namespace Phone_Book.Pages
             else
             {
                 TextBoxSurname.Background = Brushes.LightGreen;
-            } 
+            }
 
             if (TextBoxName.Text == string.Empty)
             {
@@ -107,7 +108,19 @@ namespace Phone_Book.Pages
                 TextBoxMiddleName.Background = Brushes.LightGreen;
             }
 
-            if (!string.IsNullOrEmpty(ComboBoxPosition.Text))
+            // Дата рождения
+            DateTime dateValue;
+            if (TextBoxDataBirthday.Text != string.Empty && !DateTime.TryParse(TextBoxDataBirthday.Text, out dateValue))
+            {
+                TextBoxDataBirthday.Background = Brushes.LightCoral;
+                hasMistake = true;
+            }
+            else
+            {
+                TextBoxDataBirthday.Background = Brushes.LightGreen;
+            }
+
+            if (string.IsNullOrEmpty(ComboBoxPosition.Text))
             {
                 ComboBoxPosition.Background = Brushes.LightCoral;
                 hasMistake = true;
@@ -117,7 +130,7 @@ namespace Phone_Book.Pages
                 ComboBoxPosition.Background = Brushes.LightGreen;
             }
 
-            if (!string.IsNullOrEmpty(ComboBoxDepartment.Text))
+            if (string.IsNullOrEmpty(ComboBoxDepartment.Text))
             {
                 ComboBoxDepartment.Background = Brushes.LightCoral;
                 hasMistake = true;
@@ -137,6 +150,26 @@ namespace Phone_Book.Pages
                 ComboBoxLocal.Background = Brushes.LightGreen;
             }
 
+            if (ComboBoxCity.Text.Length != 0 && ComboBoxCity.Text.Length != 6)
+            {
+                ComboBoxCity.Background = Brushes.LightCoral;
+                hasMistake = true;
+            }
+            else
+            {
+                ComboBoxCity.Background = Brushes.LightGreen;
+            }
+
+            if (TextBoxMobile.Text.Length != 0 && TextBoxMobile.Text.Length != 11)
+            {
+                TextBoxMobile.Background = Brushes.LightCoral;
+                hasMistake = true;
+            }
+            else
+            {
+                TextBoxMobile.Background = Brushes.LightGreen;
+            }
+
             if (hasMistake)
             {
                 return false;
@@ -144,7 +177,7 @@ namespace Phone_Book.Pages
             else
             {
                 return true;
-            }    
+            }
         }
 
         // Для подтверждения сохранения внесенных изменений или создания нового пользователя
@@ -197,7 +230,7 @@ namespace Phone_Book.Pages
                             db.Positions.Add(position);
                             db.SaveChanges();
                         }
-                        else 
+                        else
                         {
                             position = (Position)ComboBoxPosition.SelectedItem;
                         }

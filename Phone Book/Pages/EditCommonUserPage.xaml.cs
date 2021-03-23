@@ -5,6 +5,7 @@ using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Input;
 using Phone_Book.Model;
+using System.Windows.Media;
 
 namespace Phone_Book.Pages
 {
@@ -53,21 +54,84 @@ namespace Phone_Book.Pages
             }
         }
 
+        // Проверка ввода значений в полях для ввода
+        // Не окрашивает ComboBox
+        private bool CheckTextInsert()
+        {
+            var hasMistake = false;
+            if (TextBoxSurname.Text == string.Empty)
+            {
+                TextBoxSurname.Background = Brushes.LightCoral;
+                hasMistake = true;
+            }
+            else
+            {
+                TextBoxSurname.Background = Brushes.LightGreen;
+            }
+
+            if (string.IsNullOrEmpty(ComboBoxDepartment.Text))
+            {
+                ComboBoxDepartment.Background = Brushes.LightCoral;
+                hasMistake = true;
+            }
+            else
+            {
+                ComboBoxDepartment.Background = Brushes.LightGreen;
+            }
+
+            if (ComboBoxLocal.Text.Length != 3)
+            {
+                ComboBoxLocal.Background = Brushes.LightCoral;
+                hasMistake = true;
+            }
+            else
+            {
+                ComboBoxLocal.Background = Brushes.LightGreen;
+            }
+
+            if (ComboBoxCity.Text.Length != 0 && ComboBoxCity.Text.Length != 6)
+            {
+                ComboBoxCity.Background = Brushes.LightCoral;
+                hasMistake = true;
+            }
+            else
+            {
+                ComboBoxCity.Background = Brushes.LightGreen;
+            }
+
+            if (hasMistake)
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
+
         // Для подтверждения сохранения внесенных изменений или создания нового пользователя
         private void Accept_Click(object sender, RoutedEventArgs e)
         {
-            MessageBoxResult result = MessageBox.Show(
-                "Вы действительно хотите сохранять изменения?",
-                "Сохранение",
-                MessageBoxButton.YesNo,
-                MessageBoxImage.Question);
-
-            if (result == MessageBoxResult.Yes)
+            if (CheckTextInsert())
             {
-                if (insertUser == null) CreatyNewUser();
-                else EditCurrentUser();
-                this.Close();
+                MessageBoxResult result = MessageBox.Show(
+                    "Вы действительно хотите сохранять изменения?",
+                    "Сохранение",
+                    MessageBoxButton.YesNo,
+                    MessageBoxImage.Question);
+
+                if (result == MessageBoxResult.Yes)
+                {
+                    if (insertUser == null) CreatyNewUser();
+                    else EditCurrentUser();
+                    this.Close();
+                }
             }
+            else
+            {
+
+            }
+
         }
 
         // Для подтверждения отмены сохранения изменений для текущего пользователя
