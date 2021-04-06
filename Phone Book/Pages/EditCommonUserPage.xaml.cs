@@ -40,7 +40,7 @@ namespace Phone_Book.Pages
                 {
                     insertUser = user;
 
-                    TextBoxSurname.Text = user.Name;
+                    TextBoxAbonent.Text = user.Name;
 
                     if (user.Department != null)
                         ComboBoxDepartment.SelectedIndex = DepartmentList.FindIndex(t => t.DepartmentId == user.DepartmentId);
@@ -59,14 +59,14 @@ namespace Phone_Book.Pages
         private bool CheckTextInsert()
         {
             var hasMistake = false;
-            if (TextBoxSurname.Text == string.Empty)
+            if (TextBoxAbonent.Text == string.Empty)
             {
-                TextBoxSurname.Background = Brushes.LightCoral;
+                TextBoxAbonent.Background = Brushes.LightCoral;
                 hasMistake = true;
             }
             else
             {
-                TextBoxSurname.Background = Brushes.LightGreen;
+                TextBoxAbonent.Background = Brushes.LightGreen;
             }
 
             if (string.IsNullOrEmpty(ComboBoxDepartment.Text))
@@ -126,12 +126,11 @@ namespace Phone_Book.Pages
                     else EditCurrentUser();
                     this.Close();
                 }
+                else
+                {
+                    this.Close();
+                }
             }
-            else
-            {
-
-            }
-
         }
 
         // Для подтверждения отмены сохранения изменений для текущего пользователя
@@ -202,7 +201,7 @@ namespace Phone_Book.Pages
         {
             using (ApplicationContext db = new ApplicationContext())
             {
-                insertUser.Name = TextBoxSurname.Text;
+                insertUser.Name = TextBoxAbonent.Text;
 
                 insertUser.Department = (Department)CreatyStringInTable(new Department());
                 insertUser.DepartmentId = insertUser.Department?.DepartmentId;
@@ -224,7 +223,7 @@ namespace Phone_Book.Pages
             using (ApplicationContext db = new ApplicationContext())
             {
                 User newUser = new User();
-                string nameUser = TextBoxSurname.Text;
+                string nameUser = TextBoxAbonent.Text;
                 newUser.Name = nameUser;
                 newUser.Common = true;
 
@@ -242,6 +241,13 @@ namespace Phone_Book.Pages
         private void ValidatonOnlyNumber(object sender, TextCompositionEventArgs e)
         {
             Regex regex = new Regex("[^0-9]+");
+            e.Handled = regex.IsMatch(e.Text);
+        }
+
+        // Проверка на ввод только кириллицы 
+        private void ValidatonOnlyText(object sender, TextCompositionEventArgs e)
+        {
+            Regex regex = new Regex("[^а-яА-Я]");
             e.Handled = regex.IsMatch(e.Text);
         }
 

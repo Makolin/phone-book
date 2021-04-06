@@ -31,7 +31,7 @@
         <Label Grid.Row="2" Grid.Column="1" Content="Местный номер" FontWeight="Bold"/>
         <Label Grid.Row="3" Grid.Column="1" Content="Городской номер"/>
 
-        <TextBox Grid.Row="0" Grid.Column="2" x:Name="TextBoxSurname"/>
+        <TextBox Grid.Row="0" Grid.Column="2" x:Name="TextBoxAbonent" PreviewTextInput="ValidatonOnlyText"/>
 
         <ComboBox Grid.Row="1" Grid.Column="2" x:Name="ComboBoxDepartment" Style="{StaticResource ReadOnlyCombobox}"/>
         <Button Grid.Row="1" Grid.Column="3" x:Name="ClearDepartment" Click="ClearDepartment_Click" Style="{StaticResource ClearButton}"/>

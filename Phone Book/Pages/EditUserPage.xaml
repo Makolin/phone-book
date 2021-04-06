@@ -49,7 +49,7 @@
         <TextBox Grid.Row="3" Grid.Column="2" x:Name="TextBoxDataBirthday"/>
         <ComboBox Grid.Row="4" Grid.Column="2" x:Name="ComboBoxPosition" PreviewTextInput="ValidatonOnlyText" Style="{StaticResource NotReadOnlyCombobox}"/>
 
-        <ComboBox Grid.Row="5" Grid.Column="2" x:Name="ComboBoxDepartment" PreviewTextInput="ValidatonOnlyText" Style="{StaticResource ReadOnlyCombobox}" />
+        <ComboBox Grid.Row="5" Grid.Column="2" x:Name="ComboBoxDepartment" Style="{StaticResource ReadOnlyCombobox}" />
         <Button Grid.Row="5" Grid.Column="3" x:Name="ClearDepartment" Click="ClearDepartment_Click" Style="{StaticResource ClearButton}"/>
 
         <ComboBox Grid.Row="6" Grid.Column="2" x:Name="ComboBoxLocal" PreviewTextInput="ValidatonOnlyNumber" Style="{StaticResource NotReadOnlyCombobox}"/>

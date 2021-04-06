@@ -5,7 +5,7 @@ using System.Windows;
 
 namespace Phone_Book.Pages
 {
-    public partial class EditListDepartment : Window
+    public partial class ListDepartment : Window
     {
         public static ObservableCollection<Department> Departments = new ObservableCollection<Department>();
 
@@ -16,7 +16,7 @@ namespace Phone_Book.Pages
                 Departments = new ObservableCollection<Department>(db.Deparments.ToList());
             }
         }
-        public EditListDepartment()
+        public ListDepartment()
         {
             InitializeComponent();
             GetDataInDataBase();

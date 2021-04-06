@@ -1,5 +1,6 @@
 using Phone_Book.Model;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
 
 namespace Phone_Book.Pages
@@ -109,7 +110,7 @@ namespace Phone_Book.Pages
         // Редактирование подразделений в базе данных
         private void EditDepartment_Click(object sender, RoutedEventArgs e)
         {
-            EditListDepartment EditDepartment = new EditListDepartment();
+            ListDepartment EditDepartment = new ListDepartment();
             EditDepartment.ShowDialog();
         }
 

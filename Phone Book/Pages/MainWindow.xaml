@@ -9,7 +9,6 @@
         WindowStartupLocation="CenterScreen"
         MinHeight="810"
         MinWidth="1540">
-
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="25"/>
@@ -17,23 +16,22 @@
             <RowDefinition Height="*"/>
             <RowDefinition Height="45"/>
         </Grid.RowDefinitions>
+        <StackPanel Orientation="Horizontal" Grid.Row="0">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                
+                <Button Grid.Column="0" Content="Главная" x:Name="MainButton"/>
+                <Button Grid.Column="1" Content="Подразделения" x:Name="DepartmentButton" Click="EditDepartment_Click"/>
+                <Button Grid.Column="2" Content="Справка" x:Name="InfoButton" Click="MenuInfo_Click"/>
+                <Button Grid.Column="3" Content="Выход" x:Name="ExitButton" Click="MenuExit_Click"/>
+            </Grid>
 
-        <Menu Grid.Row="0">
-            <MenuItem Header="Файл">
-                <MenuItem Header="Выйти" x:Name="MenuExit" Click="MenuExit_Click"/>
-            </MenuItem>
-            <MenuItem Header="Справочники">
-                <MenuItem Header="Подразделения" x:Name="EditDepartment" Click="EditDepartment_Click"/>
-                <MenuItem Header="Местные номера"/>
-                <MenuItem Header="Городские номера"/>
-            </MenuItem>
-            <MenuItem Header="Списки сотрудников">
-                <MenuItem Header="Техническая поддержка"/>
-            </MenuItem>
-            <MenuItem Header="Справка">
-                <MenuItem Header="О приложении" x:Name="MenuInfo" Click="MenuInfo_Click"/>
-            </MenuItem>
-        </Menu>
+        </StackPanel>
 
         <Label Grid.Row="1" Margin="0,0,425,0" Content="Строка поиска" HorizontalAlignment="Right"/>
         <TextBox Grid.Row="1" Margin="0,0,150,0" Width="260" TextWrapping="Wrap" x:Name="FindString" HorizontalAlignment="Right" KeyDown="FindString_KeyDown"/>

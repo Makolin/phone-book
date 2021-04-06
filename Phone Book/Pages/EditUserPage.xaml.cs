@@ -197,10 +197,10 @@ namespace Phone_Book.Pages
                     else EditCurrentUser();
                     this.Close();
                 }
-            }
-            else
-            {
-
+                else
+                {
+                    this.Close();
+                }
             }
         }
 
