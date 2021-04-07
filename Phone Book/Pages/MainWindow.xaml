@@ -11,61 +11,53 @@
         MinWidth="1540">
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="25"/>
-            <RowDefinition Height="50"/>
+            <RowDefinition Height="35"/>
             <RowDefinition Height="*"/>
-            <RowDefinition Height="45"/>
         </Grid.RowDefinitions>
-        <StackPanel Orientation="Horizontal" Grid.Row="0">
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions>
-                
-                <Button Grid.Column="0" Content="Главная" x:Name="MainButton"/>
-                <Button Grid.Column="1" Content="Подразделения" x:Name="DepartmentButton" Click="EditDepartment_Click"/>
-                <Button Grid.Column="2" Content="Справка" x:Name="InfoButton" Click="MenuInfo_Click"/>
-                <Button Grid.Column="3" Content="Выход" x:Name="ExitButton" Click="MenuExit_Click"/>
-            </Grid>
+        
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
 
-        </StackPanel>
+            <Button Grid.Column="0" x:Name="MainButton" Style="{StaticResource MenuStyleButton}" Click="MainButton_Click">
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="Главная"/>
+                </StackPanel>
+            </Button>
 
-        <Label Grid.Row="1" Margin="0,0,425,0" Content="Строка поиска" HorizontalAlignment="Right"/>
-        <TextBox Grid.Row="1" Margin="0,0,150,0" Width="260" TextWrapping="Wrap" x:Name="FindString" HorizontalAlignment="Right" KeyDown="FindString_KeyDown"/>
-        <Button Grid.Row="1" Margin="0,0,25,0" x:Name="ButtonFind" HorizontalAlignment="Right" Click="ButtonFind_Click" Style="{StaticResource FindButton}"/>
+            <Button Grid.Column="1" x:Name="DepartmentButton" Style="{StaticResource MenuStyleButton}" Click="DepartmentButton_Click">
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="Подразделения"/>
+                </StackPanel>
+            </Button>
 
-        <DataGrid x:Name="UsersGrid" Margin="25,0,25,0" Grid.Row="2" ItemsSource="{Binding Users}" Style="{StaticResource UserDataGrid}" MouseDoubleClick="UsersGrid_MouseDoubleClick">
-            <DataGrid.Columns>
-                <DataGridTemplateColumn Width="0.1*">
-                    <DataGridTemplateColumn.CellTemplate>
-                        <DataTemplate>
-                            <Image Source="{Binding Path=ComputerStatus.Status, Converter={StaticResource DisplayStatus}}"/>
-                        </DataTemplate>
-                    </DataGridTemplateColumn.CellTemplate>
-                </DataGridTemplateColumn>
-                <DataGridTextColumn Width="1.3*" Header="Абонент" Binding="{Binding Path=Name}" SortDirection="Ascending" CellStyle="{StaticResource MainDataGridCell}"/>
-                <DataGridTextColumn Width="1.4*" Header="Подразделение" Binding="{Binding Path=Department, Converter={StaticResource DisplayDepartment}}" CellStyle="{StaticResource MainDataGridCell}"/>
-                <DataGridTextColumn Width="2.1*" Header="Должность" Binding="{Binding Path=Position.PositionName}" CellStyle="{StaticResource MainDataGridCell}"/>
-                <DataGridTextColumn Width="0.6*" Header="Местный номер" Binding="{Binding Path=LocalNumber.LocalNumber}" CellStyle="{StaticResource CenterDataGridCell}"/>
-                <DataGridTextColumn Width="0.7*" Header="Городской номер"  Binding="{Binding Path=CityNumber.CityNumber, Converter={StaticResource DisplayNumber}}" CellStyle="{StaticResource CenterDataGridCell}"/>
-                <DataGridTextColumn Width="*" Header="Отсутствие" Binding="{Binding Path=UserId, Converter={StaticResource DisplayAbsence}}" CellStyle="{StaticResource CenterDataGridCell}"/>
-            </DataGrid.Columns>
-            <DataGrid.ContextMenu>
-                <ContextMenu>
-                    <MenuItem Header="Новый сотрудник" x:Name="NewUser" Click="NewUser_Click"/>
-                    <MenuItem Header="Новый общий номер" x:Name="NewCommon" Click="NewCommon_Click"/>
-                    <MenuItem Header="Редактировать" x:Name="EditUser" Click="EditUser_Click"/>
-                    <MenuItem Header="Удалить" x:Name="DeleteUser" Click="DeleteUser_Click"/>
-                    <MenuItem Header="Обновить статус" x:Name="UpdateStatus" Click="UpdateStatus_Click"/>
-                </ContextMenu>
-            </DataGrid.ContextMenu>
-        </DataGrid>
+            <Button Grid.Column="2" x:Name="PositionButton" Style="{StaticResource MenuStyleButton}" Click="PositionButton_Click">
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="Должности"/>
+                </StackPanel>
+            </Button>
 
-        <Label Grid.Row="1" x:Name="CommonNumber" HorizontalAlignment="Left" Margin="25,0,0,0" />
-        <Label Grid.Row="3" x:Name="CountUser" HorizontalAlignment="Left" Margin="25,0,0,0" Content="{Binding Path=CountUserString}"/>
+            <Button Grid.Column="3" x:Name="InfoButton" Style="{StaticResource MenuStyleButton}" Click="InfoButton_Click">
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="Справка"/>
+                </StackPanel>
+            </Button>
+
+            <Button Grid.Column="4" x:Name="ExitButton" Style="{StaticResource MenuStyleButton}" Click="ExitButton_Click">
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="Выход"/>
+                </StackPanel>
+            </Button>
+        </Grid>
+        <Grid Grid.Row="1">
+            <Frame Name="mainFrame" NavigationUIVisibility="Hidden"/>
+        </Grid>
+
     </Grid>
 </Window>
 

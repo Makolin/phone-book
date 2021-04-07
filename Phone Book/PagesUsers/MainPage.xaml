@@ -1,0 +1,51 @@
+﻿<Page x:Class="Phone_Book.Pages.MainPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:Phone_Book.Pages"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="MainPage">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="45"/>
+        </Grid.RowDefinitions>
+        <Label Grid.Row="0" Margin="0,0,425,0" Content="Строка поиска" HorizontalAlignment="Right"/>
+        <TextBox Grid.Row="0" Margin="0,0,150,0" Width="260" TextWrapping="Wrap" x:Name="FindString" HorizontalAlignment="Right" KeyDown="FindString_KeyDown"/>
+        <Button Grid.Row="0" Margin="0,0,25,0" x:Name="ButtonFind" HorizontalAlignment="Right" Click="ButtonFind_Click" Style="{StaticResource FindButton}"/>
+
+        <DataGrid x:Name="UsersGrid" Margin="25,0,25,0" Grid.Row="1" ItemsSource="{Binding Users}" Style="{StaticResource UserDataGrid}" MouseDoubleClick="UsersGrid_MouseDoubleClick">
+            <DataGrid.Columns>
+                <DataGridTemplateColumn Width="0.1*">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Image Source="{Binding Path=ComputerStatus.Status, Converter={StaticResource DisplayStatus}}"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTextColumn Width="1.3*" Header="Абонент" Binding="{Binding Path=Name}" SortDirection="Ascending" CellStyle="{StaticResource MainDataGridCell}"/>
+                <DataGridTextColumn Width="1.4*" Header="Подразделение" Binding="{Binding Path=Department, Converter={StaticResource DisplayDepartment}}" CellStyle="{StaticResource MainDataGridCell}"/>
+                <DataGridTextColumn Width="2.1*" Header="Должность" Binding="{Binding Path=Position.PositionName}" CellStyle="{StaticResource MainDataGridCell}"/>
+                <DataGridTextColumn Width="0.6*" Header="Местный номер" Binding="{Binding Path=LocalNumber.LocalNumber}" CellStyle="{StaticResource CenterDataGridCell}"/>
+                <DataGridTextColumn Width="0.7*" Header="Городской номер"  Binding="{Binding Path=CityNumber.CityNumber, Converter={StaticResource DisplayNumber}}" CellStyle="{StaticResource CenterDataGridCell}"/>
+                <DataGridTextColumn Width="*" Header="Отсутствие" Binding="{Binding Path=UserId, Converter={StaticResource DisplayAbsence}}" CellStyle="{StaticResource CenterDataGridCell}"/>
+            </DataGrid.Columns>
+            <DataGrid.ContextMenu>
+                <ContextMenu>
+                    <MenuItem Header="Новый сотрудник" x:Name="NewUser" Click="NewUser_Click"/>
+                    <MenuItem Header="Новый общий номер" x:Name="NewCommon" Click="NewCommon_Click"/>
+                    <MenuItem Header="Редактировать" x:Name="EditUser" Click="EditUser_Click"/>
+                    <MenuItem Header="Удалить" x:Name="DeleteUser" Click="DeleteUser_Click"/>
+                    <MenuItem Header="Обновить статус" x:Name="UpdateStatus" Click="UpdateStatus_Click"/>
+                </ContextMenu>
+            </DataGrid.ContextMenu>
+        </DataGrid>
+
+        <Label Grid.Row="0" x:Name="CommonNumber" HorizontalAlignment="Left" Margin="25,0,0,0" />
+        <Label Grid.Row="2" x:Name="CountUser" HorizontalAlignment="Left" Margin="25,0,0,0" Content="{Binding Path=CountUserString}"/>
+    </Grid>
+</Page>
