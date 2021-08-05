@@ -9,10 +9,10 @@ using Phone_Book.Model;
 
 namespace Phone_Book.Pages
 {
-    public partial class EditUserPage : Window
+    public partial class EditUserWindow : Window
     {
         User insertUser;
-        public EditUserPage(User currentUser)
+        public EditUserWindow(User currentUser)
         {
             InitializeComponent();
             InsertDataInComboBox(currentUser);
@@ -52,7 +52,7 @@ namespace Phone_Book.Pages
                     TextBoxName.Text = nameUser[1];
                     TextBoxMiddleName.Text = nameUser[2];
 
-                    TextBoxDataBirthday.Text = user.BirtheyDay.ToShortDateString();
+                    TextBoxDataBirthday.Text = user.Birthday.ToShortDateString();
                     TextBoxMobile.Text = user.MobileNumber.ToString();
 
                     if (user.Position != null)
@@ -83,30 +83,21 @@ namespace Phone_Book.Pages
                 TextBoxSurname.Background = Brushes.LightCoral;
                 hasMistake = true;
             }
-            else
-            {
-                TextBoxSurname.Background = Brushes.LightGreen;
-            }
+            else TextBoxSurname.Background = Brushes.LightGreen;
 
             if (TextBoxName.Text == string.Empty)
             {
                 TextBoxName.Background = Brushes.LightCoral;
                 hasMistake = true;
             }
-            else
-            {
-                TextBoxName.Background = Brushes.LightGreen;
-            }
+            else TextBoxName.Background = Brushes.LightGreen;
 
             if (TextBoxMiddleName.Text == string.Empty)
             {
                 TextBoxMiddleName.Background = Brushes.LightCoral;
                 hasMistake = true;
             }
-            else
-            {
-                TextBoxMiddleName.Background = Brushes.LightGreen;
-            }
+            else TextBoxMiddleName.Background = Brushes.LightGreen;
 
             // Дата рождения
             DateTime dateValue;
@@ -115,69 +106,48 @@ namespace Phone_Book.Pages
                 TextBoxDataBirthday.Background = Brushes.LightCoral;
                 hasMistake = true;
             }
-            else
-            {
-                TextBoxDataBirthday.Background = Brushes.LightGreen;
-            }
+            else TextBoxDataBirthday.Background = Brushes.LightGreen;
 
             if (string.IsNullOrEmpty(ComboBoxPosition.Text))
             {
                 ComboBoxPosition.Background = Brushes.LightCoral;
                 hasMistake = true;
             }
-            else
-            {
-                ComboBoxPosition.Background = Brushes.LightGreen;
-            }
+            else ComboBoxPosition.Background = Brushes.LightGreen;
 
             if (string.IsNullOrEmpty(ComboBoxDepartment.Text))
             {
                 ComboBoxDepartment.Background = Brushes.LightCoral;
                 hasMistake = true;
             }
-            else
-            {
-                ComboBoxDepartment.Background = Brushes.LightGreen;
-            }
+            else ComboBoxDepartment.Background = Brushes.LightGreen;
 
             if (ComboBoxLocal.Text.Length != 3)
             {
                 ComboBoxLocal.Background = Brushes.LightCoral;
                 hasMistake = true;
             }
-            else
-            {
-                ComboBoxLocal.Background = Brushes.LightGreen;
-            }
+            else ComboBoxLocal.Background = Brushes.LightGreen;
 
             if (ComboBoxCity.Text.Length != 0 && ComboBoxCity.Text.Length != 6)
             {
                 ComboBoxCity.Background = Brushes.LightCoral;
                 hasMistake = true;
             }
-            else
-            {
-                ComboBoxCity.Background = Brushes.LightGreen;
-            }
+            else ComboBoxCity.Background = Brushes.LightGreen;
 
             if (TextBoxMobile.Text.Length != 0 && TextBoxMobile.Text.Length != 11)
             {
                 TextBoxMobile.Background = Brushes.LightCoral;
                 hasMistake = true;
             }
-            else
+            else TextBoxMobile.Background = Brushes.LightGreen;
             {
-                TextBoxMobile.Background = Brushes.LightGreen;
+
             }
 
-            if (hasMistake)
-            {
-                return false;
-            }
-            else
-            {
-                return true;
-            }
+            if (hasMistake) return false;
+            else return true;
         }
 
         // Для подтверждения сохранения внесенных изменений или создания нового пользователя
@@ -306,7 +276,7 @@ namespace Phone_Book.Pages
                     insertUser.MobileNumber = Convert.ToInt64(TextBoxMobile.Text);
 
                 if (!string.IsNullOrEmpty(TextBoxDataBirthday.Text))
-                    insertUser.BirtheyDay = DateTime.Parse(TextBoxDataBirthday.Text);
+                    insertUser.Birthday = DateTime.Parse(TextBoxDataBirthday.Text);
 
                 insertUser.Position = (Position)CreatyStringInTable(new Position());
                 insertUser.PositionId = insertUser.Position?.PositionId;
@@ -348,7 +318,7 @@ namespace Phone_Book.Pages
                     newUser.MobileNumber = Convert.ToInt64(TextBoxMobile.Text);
 
                 if (!string.IsNullOrEmpty(TextBoxDataBirthday.Text))
-                    insertUser.BirtheyDay = DateTime.Parse(TextBoxDataBirthday.Text);
+                    insertUser.Birthday = DateTime.Parse(TextBoxDataBirthday.Text);
 
                 UserCollection.Users.Add(newUser);
                 db.Entry(newUser).State = EntityState.Added;
@@ -373,6 +343,11 @@ namespace Phone_Book.Pages
         private void ClearDepartment_Click(object sender, RoutedEventArgs e)
         {
             ComboBoxDepartment.SelectedItem = null;
+        }
+
+        private void ClearPosition_Click(object sender, RoutedEventArgs e)
+        {
+            ComboBoxPosition.SelectedItem = null;
         }
     }
 }

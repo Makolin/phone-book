@@ -17,7 +17,7 @@ namespace Phone_Book.Pages
         {
             // Загрузка переменных в окно
             Versions.TextWrapping = TextWrapping.Wrap;
-            Version.Text = "Версия приложения - 0.02";
+            Version.Text = "Версия приложения - 0.04";
             MainText.Text = "Phone Book разработан @makolin и распространяется по MIT License. " +
                 "Все пожелания по внесению изменений в приложение просьба отправлять на почтовый адрес makolin@bk.ru";
 

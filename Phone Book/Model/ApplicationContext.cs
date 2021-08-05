@@ -79,7 +79,8 @@ namespace Phone_Book
         public int UserId { get; set; }
         [Required]
         public string Name { get; set; }
-        public DateTime BirtheyDay { get; set; }
+        public string DomainName { get; set; }
+        public DateTime Birthday { get; set; }
         public bool Common { get; set; }
 
         public int? PositionId { get; set; }
@@ -190,7 +191,7 @@ namespace Phone_Book
                     {
                         UserId = 1,
                         Name = "Петров Петр Петрович",
-                        BirtheyDay = new DateTime(1992,12,24),
+                        Birthday = new DateTime(1992,12,24),
                         DepartmentId = 1,
                         PositionId = 1,
                         LocalId = 1,
@@ -202,7 +203,17 @@ namespace Phone_Book
                     {
                         UserId = 2,
                         Name = "Иванов Иван Иванович",
-                        BirtheyDay = new DateTime(1992,11,05),
+                        Birthday = new DateTime(1992,11,05),
+                        DepartmentId = 2,
+                        PositionId = 2,
+                        LocalId = 2
+                    },
+                    new User
+                    {
+                        UserId = 3,
+                        Name = "Карлов Карл Карлович",
+                        DomainName = "CRYONT\\Vasiliev.MA",
+                        Birthday = new DateTime(1992,11,05),
                         DepartmentId = 2,
                         PositionId = 2,
                         LocalId = 2

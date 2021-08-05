@@ -1,3 +1,5 @@
+using Phone_Book.PagesDepartments;
+using Phone_Book.PagesPosition;
 using System.Windows;
 
 namespace Phone_Book.Pages
@@ -22,7 +24,7 @@ namespace Phone_Book.Pages
 
         private void PositionButton_Click(object sender, RoutedEventArgs e)
         {
-
+            mainFrame.Content = new PositionPage();
         }
 
         private void InfoButton_Click(object sender, RoutedEventArgs e)
@@ -34,6 +36,16 @@ namespace Phone_Book.Pages
         private void ExitButton_Click(object sender, RoutedEventArgs e)
         {
             Application.Current.Shutdown();
+        }
+
+        private void TechnicalSupportButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void OptionButton_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

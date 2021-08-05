@@ -8,6 +8,7 @@
         <convert:DisplayStatus x:Key="DisplayStatus"/>
         <convert:DisplayDepartment x:Key="DisplayDepartment"/>
         <convert:DisplayAbsence x:Key="DisplayAbsence"/>
+        <convert:DisplayCountPosition x:Key="DisplayPosition"/>
 
         <!--Стили для вывода информации в DataGrid-->
         <Style TargetType="DataGrid" x:Key="MainDataGrid">
@@ -45,7 +46,7 @@
         <Style TargetType="DataGridCell" x:Key="CenterDataGridCell" BasedOn="{StaticResource MainDataGridCell}">
             <Setter Property="TextBlock.TextAlignment" Value="Center"/>
         </Style>
-        
+
         <!--Стили для вывода меню-->
         <Style TargetType="Menu">
             <Setter Property="VerticalAlignment" Value="Center"/>

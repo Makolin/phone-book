@@ -9,10 +9,10 @@ using System.Windows.Media;
 
 namespace Phone_Book.Pages
 {
-    public partial class EditCommonUserPage : Window
+    public partial class EditCommonUserWindow : Window
     {
         User insertUser;
-        public EditCommonUserPage(User currentUser)
+        public EditCommonUserWindow(User currentUser)
         {
             InitializeComponent();
             InsertDataInComboBox(currentUser);

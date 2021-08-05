@@ -1,25 +1,41 @@
-﻿using System.Windows;
+﻿using System.Linq;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using Phone_Book.Model;
 
 namespace Phone_Book.Pages
 {
-
     public partial class MainPage : Page
     {
         public MainPage()
         {
             InitializeComponent();
-            CommonNumber.Content = "Общий многоканальный номер 344 - 154";
+            CommonNumber.Content = "Общий многоканальный номер 499 - 080";
+            User.Content = HelloUser();
             DataContext = new UserCollection();
         }
 
+        // Приветствие пользователя
+        public string HelloUser()
+        {
+            string nameUser = System.Security.Principal.WindowsIdentity.GetCurrent().Name;
+            using (ApplicationContext db = new ApplicationContext())
+            {
+                var user = db.Users.Where(t => t.DomainName == nameUser).FirstOrDefault();
+                if (user != null)
+                {
+                    nameUser = "Текущий пользователь: " + user.Name;
+                    return nameUser;
+                }
+                else return string.Empty;
+            }
 
+        }
         // Создание нового пользователя
         private void NewUser_Click(object sender, RoutedEventArgs e)
         {
-            EditUserPage newUserPage = new EditUserPage(null);
+            EditUserWindow newUserPage = new EditUserWindow(null);
             newUserPage.ShowDialog();
         }
 
@@ -31,12 +47,12 @@ namespace Phone_Book.Pages
             {
                 if (!editUser.Common)
                 {
-                    EditUserPage editUserPage = new EditUserPage(editUser);
+                    EditUserWindow editUserPage = new EditUserWindow(editUser);
                     editUserPage.ShowDialog();
                 }
                 else
                 {
-                    EditCommonUserPage editCommonPage = new EditCommonUserPage(editUser);
+                    EditCommonUserWindow editCommonPage = new EditCommonUserWindow(editUser);
                     editCommonPage.ShowDialog();
                 }
             }
@@ -86,7 +102,7 @@ namespace Phone_Book.Pages
         // Создание нового абонента (общего номера телефона)
         private void NewCommon_Click(object sender, RoutedEventArgs e)
         {
-            EditCommonUserPage newCommonPage = new EditCommonUserPage(null);
+            EditCommonUserWindow newCommonPage = new EditCommonUserWindow(null);
             newCommonPage.ShowDialog();
         }
 

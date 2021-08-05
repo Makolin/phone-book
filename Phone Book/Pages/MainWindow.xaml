@@ -14,9 +14,11 @@
             <RowDefinition Height="35"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        
+
         <Grid Grid.Row="0">
             <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
@@ -30,25 +32,37 @@
                 </StackPanel>
             </Button>
 
-            <Button Grid.Column="1" x:Name="DepartmentButton" Style="{StaticResource MenuStyleButton}" Click="DepartmentButton_Click">
+            <Button Grid.Column="1" x:Name="TechnicalSupportButton" Style="{StaticResource MenuStyleButton}" Click="TechnicalSupportButton_Click">
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="Тех.поддержка"/>
+                </StackPanel>
+            </Button>
+
+            <Button Grid.Column="2" x:Name="DepartmentButton" Style="{StaticResource MenuStyleButton}" Click="DepartmentButton_Click">
                 <StackPanel Orientation="Horizontal">
                     <TextBlock Text="Подразделения"/>
                 </StackPanel>
             </Button>
 
-            <Button Grid.Column="2" x:Name="PositionButton" Style="{StaticResource MenuStyleButton}" Click="PositionButton_Click">
+            <Button Grid.Column="3" x:Name="PositionButton" Style="{StaticResource MenuStyleButton}" Click="PositionButton_Click">
                 <StackPanel Orientation="Horizontal">
                     <TextBlock Text="Должности"/>
                 </StackPanel>
             </Button>
 
-            <Button Grid.Column="3" x:Name="InfoButton" Style="{StaticResource MenuStyleButton}" Click="InfoButton_Click">
+            <Button Grid.Column="4" x:Name="OptionButton" Style="{StaticResource MenuStyleButton}" Click="OptionButton_Click">
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="Настройки"/>
+                </StackPanel>
+            </Button>
+
+            <Button Grid.Column="5" x:Name="InfoButton" Style="{StaticResource MenuStyleButton}" Click="InfoButton_Click">
                 <StackPanel Orientation="Horizontal">
                     <TextBlock Text="Справка"/>
                 </StackPanel>
             </Button>
 
-            <Button Grid.Column="4" x:Name="ExitButton" Style="{StaticResource MenuStyleButton}" Click="ExitButton_Click">
+            <Button Grid.Column="6" x:Name="ExitButton" Style="{StaticResource MenuStyleButton}" Click="ExitButton_Click">
                 <StackPanel Orientation="Horizontal">
                     <TextBlock Text="Выход"/>
                 </StackPanel>
