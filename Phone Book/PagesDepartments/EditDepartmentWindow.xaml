@@ -6,8 +6,8 @@
         xmlns:local="clr-namespace:Phone_Book.PagesDepartments"
         mc:Ignorable="d"
         Title="Подразделение"
-        Height="230" 
-        Width="650"
+        Height="250" 
+        Width="670"
         ResizeMode="NoResize"
         WindowStartupLocation="CenterScreen">
     <Grid>
@@ -20,20 +20,28 @@
 
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
+            <RowDefinition Height="0.5*"/>
             <RowDefinition Height="*"/>
+            <RowDefinition Height="0.5*"/>
             <RowDefinition Height="*"/>
-            <RowDefinition Height="2*"/>
+            <RowDefinition Height="0.5*"/>
+            <RowDefinition Height="1.5*"/>
         </Grid.RowDefinitions>
 
         <Label Grid.Row="0" Grid.Column="1" Content="Номер подразделения" FontWeight="Bold"/>
-        <Label Grid.Row="1" Grid.Column="1" Content="Полное наименование" FontWeight="Bold"/>
-        <Label Grid.Row="2" Grid.Column="1" Content="Короткое наименование" FontWeight="Bold"/>
+        <Label Grid.Row="2" Grid.Column="1" Content="Полное наименование" FontWeight="Bold"/>
+        <Label Grid.Row="4" Grid.Column="1" Content="Короткое наименование" FontWeight="Bold"/>
 
         <TextBox Grid.Row="0" Grid.Column="2" x:Name="TextBoxNumber" PreviewTextInput="ValidatonOnlyNumber"/>
-        <TextBox Grid.Row="1" Grid.Column="2" x:Name="TextBoxFullName" PreviewTextInput="ValidatonOnlyText"/>
-        <TextBox Grid.Row="2" Grid.Column="2" x:Name="TextBoxShortName" PreviewTextInput="ValidatonOnlyText"/>
+        <Label Grid.Row="1" Grid.Column="2" x:Name="TextBoxNumberError" Style="{StaticResource ErrorLabel}"/>
 
-        <Button Grid.Row="4" Grid.Column="2" x:Name="Accept" HorizontalAlignment="Right" Margin="0,0,150,0" Click="Accept_Click" Style="{StaticResource AcceptButton}"/>
-        <Button Grid.Row="4" Grid.Column="2" x:Name="Cancel" HorizontalAlignment="Right" Margin="0,0,0,0" Click="Cancel_Click" Style="{StaticResource CancelButton}"/>
+        <TextBox Grid.Row="2" Grid.Column="2" x:Name="TextBoxFullName" PreviewTextInput="ValidatonOnlyText"/>
+        <Label Grid.Row="3" Grid.Column="2" x:Name="TextBoxFullNameError" Style="{StaticResource ErrorLabel}"/>
+
+        <TextBox Grid.Row="4" Grid.Column="2" x:Name="TextBoxShortName" PreviewTextInput="ValidatonOnlyText"/>
+        <Label Grid.Row="5" Grid.Column="2" x:Name="TextBoxShortNameError" Style="{StaticResource ErrorLabel}"/>
+
+        <Button Grid.Row="6" Grid.Column="2" x:Name="Accept" HorizontalAlignment="Right" Margin="0,0,150,0" Click="Accept_Click" Style="{StaticResource AcceptButton}"/>
+        <Button Grid.Row="6" Grid.Column="2" x:Name="Cancel" HorizontalAlignment="Right" Margin="0,0,0,0" Click="Cancel_Click" Style="{StaticResource CancelButton}"/>
     </Grid>
 </Window>

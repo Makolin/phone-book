@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System;
+using System.Linq;
 using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Input;
@@ -8,7 +9,7 @@ namespace Phone_Book.PagesDepartments
 {
     public partial class EditDepartmentWindow : Window
     {
-        Department insertDepartment;
+        private Department insertDepartment;
         public EditDepartmentWindow(Department currentDepartment)
         {
             InitializeComponent();
@@ -31,10 +32,12 @@ namespace Phone_Book.PagesDepartments
         {
             using (ApplicationContext db = new())
             {
-                Department newDepartment = new Department();
-                newDepartment.DepartmentNumber = Convert.ToInt32(TextBoxNumber.Text);
-                newDepartment.DepartmentFullName = TextBoxFullName.Text;
-                newDepartment.DepartmentShortName = TextBoxShortName.Text;
+                Department newDepartment = new Department
+                {
+                    DepartmentNumber = Convert.ToInt32(TextBoxNumber.Text),
+                    DepartmentFullName = TextBoxFullName.Text,
+                    DepartmentShortName = TextBoxShortName.Text
+                };
 
                 DepartmentPage.Departments.Add(newDepartment);
                 db.Entry(newDepartment).State = EntityState.Added;
@@ -58,23 +61,86 @@ namespace Phone_Book.PagesDepartments
             }
         }
 
-        private void Accept_Click(object sender, RoutedEventArgs e)
+        // Проверка на заполнение обязательного поля
+        // Проверка на уникальность 
+        private bool CheckTextInsert()
         {
-            MessageBoxResult result = MessageBox.Show(
-               "Вы действительно хотите сохранять изменения?",
-               "Сохранение",
-               MessageBoxButton.YesNo,
-               MessageBoxImage.Question);
+            bool hasMistake = false;
+            TextBoxNumberError.Content = string.Empty;
+            TextBoxFullNameError.Content = string.Empty;
+            TextBoxShortNameError.Content = string.Empty;
 
-            if (result == MessageBoxResult.Yes)
+            if (TextBoxNumber.Text == string.Empty)
             {
-                if (insertDepartment == null) CreatyNewDepartment();
-                else EditCurrentDepartment();
-                Close();
+                hasMistake = true;
+                TextBoxNumberError.Content = "Обязательное поле";
             }
             else
             {
-                Close();
+                using (ApplicationContext db = new ApplicationContext())
+                {
+                    var find = db.Deparments.Where(t => t.DepartmentNumber == Convert.ToInt32(TextBoxNumber.Text)).FirstOrDefault();
+                    if (find != null)
+                    {
+                        if (insertDepartment != null)
+                        {
+                            if (insertDepartment.DepartmentId != find.DepartmentId)
+                            {
+                                hasMistake = true;
+                                TextBoxNumberError.Content = "Данный номер подразделения уже существует";
+                            }
+                        }
+                        else
+                        {
+                            hasMistake = true;
+                            TextBoxNumberError.Content = "Данный номер подразделения уже существует";
+                        }
+
+                    }
+                }
+            }
+
+            if (TextBoxFullName.Text == string.Empty)
+            {
+                hasMistake = true;
+                TextBoxFullNameError.Content = "Обязательное поле";
+            }
+
+            if (TextBoxShortName.Text == string.Empty)
+            {
+                hasMistake = true;
+                TextBoxShortNameError.Content = "Обязательное поле";
+            }
+
+            return !hasMistake;
+        }
+
+        private void Accept_Click(object sender, RoutedEventArgs e)
+        {
+            if (CheckTextInsert())
+            {
+                MessageBoxResult result = MessageBox.Show(
+                   "Вы действительно хотите сохранять изменения?",
+                   "Сохранение",
+                   MessageBoxButton.YesNo,
+                   MessageBoxImage.Question);
+
+                if (result == MessageBoxResult.Yes)
+                {
+                    if (insertDepartment == null)
+                    {
+                        CreatyNewDepartment();
+                    }
+                    else
+                    {
+                        EditCurrentDepartment();
+                    }
+                    Close();
+                }
+                else
+                {
+                    Close();
+                }
             }
         }
 
@@ -86,7 +152,10 @@ namespace Phone_Book.PagesDepartments
                 MessageBoxButton.YesNo,
                 MessageBoxImage.Exclamation);
 
-            if (result == MessageBoxResult.Yes) Close();
+            if (result == MessageBoxResult.Yes)
+            {
+                Close();
+            }
         }
 
         // Проверка на ввод только чисел

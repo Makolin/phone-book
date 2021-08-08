@@ -9,7 +9,7 @@ namespace Phone_Book.Pages
     {
         public static ObservableCollection<Absence> AbcensesCollection = new ObservableCollection<Absence>();
 
-        public void GetData()
+        private static void GetData()
         {
             using (ApplicationContext db = new ApplicationContext())
             {
@@ -26,7 +26,6 @@ namespace Phone_Book.Pages
 
         private void Accept_Click(object sender, RoutedEventArgs e)
         {
-
             MessageBoxResult result = MessageBox.Show(
                 "Вы действительно хотите сохранять изменения?",
                 "Сохранение",
@@ -43,9 +42,8 @@ namespace Phone_Book.Pages
                         db.SaveChanges();
                     }
                 }
-
             }
-            this.Close();
+            Close();
         }
 
         private void Cancel_Click(object sender, RoutedEventArgs e)
@@ -56,8 +54,10 @@ namespace Phone_Book.Pages
                 MessageBoxButton.YesNo,
                 MessageBoxImage.Exclamation);
 
-            if (result == MessageBoxResult.Yes) this.Close();
+            if (result == MessageBoxResult.Yes)
+            {
+                Close();
+            }
         }
-
     }
 }

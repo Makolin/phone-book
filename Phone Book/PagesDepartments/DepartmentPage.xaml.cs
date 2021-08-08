@@ -9,7 +9,7 @@ namespace Phone_Book.PagesDepartments
     {
 
         public static ObservableCollection<Department> Departments = new ObservableCollection<Department>();
-        public void GetDataInDataBase()
+        private static void GetDataInDataBase()
         {
             using (ApplicationContext db = new ApplicationContext())
             {
@@ -45,9 +45,9 @@ namespace Phone_Book.PagesDepartments
             if (deleteDepartment != null)
             {
                 // Проверка на наличие пользователей с данной должностью
-                using (ApplicationContext db = new())
+                using (ApplicationContext db = new ApplicationContext())
                 {
-                    var countDepartment = 0;
+                    int countDepartment = 0;
                     var find = db.Users.Where(t => t.DepartmentId == deleteDepartment.DepartmentId);
                     if (find != null)
                     {
@@ -71,7 +71,7 @@ namespace Phone_Book.PagesDepartments
                     }
                     else
                     {
-                        MessageBox.Show($"Нельзя удалить \"{deleteDepartment.DepartmentFullName}\", так как имеются пользователи с данной должностью.");
+                        MessageBox.Show($"Нельзя удалить \"{deleteDepartment.DepartmentFullName}\", так как имеются пользователи в данном подразделении.");
                     }
                 }
             }

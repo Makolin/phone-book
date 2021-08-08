@@ -23,13 +23,16 @@ namespace Phone_Book.Converts
                 if (AbsenceList.Count > 0)
                 {
                     string absenceString = string.Empty;
-                    foreach (var absence in AbsenceList)
+                    foreach (Absence absence in AbsenceList)
                     {
-                        absenceString += $"{absence.Reason} c {absence.DateFrom.ToString("dd.MM")} до {absence.DateBefore.ToString("dd.MM")}";
+                        absenceString += $"{absence.Reason} c {absence.DateFrom:dd.MM} до {absence.DateBefore:dd.MM}";
                     }
                     return absenceString;
                 }
-                else return string.Empty;
+                else
+                {
+                    return string.Empty;
+                }
             }
         }
 

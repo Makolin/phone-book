@@ -9,7 +9,7 @@ namespace Phone_Book.PagesPosition
     public partial class PositionPage : Page
     {
         public static ObservableCollection<Position> Positions = new ObservableCollection<Position>();
-        public void GetDataInDataBase()
+        private static void GetDataInDataBase()
         {
             using (ApplicationContext db = new ApplicationContext())
             {
@@ -41,7 +41,7 @@ namespace Phone_Book.PagesPosition
 
         private void DeletePosition_Click(object sender, RoutedEventArgs e)
         {
-            var deletePosition = (Position)PositionGrid.SelectedItem;
+            Position deletePosition = (Position)PositionGrid.SelectedItem;
             if (deletePosition != null)
             {
                 // Проверка на наличие пользователей с данной должностью
@@ -63,7 +63,7 @@ namespace Phone_Book.PagesPosition
                             MessageBoxImage.Warning);
                         if (result == MessageBoxResult.Yes)
                         {
-                            PositionPage.Positions.Remove(deletePosition);
+                            Positions.Remove(deletePosition);
                             db.Positions.Remove(deletePosition);
                             db.SaveChanges();
                         }

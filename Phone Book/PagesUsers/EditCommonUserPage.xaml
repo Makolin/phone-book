@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:Phone_Book.Pages"
         mc:Ignorable="d"
         Title="Общий номер"
-        Height="260" 
+        Height="310" 
         Width="650"
         ResizeMode="NoResize"
         WindowStartupLocation="CenterScreen">
@@ -20,26 +20,35 @@
 
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
+            <RowDefinition Height="0.5*"/>
             <RowDefinition Height="*"/>
+            <RowDefinition Height="0.5*"/>
             <RowDefinition Height="*"/>
+            <RowDefinition Height="0.5*"/>
             <RowDefinition Height="*"/>
-            <RowDefinition Height="2*"/>
+            <RowDefinition Height="0.5*"/>
+            <RowDefinition Height="1.5*"/>
         </Grid.RowDefinitions>
 
         <Label Grid.Row="0" Grid.Column="1" Content="Абонент" FontWeight="Bold"/>
-        <Label Grid.Row="1" Grid.Column="1" Content="Подразделение" FontWeight="Bold"/>
-        <Label Grid.Row="2" Grid.Column="1" Content="Местный номер" FontWeight="Bold"/>
-        <Label Grid.Row="3" Grid.Column="1" Content="Городской номер"/>
+        <Label Grid.Row="2" Grid.Column="1" Content="Подразделение" FontWeight="Bold"/>
+        <Label Grid.Row="4" Grid.Column="1" Content="Местный номер" FontWeight="Bold"/>
+        <Label Grid.Row="6" Grid.Column="1" Content="Городской номер"/>
 
         <TextBox Grid.Row="0" Grid.Column="2" x:Name="TextBoxAbonent" PreviewTextInput="ValidatonOnlyText"/>
+        <Label Grid.Row="1" Grid.Column="2" x:Name="TextBoxAbonentError" Style="{StaticResource ErrorLabel}"/>
 
-        <ComboBox Grid.Row="1" Grid.Column="2" x:Name="ComboBoxDepartment" Style="{StaticResource ReadOnlyCombobox}"/>
-        <Button Grid.Row="1" Grid.Column="3" x:Name="ClearDepartment" Click="ClearDepartment_Click" Style="{StaticResource ClearButton}"/>
+        <ComboBox Grid.Row="2" Grid.Column="2" x:Name="ComboBoxDepartment" Style="{StaticResource ReadOnlyCombobox}"/>
+        <Label Grid.Row="3" Grid.Column="2" x:Name="ComboBoxDepartmentError" Style="{StaticResource ErrorLabel}"/>
+        <Button Grid.Row="2" Grid.Column="3" x:Name="ClearDepartment" Click="ClearDepartment_Click" Style="{StaticResource ClearButton}"/>
 
-        <ComboBox Grid.Row="2" Grid.Column="2" x:Name="ComboBoxLocal" PreviewTextInput="ValidatonOnlyNumber" Style="{StaticResource NotReadOnlyCombobox}"/>
-        <ComboBox Grid.Row="3" Grid.Column="2" x:Name="ComboBoxCity" PreviewTextInput="ValidatonOnlyNumber" Style="{StaticResource NotReadOnlyCombobox}"/>
+        <ComboBox Grid.Row="4" Grid.Column="2" x:Name="ComboBoxLocal" PreviewTextInput="ValidatonOnlyNumber" Style="{StaticResource NotReadOnlyCombobox}"/>
+        <Label Grid.Row="5" Grid.Column="2" x:Name="ComboBoxLocalError" Style="{StaticResource ErrorLabel}"/>
 
-        <Button Grid.Row="5" Grid.Column="2" x:Name="Accept" HorizontalAlignment="Right" Margin="0,0,150,0" Click="Accept_Click" Style="{StaticResource AcceptButton}"/>
-        <Button Grid.Row="5" Grid.Column="2" x:Name="Cancel" HorizontalAlignment="Right" Margin="0,0,0,0" Click="Cancel_Click" Style="{StaticResource CancelButton}"/>
+        <ComboBox Grid.Row="6" Grid.Column="2" x:Name="ComboBoxCity" PreviewTextInput="ValidatonOnlyNumber" Style="{StaticResource NotReadOnlyCombobox}"/>
+        <Label Grid.Row="7" Grid.Column="2" x:Name="ComboBoxCityError" Style="{StaticResource ErrorLabel}"/>
+
+        <Button Grid.Row="8" Grid.Column="2" x:Name="Accept" HorizontalAlignment="Right" Margin="0,0,150,0" Click="Accept_Click" Style="{StaticResource AcceptButton}"/>
+        <Button Grid.Row="8" Grid.Column="2" x:Name="Cancel" HorizontalAlignment="Right" Margin="0,0,0,0" Click="Cancel_Click" Style="{StaticResource CancelButton}"/>
     </Grid>
 </Window>

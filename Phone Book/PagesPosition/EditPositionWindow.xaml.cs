@@ -3,12 +3,13 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Input;
+using System.Windows.Media;
 
 namespace Phone_Book.PagesPosition
 {
     public partial class EditPositionWindow : Window
     {
-        Position insertPosition;
+        private Position insertPosition;
         public EditPositionWindow(Position currentPosition)
         {
             InitializeComponent();
@@ -28,8 +29,10 @@ namespace Phone_Book.PagesPosition
         {
             using (ApplicationContext db = new ApplicationContext())
             {
-                Position newPosition = new Position();
-                newPosition.PositionName = TextBoxName.Text;
+                Position newPosition = new Position
+                {
+                    PositionName = TextBoxName.Text
+                };
 
                 PositionPage.Positions.Add(newPosition);
                 db.Entry(newPosition).State = EntityState.Added;
@@ -50,23 +53,71 @@ namespace Phone_Book.PagesPosition
             }
         }
 
-        private void Accept_Click(object sender, RoutedEventArgs e)
+        // Проверка на заполнение обязательного поля
+        // Проверка на уникальность наименования должности
+        private bool CheckTextInsert()
         {
-            MessageBoxResult result = MessageBox.Show(
-                "Вы действительно хотите сохранять изменения?",
-                "Сохранение",
-                MessageBoxButton.YesNo,
-                MessageBoxImage.Question);
+            bool hasMistake = false;
+            TextBoxNameError.Content = string.Empty;
 
-            if (result == MessageBoxResult.Yes)
+            if (TextBoxName.Text == string.Empty)
             {
-                if (insertPosition == null) CreatyNewPosition();
-                else EditCurrentPosition();
-                this.Close();
+                hasMistake = true;
+                TextBoxNameError.Content = "Обязательное поле";
             }
             else
             {
-                this.Close();
+                using (ApplicationContext db = new ApplicationContext())
+                {
+                    var find = db.Positions.Where(t => t.PositionName == TextBoxName.Text).FirstOrDefault();
+                    if (find != null)
+                    {
+                        if (insertPosition != null)
+                        {
+                            if (insertPosition.PositionId != find.PositionId)
+                            {
+                                hasMistake = true;
+                                TextBoxNameError.Content = "Данная должность уже существует";
+                            }
+                        }
+                        else
+                        {
+                            hasMistake = true;
+                            TextBoxNameError.Content = "Данная должность уже существует";
+                        }
+                    }
+                }
+            }
+
+            return !hasMistake;
+        }
+
+        private void Accept_Click(object sender, RoutedEventArgs e)
+        {
+            if (CheckTextInsert())
+            {
+                MessageBoxResult result = MessageBox.Show(
+                    "Вы действительно хотите сохранять изменения?",
+                    "Сохранение",
+                    MessageBoxButton.YesNo,
+                    MessageBoxImage.Question);
+
+                if (result == MessageBoxResult.Yes)
+                {
+                    if (insertPosition == null)
+                    {
+                        CreatyNewPosition();
+                    }
+                    else
+                    {
+                        EditCurrentPosition();
+                    }
+                    Close();
+                }
+                else
+                {
+                    Close();
+                }
             }
         }
 
@@ -78,7 +129,10 @@ namespace Phone_Book.PagesPosition
                 MessageBoxButton.YesNo,
                 MessageBoxImage.Exclamation);
 
-            if (result == MessageBoxResult.Yes) this.Close();
+            if (result == MessageBoxResult.Yes)
+            {
+                Close();
+            }
         }
 
         private void ValidatonOnlyText(object sender, TextCompositionEventArgs e)

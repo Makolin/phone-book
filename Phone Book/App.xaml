@@ -64,6 +64,13 @@
             <Setter Property="VerticalAlignment" Value="Center"/>
         </Style>
 
+        <Style TargetType="Label" x:Key="ErrorLabel">
+            <Setter Property="FontSize" Value="11"/>
+            <Setter Property="Foreground" Value="Red"/>
+            <Setter Property="VerticalAlignment" Value="Top"/>
+            <Setter Property="Margin" Value="-5 -9 0 0"/>
+        </Style>
+
         <!--Стили для вывода всех кнопок-->
         <Style TargetType="Button" x:Key="MainStyleButton">
             <Setter Property="Width" Value="100"/>

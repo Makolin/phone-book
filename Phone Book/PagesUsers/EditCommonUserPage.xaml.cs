@@ -11,7 +11,7 @@ namespace Phone_Book.Pages
 {
     public partial class EditCommonUserWindow : Window
     {
-        User insertUser;
+        private User insertUser;
         public EditCommonUserWindow(User currentUser)
         {
             InitializeComponent();
@@ -43,70 +43,64 @@ namespace Phone_Book.Pages
                     TextBoxAbonent.Text = user.Name;
 
                     if (user.Department != null)
+                    {
                         ComboBoxDepartment.SelectedIndex = DepartmentList.FindIndex(t => t.DepartmentId == user.DepartmentId);
+                    }
 
                     if (user.LocalNumber != null)
+                    {
                         ComboBoxLocal.SelectedIndex = LocalList.FindIndex(t => t.LocalId == user.LocalId);
+                    }
 
                     if (user.CityNumber != null)
+                    {
                         ComboBoxCity.SelectedIndex = CityList.FindIndex(t => t.CityId == user.CityId);
+                    }
                 }
             }
         }
 
-        // Проверка ввода значений в полях для ввода
-        // Не окрашивает ComboBox
+        // Проверка на заполнение обязательного поля
+        // ДОБАВИТЬ! Проверка на уникальность 
         private bool CheckTextInsert()
         {
-            var hasMistake = false;
+            bool hasMistake = false;
+            TextBoxAbonentError.Content = string.Empty;
+            ComboBoxDepartmentError.Content = string.Empty;
+            ComboBoxLocalError.Content = string.Empty;
+            ComboBoxCityError.Content = string.Empty;
+
+
             if (TextBoxAbonent.Text == string.Empty)
             {
-                TextBoxAbonent.Background = Brushes.LightCoral;
+                TextBoxAbonentError.Content = "Обязательное поле";
                 hasMistake = true;
-            }
-            else
-            {
-                TextBoxAbonent.Background = Brushes.LightGreen;
             }
 
             if (string.IsNullOrEmpty(ComboBoxDepartment.Text))
             {
-                ComboBoxDepartment.Background = Brushes.LightCoral;
+                ComboBoxDepartmentError.Content = "Обязательное поле";
                 hasMistake = true;
-            }
-            else
-            {
-                ComboBoxDepartment.Background = Brushes.LightGreen;
             }
 
-            if (ComboBoxLocal.Text.Length != 3)
+            if (ComboBoxLocal.Text.Length == 0)
             {
-                ComboBoxLocal.Background = Brushes.LightCoral;
+                ComboBoxLocalError.Content = "Обязательное поле";
                 hasMistake = true;
             }
-            else
+            else if (ComboBoxLocal.Text.Length != 3)
             {
-                ComboBoxLocal.Background = Brushes.LightGreen;
+                ComboBoxLocalError.Content = "Длина местного номера 3 цифры";
+                hasMistake = true;
             }
 
             if (ComboBoxCity.Text.Length != 0 && ComboBoxCity.Text.Length != 6)
             {
-                ComboBoxCity.Background = Brushes.LightCoral;
+                ComboBoxCityError.Content = "Длина городского номера 6 цифр";
                 hasMistake = true;
             }
-            else
-            {
-                ComboBoxCity.Background = Brushes.LightGreen;
-            }
 
-            if (hasMistake)
-            {
-                return false;
-            }
-            else
-            {
-                return true;
-            }
+            return !hasMistake;
         }
 
         // Для подтверждения сохранения внесенных изменений или создания нового пользователя
@@ -122,13 +116,19 @@ namespace Phone_Book.Pages
 
                 if (result == MessageBoxResult.Yes)
                 {
-                    if (insertUser == null) CreatyNewUser();
-                    else EditCurrentUser();
-                    this.Close();
+                    if (insertUser == null)
+                    {
+                        CreatyNewUser();
+                    }
+                    else
+                    {
+                        EditCurrentUser();
+                    }
+                    Close();
                 }
                 else
                 {
-                    this.Close();
+                    Close();
                 }
             }
         }
@@ -142,7 +142,10 @@ namespace Phone_Book.Pages
                 MessageBoxButton.YesNo,
                 MessageBoxImage.Exclamation);
 
-            if (result == MessageBoxResult.Yes) this.Close();
+            if (result == MessageBoxResult.Yes)
+            {
+                Close();
+            }
         }
 
         // Макрос для создания новых записей в базе данных, если значение было добавлено пользователем и не существует в базе данных

@@ -105,9 +105,9 @@ namespace Phone_Book
     #endregion
 
     // Создание контекста для базы данных
-    class ApplicationContext : DbContext
+    internal class ApplicationContext : DbContext
     {
-        private string connectionString;
+        private readonly string connectionString;
 
         public DbSet<User> Users { get; set; }
         public DbSet<Department> Deparments { get; set; }
@@ -121,10 +121,10 @@ namespace Phone_Book
         public ApplicationContext()
             : base()
         {
-            var builder = new ConfigurationBuilder();
+            ConfigurationBuilder builder = new ConfigurationBuilder();
             builder.SetBasePath(Directory.GetCurrentDirectory());
             builder.AddJsonFile("Resources//appsettings.json");
-            var config = builder.Build();
+            IConfigurationRoot config = builder.Build();
             connectionString = config.GetConnectionString("DefaultConnection");
             Database.EnsureCreated();
         }

@@ -17,7 +17,7 @@ namespace Phone_Book.Pages
         }
 
         // Приветствие пользователя
-        public string HelloUser()
+        private static string HelloUser()
         {
             string nameUser = System.Security.Principal.WindowsIdentity.GetCurrent().Name;
             using (ApplicationContext db = new ApplicationContext())
@@ -28,7 +28,10 @@ namespace Phone_Book.Pages
                     nameUser = "Текущий пользователь: " + user.Name;
                     return nameUser;
                 }
-                else return string.Empty;
+                else
+                {
+                    return string.Empty;
+                }
             }
 
         }
@@ -42,7 +45,7 @@ namespace Phone_Book.Pages
         // Редактирование выбранного из списка пользователя
         private void EditUser_Click(object sender, RoutedEventArgs e)
         {
-            var editUser = (User)UsersGrid.SelectedItem;
+            User editUser = (User)UsersGrid.SelectedItem;
             if (editUser != null)
             {
                 if (!editUser.Common)
@@ -61,7 +64,7 @@ namespace Phone_Book.Pages
         // Удаление выбранного из списка пользователя
         private void DeleteUser_Click(object sender, RoutedEventArgs e)
         {
-            var deleteUser = (User)UsersGrid.SelectedItem;
+            User deleteUser = (User)UsersGrid.SelectedItem;
             if (deleteUser != null)
             {
                 MessageBoxResult result = MessageBox.Show(
@@ -85,7 +88,7 @@ namespace Phone_Book.Pages
         // Поиск пользователя после нажатия кнопки "Найти"
         private void ButtonFind_Click(object sender, RoutedEventArgs e)
         {
-            var findString = FindString.Text;
+            string findString = FindString.Text;
             DataContext = new UserCollection(findString);
         }
 
@@ -94,7 +97,7 @@ namespace Phone_Book.Pages
         {
             if (e.Key == Key.Enter)
             {
-                var findString = FindString.Text;
+                string findString = FindString.Text;
                 DataContext = new UserCollection(findString);
             }
         }
@@ -115,7 +118,7 @@ namespace Phone_Book.Pages
         // Отображение основной информации о пользователе
         private void UsersGrid_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            var editUser = (User)UsersGrid.SelectedItem;
+            User editUser = (User)UsersGrid.SelectedItem;
             if (editUser != null)
             {
                 /*ViewUser editAbsence = new ViewUser(editUser);

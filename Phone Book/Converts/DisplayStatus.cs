@@ -11,7 +11,7 @@ namespace Phone_Book.Converts
     {
         public object Convert(object value, Type TargetType, object parametr, CultureInfo culture)
         {
-            BitmapImage bitmap = null;
+            BitmapImage bitmap;
             if (value != null)
             {
                 if ((bool)value)

@@ -11,7 +11,7 @@ namespace Phone_Book.Pages
 {
     public partial class EditUserWindow : Window
     {
-        User insertUser;
+        private User insertUser;
         public EditUserWindow(User currentUser)
         {
             InitializeComponent();
@@ -56,19 +56,29 @@ namespace Phone_Book.Pages
                     TextBoxMobile.Text = user.MobileNumber.ToString();
 
                     if (user.Position != null)
+                    {
                         ComboBoxPosition.SelectedIndex = PositionList.FindIndex(t => t.PositionId == user.PositionId);
+                    }
 
                     if (user.Department != null)
+                    {
                         ComboBoxDepartment.SelectedIndex = DepartmentList.FindIndex(t => t.DepartmentId == user.DepartmentId);
+                    }
 
                     if (user.LocalNumber != null)
+                    {
                         ComboBoxLocal.SelectedIndex = LocalList.FindIndex(t => t.LocalId == user.LocalId);
+                    }
 
                     if (user.CityNumber != null)
+                    {
                         ComboBoxCity.SelectedIndex = CityList.FindIndex(t => t.CityId == user.CityId);
+                    }
 
                     if (user.ComputerStatus != null)
+                    {
                         ComboBoxNameComputer.SelectedIndex = ComputerNameList.FindIndex(t => t.ComputerId == user.ComputerId);
+                    }
                 }
             }
         }
@@ -77,77 +87,88 @@ namespace Phone_Book.Pages
         // Не окрашивает ComboBox
         private bool CheckTextInsert()
         {
-            var hasMistake = false;
+            bool hasMistake = false;
+            
+            TextBoxSurnameError.Content = string.Empty;
+            TextBoxNameError.Content = string.Empty;
+            TextBoxMiddleNameError.Content = string.Empty;
+            TextBoxDataBirthdayError.Content = string.Empty;
+
+            ComboBoxPositionError.Content = string.Empty;
+            ComboBoxDepartmentError.Content = string.Empty;
+
+            ComboBoxLocalError.Content = string.Empty;
+            ComboBoxCityError.Content = string.Empty;
+            TextBoxMobileError.Content = string.Empty;
+
+            ComboBoxNameComputerError.Content = string.Empty;
+
             if (TextBoxSurname.Text == string.Empty)
             {
-                TextBoxSurname.Background = Brushes.LightCoral;
+                TextBoxSurnameError.Content = "Обязательное поле";
                 hasMistake = true;
             }
-            else TextBoxSurname.Background = Brushes.LightGreen;
 
             if (TextBoxName.Text == string.Empty)
             {
-                TextBoxName.Background = Brushes.LightCoral;
+                TextBoxNameError.Content = "Обязательное поле";
                 hasMistake = true;
             }
-            else TextBoxName.Background = Brushes.LightGreen;
 
             if (TextBoxMiddleName.Text == string.Empty)
             {
-                TextBoxMiddleName.Background = Brushes.LightCoral;
+                TextBoxMiddleNameError.Content = "Обязательное поле";
                 hasMistake = true;
             }
-            else TextBoxMiddleName.Background = Brushes.LightGreen;
 
-            // Дата рождения
-            DateTime dateValue;
-            if (TextBoxDataBirthday.Text != string.Empty && !DateTime.TryParse(TextBoxDataBirthday.Text, out dateValue))
+            if (TextBoxDataBirthday.Text != string.Empty)
             {
-                TextBoxDataBirthday.Background = Brushes.LightCoral;
-                hasMistake = true;
+                if (!DateTime.TryParse(TextBoxDataBirthday.Text, out _))
+                {
+                    TextBoxDataBirthdayError.Content = "Дата рождения не соответствует формат **.**.****";
+                    hasMistake = true;
+                }
             }
-            else TextBoxDataBirthday.Background = Brushes.LightGreen;
 
             if (string.IsNullOrEmpty(ComboBoxPosition.Text))
             {
-                ComboBoxPosition.Background = Brushes.LightCoral;
+                ComboBoxPositionError.Content = "Обязательное поле";
                 hasMistake = true;
             }
-            else ComboBoxPosition.Background = Brushes.LightGreen;
 
             if (string.IsNullOrEmpty(ComboBoxDepartment.Text))
             {
-                ComboBoxDepartment.Background = Brushes.LightCoral;
+                ComboBoxDepartmentError.Content = "Обязательное поле";
                 hasMistake = true;
             }
-            else ComboBoxDepartment.Background = Brushes.LightGreen;
 
-            if (ComboBoxLocal.Text.Length != 3)
+            if (string.IsNullOrEmpty(ComboBoxLocal.Text))
             {
-                ComboBoxLocal.Background = Brushes.LightCoral;
+                ComboBoxLocalError.Content = "Обязательное поле";
                 hasMistake = true;
             }
-            else ComboBoxLocal.Background = Brushes.LightGreen;
-
-            if (ComboBoxCity.Text.Length != 0 && ComboBoxCity.Text.Length != 6)
+            else if (ComboBoxLocal.Text.Length != 3)
             {
-                ComboBoxCity.Background = Brushes.LightCoral;
+                ComboBoxLocalError.Content = "Длина местного номера 3 цифры";
                 hasMistake = true;
             }
-            else ComboBoxCity.Background = Brushes.LightGreen;
 
-            if (TextBoxMobile.Text.Length != 0 && TextBoxMobile.Text.Length != 11)
+            if (ComboBoxCity.Text.Length is not 0 and not 6)
             {
-                TextBoxMobile.Background = Brushes.LightCoral;
+                ComboBoxCityError.Content = "Длина городского номера 6 цифр";
                 hasMistake = true;
             }
-            else TextBoxMobile.Background = Brushes.LightGreen;
-            {
 
+            if (TextBoxMobile.Text != string.Empty)
+            {
+                if (TextBoxMobile.Text.Length != 11)
+                {
+                    TextBoxMobileError.Content = "Длина мобильного номера 11 цифр";
+                    hasMistake = true;
+                }
             }
 
-            if (hasMistake) return false;
-            else return true;
+            return !hasMistake;
         }
 
         // Для подтверждения сохранения внесенных изменений или создания нового пользователя
@@ -163,13 +184,19 @@ namespace Phone_Book.Pages
 
                 if (result == MessageBoxResult.Yes)
                 {
-                    if (insertUser == null) CreateNewUser();
-                    else EditCurrentUser();
-                    this.Close();
+                    if (insertUser == null)
+                    {
+                        CreateNewUser();
+                    }
+                    else
+                    {
+                        EditCurrentUser();
+                    }
+                    Close();
                 }
                 else
                 {
-                    this.Close();
+                    Close();
                 }
             }
         }
@@ -183,7 +210,10 @@ namespace Phone_Book.Pages
                 MessageBoxButton.YesNo,
                 MessageBoxImage.Exclamation);
 
-            if (result == MessageBoxResult.Yes) this.Close();
+            if (result == MessageBoxResult.Yes)
+            {
+                Close();
+            }
         }
 
         // Макрос для создания новых записей в базе данных, если значение было добавлено пользователем и не существует в базе данных
@@ -273,10 +303,14 @@ namespace Phone_Book.Pages
                 insertUser.Name = nameUser;
 
                 if (!string.IsNullOrEmpty(TextBoxMobile.Text))
+                {
                     insertUser.MobileNumber = Convert.ToInt64(TextBoxMobile.Text);
+                }
 
                 if (!string.IsNullOrEmpty(TextBoxDataBirthday.Text))
+                {
                     insertUser.Birthday = DateTime.Parse(TextBoxDataBirthday.Text);
+                }
 
                 insertUser.Position = (Position)CreatyStringInTable(new Position());
                 insertUser.PositionId = insertUser.Position?.PositionId;
@@ -315,10 +349,14 @@ namespace Phone_Book.Pages
                 newUser.ComputerStatus = (Computer)CreatyStringInTable(new Computer());
 
                 if (!string.IsNullOrEmpty(TextBoxMobile.Text))
+                {
                     newUser.MobileNumber = Convert.ToInt64(TextBoxMobile.Text);
+                }
 
                 if (!string.IsNullOrEmpty(TextBoxDataBirthday.Text))
+                {
                     insertUser.Birthday = DateTime.Parse(TextBoxDataBirthday.Text);
+                }
 
                 UserCollection.Users.Add(newUser);
                 db.Entry(newUser).State = EntityState.Added;
