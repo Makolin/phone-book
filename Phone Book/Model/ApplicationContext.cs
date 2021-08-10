@@ -21,11 +21,10 @@ namespace Phone_Book
     public class Department
     {
         public int DepartmentId { get; set; }
-        // Потому что бывают номер 01 и 09
-        public string? DepartmentNumber { get; set; }
+        public string DepartmentNumber { get; set; }
         [Required]
         public string DepartmentFullName { get; set; }
-        public string? DepartmentShortName { get; set; }
+        public string DepartmentShortName { get; set; }
         public List<User> Users { get; set; } = new List<User>();
     }
 
@@ -70,8 +69,8 @@ namespace Phone_Book
         public User UserAbsence { get; set; }
         [Required]
         public string Reason { get; set; }
-        public DateTime? DateFrom { get; set; }
-        public DateTime? DateBefore { get; set; }
+        public DateTime DateFrom { get; set; }
+        public DateTime DateBefore { get; set; }
     }
 
     // Таблица пользователей 
@@ -80,8 +79,8 @@ namespace Phone_Book
         public int UserId { get; set; }
         [Required]
         public string Name { get; set; }
-        public string? DomainName { get; set; }
-        public DateTime? Birthday { get; set; }
+        public string DomainName { get; set; }
+        public DateTime Birthday { get; set; }
         public bool Common { get; set; }
 
         public int? PositionId { get; set; }
@@ -152,14 +151,14 @@ namespace Phone_Book
                     new Department
                     {
                         DepartmentId = 1,
-                        DepartmentNumber = 12,
+                        DepartmentNumber = "12",
                         DepartmentFullName = "Отдел информационных технологий",
                         DepartmentShortName = "Отдел ИТ"
                     },
                     new Department
                     {
                         DepartmentId = 2,
-                        DepartmentNumber = 20,
+                        DepartmentNumber = "20",
                         DepartmentFullName = "Отдел организации труда и заработной платы",
                         DepartmentShortName = "Отдел организации труда и ЗП"
                     }
@@ -214,7 +213,6 @@ namespace Phone_Book
                         UserId = 3,
                         Name = "Карлов Карл Карлович",
                         DomainName = "CRYONT\\Vasiliev.MA",
-                        Birthday = new DateTime(1992,11,05),
                         DepartmentId = 2,
                         PositionId = 2,
                         LocalId = 2
@@ -231,6 +229,12 @@ namespace Phone_Book
                         Reason = "Отпуск",
                         DateFrom = new DateTime(2020,12,24),
                         DateBefore = new DateTime(2020,12,31)
+                    },
+                    new Absence
+                    {
+                        AbsenceId = 2,
+                        UserId = 2,
+                        Reason = "Декрет"
                     }
                 });
         }

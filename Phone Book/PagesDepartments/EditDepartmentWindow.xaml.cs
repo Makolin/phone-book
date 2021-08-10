@@ -34,7 +34,7 @@ namespace Phone_Book.PagesDepartments
             {
                 Department newDepartment = new Department
                 {
-                    DepartmentNumber = Convert.ToInt32(TextBoxNumber.Text),
+                    DepartmentNumber = TextBoxNumber.Text,
                     DepartmentFullName = TextBoxFullName.Text,
                     DepartmentShortName = TextBoxShortName.Text
                 };
@@ -51,7 +51,7 @@ namespace Phone_Book.PagesDepartments
             using (ApplicationContext db = new ApplicationContext())
             {
                 DepartmentPage.Departments.Remove(insertDepartment);
-                insertDepartment.DepartmentNumber = Convert.ToInt32(TextBoxNumber.Text);
+                insertDepartment.DepartmentNumber = TextBoxNumber.Text;
                 insertDepartment.DepartmentFullName = TextBoxFullName.Text;
                 insertDepartment.DepartmentShortName = TextBoxShortName.Text;
 
@@ -79,7 +79,7 @@ namespace Phone_Book.PagesDepartments
             {
                 using (ApplicationContext db = new ApplicationContext())
                 {
-                    var find = db.Deparments.Where(t => t.DepartmentNumber == Convert.ToInt32(TextBoxNumber.Text)).FirstOrDefault();
+                    var find = db.Deparments.Where(t => t.DepartmentNumber == TextBoxNumber.Text).FirstOrDefault();
                     if (find != null)
                     {
                         if (insertDepartment != null)

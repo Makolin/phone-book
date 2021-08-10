@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:Phone_Book.Pages"
         mc:Ignorable="d"
         Title="Абонент"
-        Height="500" 
+        Height="530" 
         Width="680"
         ResizeMode="NoResize"
         WindowStartupLocation="CenterScreen">
@@ -19,6 +19,8 @@
         </Grid.ColumnDefinitions>
 
         <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="0.5*"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="0.5*"/>
             <RowDefinition Height="*"/>
@@ -52,16 +54,17 @@
         <Label Grid.Row="14" Grid.Column="1" Content="Городской номер"/>
         <Label Grid.Row="16" Grid.Column="1" Content="Мобильный номер"/>
         <Label Grid.Row="18" Grid.Column="1" Content="Имя компьютера"/>
+        <Label Grid.Row="20" Grid.Column="1" Content="Доменное имя"/>
 
         <TextBox Grid.Row="0" Grid.Column="2" x:Name="TextBoxSurname" PreviewTextInput="ValidatonOnlyText"/>
         <Label Grid.Row="1" Grid.Column="2" x:Name="TextBoxSurnameError" Style="{StaticResource ErrorLabel}"/>
-        
+
         <TextBox Grid.Row="2" Grid.Column="2" x:Name="TextBoxName" PreviewTextInput="ValidatonOnlyText"/>
         <Label Grid.Row="3" Grid.Column="2" x:Name="TextBoxNameError" Style="{StaticResource ErrorLabel}"/>
-        
+
         <TextBox Grid.Row="4" Grid.Column="2" x:Name="TextBoxMiddleName" PreviewTextInput="ValidatonOnlyText"/>
         <Label Grid.Row="5" Grid.Column="2" x:Name="TextBoxMiddleNameError" Style="{StaticResource ErrorLabel}"/>
-        
+
         <TextBox Grid.Row="6" Grid.Column="2" x:Name="TextBoxDataBirthday"/>
         <Label Grid.Row="7" Grid.Column="2" x:Name="TextBoxDataBirthdayError" Style="{StaticResource ErrorLabel}"/>
 
@@ -72,22 +75,25 @@
         <ComboBox Grid.Row="10" Grid.Column="2" x:Name="ComboBoxDepartment" Style="{StaticResource ReadOnlyCombobox}"/>
         <Button Grid.Row="10" Grid.Column="3" x:Name="ClearDepartment" Click="ClearDepartment_Click" Style="{StaticResource ClearButton}"/>
         <Label Grid.Row="11" Grid.Column="2" x:Name="ComboBoxDepartmentError" Style="{StaticResource ErrorLabel}"/>
-        
+
 
         <ComboBox Grid.Row="12" Grid.Column="2" x:Name="ComboBoxLocal" PreviewTextInput="ValidatonOnlyNumber" Style="{StaticResource NotReadOnlyCombobox}"/>
         <Label Grid.Row="13" Grid.Column="2" x:Name="ComboBoxLocalError" Style="{StaticResource ErrorLabel}"/>
 
         <ComboBox Grid.Row="14" Grid.Column="2" x:Name="ComboBoxCity" PreviewTextInput="ValidatonOnlyNumber" Style="{StaticResource NotReadOnlyCombobox}"/>
         <Label Grid.Row="15" Grid.Column="2" x:Name="ComboBoxCityError" Style="{StaticResource ErrorLabel}"/>
-        
+
         <TextBox Grid.Row="16" Grid.Column="2" x:Name="TextBoxMobile" PreviewTextInput="ValidatonOnlyNumber" MaxLength="9"/>
         <Label Grid.Row="17" Grid.Column="2" x:Name="TextBoxMobileError" Style="{StaticResource ErrorLabel}"/>
-        
+
         <ComboBox Grid.Row="18" Grid.Column="2" x:Name="ComboBoxNameComputer" Style="{StaticResource NotReadOnlyCombobox}"/>
         <Label Grid.Row="19" Grid.Column="2" x:Name="ComboBoxNameComputerError" Style="{StaticResource ErrorLabel}"/>
 
-        <Button Grid.Row="20" Grid.Column="2" x:Name="Accept" HorizontalAlignment="Right" Margin="0,0,150,0" Click="Accept_Click" Style="{StaticResource AcceptButton}"/>
-        <Button Grid.Row="20" Grid.Column="2" x:Name="Cancel" HorizontalAlignment="Right" Margin="0,0,0,0" Click="Cancel_Click" Style="{StaticResource CancelButton}"/>
+        <TextBox Grid.Row="20" Grid.Column="2" x:Name="TextBoxDomainName"/>
+        <Label Grid.Row="21" Grid.Column="2" x:Name="TextBoxDomainNameError" Style="{StaticResource ErrorLabel}"/>
+
+        <Button Grid.Row="22" Grid.Column="2" x:Name="Accept" HorizontalAlignment="Right" Margin="0,0,150,0" Click="Accept_Click" Style="{StaticResource AcceptButton}"/>
+        <Button Grid.Row="22" Grid.Column="2" x:Name="Cancel" HorizontalAlignment="Right" Margin="0,0,0,0" Click="Cancel_Click" Style="{StaticResource CancelButton}"/>
 
     </Grid>
 </Window>

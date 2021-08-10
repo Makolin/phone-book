@@ -55,6 +55,11 @@ namespace Phone_Book.Pages
                     TextBoxDataBirthday.Text = user.Birthday.ToShortDateString();
                     TextBoxMobile.Text = user.MobileNumber.ToString();
 
+                    if (user.DomainName != null)
+                    {
+                        TextBoxDomainName.Text = user.DomainName.ToString();
+                    }
+
                     if (user.Position != null)
                     {
                         ComboBoxPosition.SelectedIndex = PositionList.FindIndex(t => t.PositionId == user.PositionId);
@@ -88,7 +93,7 @@ namespace Phone_Book.Pages
         private bool CheckTextInsert()
         {
             bool hasMistake = false;
-            
+
             TextBoxSurnameError.Content = string.Empty;
             TextBoxNameError.Content = string.Empty;
             TextBoxMiddleNameError.Content = string.Empty;
@@ -312,6 +317,11 @@ namespace Phone_Book.Pages
                     insertUser.Birthday = DateTime.Parse(TextBoxDataBirthday.Text);
                 }
 
+                if (!string.IsNullOrEmpty(TextBoxDomainName.Text))
+                {
+                    insertUser.DomainName = TextBoxDomainName.Text;
+                }
+
                 insertUser.Position = (Position)CreatyStringInTable(new Position());
                 insertUser.PositionId = insertUser.Position?.PositionId;
 
@@ -355,7 +365,12 @@ namespace Phone_Book.Pages
 
                 if (!string.IsNullOrEmpty(TextBoxDataBirthday.Text))
                 {
-                    insertUser.Birthday = DateTime.Parse(TextBoxDataBirthday.Text);
+                    newUser.Birthday = DateTime.Parse(TextBoxDataBirthday.Text);
+                }
+
+                if (!string.IsNullOrEmpty(TextBoxDomainName.Text))
+                {
+                    newUser.DomainName = TextBoxDomainName.Text;
                 }
 
                 UserCollection.Users.Add(newUser);
