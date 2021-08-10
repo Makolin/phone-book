@@ -69,8 +69,8 @@ namespace Phone_Book
         public User UserAbsence { get; set; }
         [Required]
         public string Reason { get; set; }
-        public DateTime DateFrom { get; set; }
-        public DateTime DateBefore { get; set; }
+        public DateTime? DateFrom { get; set; }
+        public DateTime? DateBefore { get; set; }
     }
 
     // Таблица пользователей 
@@ -79,8 +79,8 @@ namespace Phone_Book
         public int UserId { get; set; }
         [Required]
         public string Name { get; set; }
-        public string DomainName { get; set; }
-        public DateTime Birthday { get; set; }
+        public string? DomainName { get; set; }
+        public DateTime? Birthday { get; set; }
         public bool Common { get; set; }
 
         public int? PositionId { get; set; }
