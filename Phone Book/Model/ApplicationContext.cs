@@ -21,7 +21,7 @@ namespace Phone_Book
     public class Department
     {
         public int DepartmentId { get; set; }
-        public int DepartmentNumber { get; set; }
+        public int? DepartmentNumber { get; set; }
         [Required]
         public string DepartmentFullName { get; set; }
         public string DepartmentShortName { get; set; }
