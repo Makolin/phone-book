@@ -21,7 +21,8 @@ namespace Phone_Book
     public class Department
     {
         public int DepartmentId { get; set; }
-        public int? DepartmentNumber { get; set; }
+        // Потому что бывают номер 01 и 09
+        public string? DepartmentNumber { get; set; }
         [Required]
         public string DepartmentFullName { get; set; }
         public string? DepartmentShortName { get; set; }
