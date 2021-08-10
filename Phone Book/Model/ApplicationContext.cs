@@ -24,7 +24,7 @@ namespace Phone_Book
         public int? DepartmentNumber { get; set; }
         [Required]
         public string DepartmentFullName { get; set; }
-        public string DepartmentShortName { get; set; }
+        public string? DepartmentShortName { get; set; }
         public List<User> Users { get; set; } = new List<User>();
     }
 
