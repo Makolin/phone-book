@@ -1,4 +1,4 @@
-﻿<Window x:Class="Phone_Book.PagesDepartments.EditDepartmentWindow"
+<Window x:Class="Phone_Book.PagesDepartments.EditDepartmentWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -28,9 +28,9 @@
             <RowDefinition Height="1.5*"/>
         </Grid.RowDefinitions>
 
-        <Label Grid.Row="0" Grid.Column="1" Content="Номер подразделения" FontWeight="Bold"/>
+        <Label Grid.Row="0" Grid.Column="1" Content="Номер подразделения"/>
         <Label Grid.Row="2" Grid.Column="1" Content="Полное наименование" FontWeight="Bold"/>
-        <Label Grid.Row="4" Grid.Column="1" Content="Короткое наименование" FontWeight="Bold"/>
+        <Label Grid.Row="4" Grid.Column="1" Content="Короткое наименование"/>
 
         <TextBox Grid.Row="0" Grid.Column="2" x:Name="TextBoxNumber" PreviewTextInput="ValidatonOnlyNumber"/>
         <Label Grid.Row="1" Grid.Column="2" x:Name="TextBoxNumberError" Style="{StaticResource ErrorLabel}"/>
