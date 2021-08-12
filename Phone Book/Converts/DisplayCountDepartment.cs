@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Globalization;
 using System.Linq;
 using System.Windows;
@@ -8,14 +8,14 @@ namespace Phone_Book.Converts
 {
     class DisplayCountDepartment : IValueConverter
     {
-        public object Convert(object value, Type TargetType, object parametr, CultureInfo culture)
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             if (value != null)
             {
                 using (ApplicationContext db = new ApplicationContext())
                 {
                     int idDepartment = (int)value;
-                    var find = db.Deparments.Where(t => t.DepartmentId == idDepartment);
+                    var find = db.Users.Where(t => t.DepartmentId == idDepartment);
                     if (find != null)
                     {
                         return find.Count().ToString();
@@ -28,7 +28,7 @@ namespace Phone_Book.Converts
             }
             return null;
         }
-        public object ConvertBack(object value, Type TargetType, object parametr, CultureInfo culture)
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
             return DependencyProperty.UnsetValue;
         }
