@@ -1,4 +1,4 @@
-﻿<Page x:Class="Phone_Book.PagesDepartments.DepartmentPage"
+<Page x:Class="Phone_Book.PagesDepartments.DepartmentPage"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -19,9 +19,9 @@
         <DataGrid x:Name="DepartmentGrid" ItemsSource="{Binding Departments}" Grid.Row="1" Margin="20,0,20,0" Style="{StaticResource UserDataGrid}">
             <DataGrid.Columns>
                 <DataGridTextColumn Width="0.5*" Header="Номер подразделения" Binding="{Binding DepartmentNumber}" CellStyle="{StaticResource CenterDataGridCell}"/>
-                <DataGridTextColumn Width="*" Header="Полное наименование" Binding="{Binding DepartmentFullName}" SortDirection="Ascending" CellStyle="{StaticResource MainDataGridCell}"/>
+                <DataGridTextColumn Width="1.8*" Header="Полное наименование" Binding="{Binding DepartmentFullName}" SortDirection="Ascending" CellStyle="{StaticResource MainDataGridCell}"/>
                 <DataGridTextColumn Width="*" Header="Сокращенное наименование" Binding="{Binding DepartmentShortName}" CellStyle="{StaticResource MainDataGridCell}"/>
-                <DataGridTextColumn Width="*" Header="Количество сотрудников" Binding="{Binding DepartmentId}" CellStyle="{StaticResource CenterDataGridCell}"/>
+                <DataGridTextColumn Width="0.5*" Header="Количество сотрудников" Binding="{Binding DepartmentId, Converter={StaticResource DisplayCountDepartment}}" CellStyle="{StaticResource CenterDataGridCell}"/>
             </DataGrid.Columns>
             <DataGrid.ContextMenu>
                 <ContextMenu>
