@@ -212,7 +212,7 @@ namespace Phone_Book
                     {
                         UserId = 3,
                         Name = "Карлов Карл Карлович",
-                        DomainName = "CRYONT\\Vasiliev.MA",
+                        DomainName = "Vasiliev.MA",
                         DepartmentId = 2,
                         PositionId = 2,
                         LocalId = 2
