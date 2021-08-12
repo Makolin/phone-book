@@ -1,4 +1,4 @@
-﻿using System.Collections.ObjectModel;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
@@ -7,7 +7,6 @@ namespace Phone_Book.PagesDepartments
 {
     public partial class DepartmentPage : Page
     {
-
         public static ObservableCollection<Department> Departments = new ObservableCollection<Department>();
         private static void GetDataInDataBase()
         {
