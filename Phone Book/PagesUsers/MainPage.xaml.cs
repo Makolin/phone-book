@@ -1,4 +1,5 @@
-﻿using System.Linq;
+using System;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -19,7 +20,7 @@ namespace Phone_Book.Pages
         // Приветствие пользователя
         private static string HelloUser()
         {
-            string nameUser = System.Security.Principal.WindowsIdentity.GetCurrent().Name;
+            string nameUser = Environment.UserName;
             using (ApplicationContext db = new ApplicationContext())
             {
                 var user = db.Users.Where(t => t.DomainName == nameUser).FirstOrDefault();
