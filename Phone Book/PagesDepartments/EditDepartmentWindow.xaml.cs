@@ -1,4 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Linq;
 using System.Text.RegularExpressions;
@@ -21,7 +21,11 @@ namespace Phone_Book.PagesDepartments
             if (department != null)
             {
                 insertDepartment = department;
-                TextBoxNumber.Text = department.DepartmentNumber.ToString();
+                if (department.DepartmentNumber != null)
+                {
+                    TextBoxNumber.Text = department.DepartmentNumber.ToString();
+                }
+                
                 TextBoxFullName.Text = department.DepartmentFullName;
                 TextBoxShortName.Text = department.DepartmentShortName;
             }
@@ -34,10 +38,14 @@ namespace Phone_Book.PagesDepartments
             {
                 Department newDepartment = new Department
                 {
-                    DepartmentNumber = TextBoxNumber.Text,
                     DepartmentFullName = TextBoxFullName.Text,
                     DepartmentShortName = TextBoxShortName.Text
                 };
+
+                if (TextBoxNumber.Text != string.Empty)
+                {
+                    newDepartment.DepartmentNumber = TextBoxNumber.Text;
+                }
 
                 DepartmentPage.Departments.Add(newDepartment);
                 db.Entry(newDepartment).State = EntityState.Added;
@@ -51,7 +59,12 @@ namespace Phone_Book.PagesDepartments
             using (ApplicationContext db = new ApplicationContext())
             {
                 DepartmentPage.Departments.Remove(insertDepartment);
-                insertDepartment.DepartmentNumber = TextBoxNumber.Text;
+
+                if (TextBoxNumber.Text != string.Empty)
+                {
+                    insertDepartment.DepartmentNumber = TextBoxNumber.Text;
+                }
+                
                 insertDepartment.DepartmentFullName = TextBoxFullName.Text;
                 insertDepartment.DepartmentShortName = TextBoxShortName.Text;
 
@@ -70,12 +83,7 @@ namespace Phone_Book.PagesDepartments
             TextBoxFullNameError.Content = string.Empty;
             TextBoxShortNameError.Content = string.Empty;
 
-            if (TextBoxNumber.Text == string.Empty)
-            {
-                hasMistake = true;
-                TextBoxNumberError.Content = "Обязательное поле";
-            }
-            else
+            if (TextBoxNumber.Text != string.Empty)
             {
                 using (ApplicationContext db = new ApplicationContext())
                 {
@@ -84,10 +92,10 @@ namespace Phone_Book.PagesDepartments
                     {
                         if (insertDepartment != null)
                         {
-                            if (insertDepartment.DepartmentId != find.DepartmentId)
+                            if (insertDepartment.DepartmentId != find.DepartmentId && insertDepartment.DepartmentFullName == find.DepartmentFullName)
                             {
                                 hasMistake = true;
-                                TextBoxNumberError.Content = "Данный номер подразделения уже существует";
+                                TextBoxNumberError.Content = "Данное подразделение уже существует";
                             }
                         }
                         else
@@ -95,7 +103,6 @@ namespace Phone_Book.PagesDepartments
                             hasMistake = true;
                             TextBoxNumberError.Content = "Данный номер подразделения уже существует";
                         }
-
                     }
                 }
             }
@@ -106,10 +113,10 @@ namespace Phone_Book.PagesDepartments
                 TextBoxFullNameError.Content = "Обязательное поле";
             }
 
-            if (TextBoxShortName.Text == string.Empty)
+            if (TextBoxShortName.Text != string.Empty && TextBoxShortName.Text.Length > 40)
             {
                 hasMistake = true;
-                TextBoxShortNameError.Content = "Обязательное поле";
+                TextBoxShortNameError.Content = "Данное поле должно содержать меньше 40 символов";
             }
 
             return !hasMistake;
