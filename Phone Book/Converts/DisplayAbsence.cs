@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
@@ -10,7 +10,7 @@ namespace Phone_Book.Converts
     // Если у пользователя есть отсутствие или скоро будет, то выводит его в основной DataGrid
     public class DisplayAbsence : IValueConverter
     {
-        public object Convert(object value, Type TargetType, object parametr, CultureInfo culture)
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             using (ApplicationContext db = new ApplicationContext())
             {
@@ -36,7 +36,7 @@ namespace Phone_Book.Converts
             }
         }
 
-        public object ConvertBack(object value, Type TargetType, object parametr, CultureInfo culture)
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
             return DependencyProperty.UnsetValue;
         }
