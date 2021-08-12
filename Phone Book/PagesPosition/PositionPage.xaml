@@ -1,4 +1,4 @@
-﻿<Page x:Class="Phone_Book.PagesPosition.PositionPage"
+<Page x:Class="Phone_Book.PagesPosition.PositionPage"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -19,7 +19,7 @@
         <DataGrid x:Name="PositionGrid" ItemsSource="{Binding Positions}" Grid.Row="1" Margin="20,0,20,0" Style="{StaticResource UserDataGrid}">
             <DataGrid.Columns>
                 <DataGridTextColumn Width="*" Header="Наименование" Binding="{Binding Path=PositionName}" SortDirection="Ascending" CellStyle="{StaticResource MainDataGridCell}"/>
-                <DataGridTextColumn Width="*" Header="Количество сотрудников" Binding="{Binding Path=PositionId, Converter={StaticResource DisplayPosition} }" CellStyle="{StaticResource CenterDataGridCell}"/>
+                <DataGridTextColumn Width="*" Header="Количество сотрудников" Binding="{Binding Path=PositionId, Converter={StaticResource DisplayCountPosition} }" CellStyle="{StaticResource CenterDataGridCell}"/>
             </DataGrid.Columns>
             <DataGrid.ContextMenu>
                 <ContextMenu>
