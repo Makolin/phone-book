@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Globalization;
 using System.Linq;
 using System.Windows;
@@ -8,7 +8,7 @@ namespace Phone_Book.Converts
 {
     class DisplayCountPosition : IValueConverter
     {
-        public object Convert(object value, Type TargetType, object parametr, CultureInfo culture)
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             if (value != null)
             {
@@ -28,7 +28,7 @@ namespace Phone_Book.Converts
             }
             return null;
         }
-        public object ConvertBack(object value, Type TargetType, object parametr, CultureInfo culture)
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
             return DependencyProperty.UnsetValue;
         }
