@@ -20,6 +20,7 @@ namespace Phone_Book.Converts
                     .Where(t => t.DateBefore.Date >= DateTime.Today)
                     .Where(t => t.DateFrom.Date <= DateTime.Today.AddDays(5))
                     .ToList();
+
                 if (AbsenceList.Count > 0)
                 {
                     string absenceString = string.Empty;

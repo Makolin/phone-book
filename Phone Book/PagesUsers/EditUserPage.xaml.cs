@@ -52,8 +52,15 @@ namespace Phone_Book.Pages
                     TextBoxName.Text = nameUser[1];
                     TextBoxMiddleName.Text = nameUser[2];
 
-                    TextBoxDataBirthday.Text = user.Birthday.ToShortDateString();
-                    TextBoxMobile.Text = user.MobileNumber.ToString();
+                    if (user.Birthday != default)
+                    {
+                        DatePickerBirhday.SelectedDate = user.Birthday;
+                    }
+
+                    if (user.MobileNumber != default)
+                    {
+                        TextBoxMobile.Text = user.MobileNumber.ToString();
+                    }
 
                     if (user.DomainName != null)
                     {
@@ -126,13 +133,10 @@ namespace Phone_Book.Pages
                 hasMistake = true;
             }
 
-            if (TextBoxDataBirthday.Text != string.Empty)
+            if (DatePickerBirhday.SelectedDate != default && DatePickerBirhday.SelectedDate > DateTime.Today)
             {
-                if (!DateTime.TryParse(TextBoxDataBirthday.Text, out _))
-                {
-                    TextBoxDataBirthdayError.Content = "Дата рождения не соответствует формат **.**.****";
-                    hasMistake = true;
-                }
+                TextBoxDataBirthdayError.Content = "Дата рождения не может быть в будущем";
+                hasMistake = true;
             }
 
             if (string.IsNullOrEmpty(ComboBoxPosition.Text))
@@ -312,9 +316,9 @@ namespace Phone_Book.Pages
                     insertUser.MobileNumber = Convert.ToInt64(TextBoxMobile.Text);
                 }
 
-                if (!string.IsNullOrEmpty(TextBoxDataBirthday.Text))
+                if (DatePickerBirhday.SelectedDate != default)
                 {
-                    insertUser.Birthday = DateTime.Parse(TextBoxDataBirthday.Text);
+                    insertUser.Birthday = (DateTime)DatePickerBirhday.SelectedDate;
                 }
 
                 if (!string.IsNullOrEmpty(TextBoxDomainName.Text))
@@ -363,9 +367,9 @@ namespace Phone_Book.Pages
                     newUser.MobileNumber = Convert.ToInt64(TextBoxMobile.Text);
                 }
 
-                if (!string.IsNullOrEmpty(TextBoxDataBirthday.Text))
+                if (DatePickerBirhday.SelectedDate != default)
                 {
-                    newUser.Birthday = DateTime.Parse(TextBoxDataBirthday.Text);
+                    newUser.Birthday = (DateTime)DatePickerBirhday.SelectedDate;
                 }
 
                 if (!string.IsNullOrEmpty(TextBoxDomainName.Text))

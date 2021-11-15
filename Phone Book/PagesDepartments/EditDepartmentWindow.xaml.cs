@@ -34,7 +34,7 @@ namespace Phone_Book.PagesDepartments
         // Создание новой должности
         private void CreatyNewDepartment()
         {
-            using (ApplicationContext db = new())
+            using (ApplicationContext db = new ApplicationContext())
             {
                 Department newDepartment = new Department
                 {

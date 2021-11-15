@@ -28,10 +28,12 @@ namespace Phone_Book.Converts
                     else
                     {
                         nameDepartment = currentDepartment.DepartmentShortName;
+
                         if (currentDepartment.DepartmentNumber != null)
                         {
                             nameDepartment += $" ({currentDepartment.DepartmentNumber})";
                         }
+
                         return nameDepartment;
                     }
                 }

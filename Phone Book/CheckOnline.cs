@@ -14,7 +14,7 @@ namespace Phone_Book
             using (ApplicationContext db = new ApplicationContext())
             {
                 List<Computer> OnlineList = new List<Computer>(db.Computers.ToList());
-                foreach (var oneNote in OnlineList)
+                foreach (Computer oneNote in OnlineList)
                 {
                     if (oneNote.LastOnline == null || oneNote.LastOnline < DateTime.Today)
                     {

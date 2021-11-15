@@ -16,14 +16,7 @@ namespace Phone_Book.Converts
                 {
                     int idDepartment = (int)value;
                     var find = db.Users.Where(t => t.DepartmentId == idDepartment);
-                    if (find != null)
-                    {
-                        return find.Count().ToString();
-                    }
-                    else
-                    {
-                        return 0;
-                    }
+                    return find != null ? find.Count().ToString() : 0;
                 }
             }
             return null;

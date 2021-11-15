@@ -12,7 +12,7 @@ namespace Phone_Book.PagesDepartments
         {
             using (ApplicationContext db = new ApplicationContext())
             {
-                Departments = new ObservableCollection<Department>(db.Deparments.ToList());
+                Departments = new ObservableCollection<Department>(db.Deparments);
             }
         }
         public DepartmentPage()

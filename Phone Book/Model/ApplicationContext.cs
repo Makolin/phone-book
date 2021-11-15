@@ -73,6 +73,15 @@ namespace Phone_Book
         public DateTime DateBefore { get; set; }
     }
 
+    // Таблица технической поддержки
+    public class TechnicalSupport
+    {
+        public int TechnicalSupportId { get; set; }
+        public int UserId { get; set; }
+        public User UserSupport { get; set; }
+        public string SupportText { get; set; }
+    }
+
     // Таблица пользователей 
     public class User
     {
@@ -116,6 +125,7 @@ namespace Phone_Book
         public DbSet<City> Cities { get; set; }
         public DbSet<Computer> Computers { get; set; }
         public DbSet<Absence> Absences { get; set; }
+        public DbSet<TechnicalSupport> TechnicalSupports { get; set; }
 
         // Создание конструктора, который загружает строку подключения из json файла
         public ApplicationContext()
@@ -235,6 +245,16 @@ namespace Phone_Book
                         AbsenceId = 2,
                         UserId = 2,
                         Reason = "Декрет"
+                    }
+                });
+            modelBuilder.Entity<TechnicalSupport>().HasData(
+                new TechnicalSupport[]
+                {
+                    new TechnicalSupport
+                    {
+                        TechnicalSupportId = 1,
+                        UserId = 1,
+                        SupportText = "АСУП Eludia"
                     }
                 });
         }

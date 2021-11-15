@@ -36,9 +36,9 @@ namespace Phone_Book.Model
                     .Include(t => t.CityNumber)
                     .Include(t => t.ComputerStatus)
                     .Where(t => EF.Functions.Like(t.Name.ToLower(), $"%{findString}%")
-                    || EF.Functions.Like(t.LocalNumber.LocalNumber.ToString(), $"%{findString}%"))
-                    .OrderBy(t => t.Name)
-                    .ToList());
+                            || EF.Functions.Like(t.LocalNumber.LocalNumber.ToString(), $"%{findString}%")
+                            || EF.Functions.Like(t.Department.DepartmentShortName.ToLower(), $"%{findString}%"))
+                    .OrderBy(t => t.Name));
             }
             CountUserString = $"В базе данных найдено {Users.Count} записей";
         }

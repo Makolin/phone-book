@@ -1,5 +1,6 @@
 using Phone_Book.PagesDepartments;
 using Phone_Book.PagesPosition;
+using Phone_Book.PagesTechnicalSupport;
 using System.Windows;
 
 namespace Phone_Book.Pages
@@ -40,12 +41,7 @@ namespace Phone_Book.Pages
 
         private void TechnicalSupportButton_Click(object sender, RoutedEventArgs e)
         {
-
-        }
-
-        private void OptionButton_Click(object sender, RoutedEventArgs e)
-        {
-
+            mainFrame.Content = new TechnicalSupportPage();
         }
     }
 }

@@ -4,12 +4,14 @@
              xmlns:convert="clr-namespace:Phone_Book.Converts">
     <Application.Resources>
         <!--Стили для конвертеров-->
-        <convert:DisplayNumber x:Key="DisplayNumber"/>
+        <convert:DisplayCityNumber x:Key="DisplayCityNumber"/>
         <convert:DisplayStatus x:Key="DisplayStatus"/>
         <convert:DisplayDepartment x:Key="DisplayDepartment"/>
         <convert:DisplayAbsence x:Key="DisplayAbsence"/>
         <convert:DisplayCountPosition x:Key="DisplayCountPosition"/>
         <convert:DisplayCountDepartment x:Key="DisplayCountDepartment"/>
+        <convert:DisplayPosition x:Key="DisplayPosition"/>
+        <convert:DisplayLocalNumber x:Key="DisplayLocalNumber"/>
 
         <!--Стили для вывода информации в DataGrid-->
         <Style TargetType="DataGrid" x:Key="MainDataGrid">
@@ -134,6 +136,17 @@
         <Style TargetType="ComboBox" x:Key="ReadOnlyCombobox" BasedOn="{StaticResource MainStyleCombobox}">
             <Setter Property="Background" Value="LightGray"/>
             <Setter Property="IsReadOnly" Value="True"/>
+        </Style>
+
+        <!--Стиль для календаря-->
+        <Style TargetType="DatePicker">
+            <Setter Property="FontSize" Value="14"/>
+        </Style>
+
+        <!--Стиль для чекбоксов-->
+        <Style TargetType="CheckBox">
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
         </Style>
 
     </Application.Resources>
