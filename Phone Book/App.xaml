@@ -8,7 +8,8 @@
         <convert:DisplayStatus x:Key="DisplayStatus"/>
         <convert:DisplayDepartment x:Key="DisplayDepartment"/>
         <convert:DisplayAbsence x:Key="DisplayAbsence"/>
-        <convert:DisplayCountPosition x:Key="DisplayPosition"/>
+        <convert:DisplayCountPosition x:Key="DisplayCountPosition"/>
+        <convert:DisplayCountDepartment x:Key="DisplayCountDepartment"/>
 
         <!--Стили для вывода информации в DataGrid-->
         <Style TargetType="DataGrid" x:Key="MainDataGrid">
