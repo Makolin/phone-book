@@ -14,7 +14,7 @@
         <convert:DisplayLocalNumber x:Key="DisplayLocalNumber"/>
 
         <!--Стили для вывода информации в DataGrid-->
-        <Style TargetType="DataGrid" x:Key="MainDataGrid">
+        <Style TargetType="{x:Type DataGrid}" x:Key="MainDataGrid">
             <Setter Property="HorizontalContentAlignment" Value="Center"/>
             <Setter Property="AutoGenerateColumns" Value="False"/>
             <Setter Property="VerticalScrollBarVisibility" Value="Auto"/>
@@ -22,52 +22,52 @@
             <Setter Property="CanUserAddRows" Value="False"/>
         </Style>
 
-        <Style TargetType="DataGrid" x:Key="UserDataGrid" BasedOn="{StaticResource MainDataGrid}">
+        <Style TargetType="{x:Type DataGrid}" x:Key="UserDataGrid" BasedOn="{StaticResource MainDataGrid}">
             <Setter Property="IsReadOnly" Value="True"/>
             <Setter Property="RowBackground" Value="#FFECE8E8"/>
             <Setter Property="AlternatingRowBackground" Value="White"/>
         </Style>
 
-        <Style TargetType="DataGridColumnHeader">
+        <Style TargetType="{x:Type DataGridColumnHeader}">
             <Setter Property="FontSize" Value="15"/>
             <Setter Property="HorizontalContentAlignment" Value="Center"/>
         </Style>
 
-        <Style TargetType="DataGridRow">
+        <Style TargetType="{x:Type DataGridRow}">
             <Setter Property="BorderBrush" Value="Black"/>
         </Style>
 
-        <Style TargetType="DataGridRowHeader">
+        <Style TargetType="{x:Type DataGridRowHeader}">
             <Setter Property="Width" Value="0"/>
         </Style>
 
         <!--Стили для ячеек основной таблицы-->
-        <Style TargetType="DataGridCell" x:Key="MainDataGridCell">
+        <Style TargetType="{x:Type DataGridCell}" x:Key="MainDataGridCell">
             <Setter Property="FontSize" Value="14"/>
         </Style>
 
-        <Style TargetType="DataGridCell" x:Key="CenterDataGridCell" BasedOn="{StaticResource MainDataGridCell}">
+        <Style TargetType="{x:Type DataGridCell}" x:Key="CenterDataGridCell" BasedOn="{StaticResource MainDataGridCell}">
             <Setter Property="TextBlock.TextAlignment" Value="Center"/>
         </Style>
 
         <!--Стили для вывода меню-->
-        <Style TargetType="Menu">
+        <Style TargetType="{x:Type Menu}">
             <Setter Property="VerticalAlignment" Value="Center"/>
         </Style>
 
-        <Style TargetType="MenuItem">
+        <Style TargetType="{x:Type MenuItem}">
             <Setter Property="FontSize" Value="16"/>
             <Setter Property="VerticalAlignment" Value="Center"/>
             <Setter Property="HorizontalAlignment" Value="Left"/>
         </Style>
 
         <!--Стили для вывода всех полей вывода-->
-        <Style TargetType="Label">
+        <Style TargetType="{x:Type Label}">
             <Setter Property="FontSize" Value="15"/>
             <Setter Property="VerticalAlignment" Value="Center"/>
         </Style>
 
-        <Style TargetType="Label" x:Key="ErrorLabel">
+        <Style TargetType="{x:Type Label}" x:Key="ErrorLabel">
             <Setter Property="FontSize" Value="11"/>
             <Setter Property="Foreground" Value="Red"/>
             <Setter Property="VerticalAlignment" Value="Top"/>
@@ -75,7 +75,7 @@
         </Style>
 
         <!--Стили для вывода всех кнопок-->
-        <Style TargetType="Button" x:Key="MainStyleButton">
+        <Style TargetType="{x:Type Button}" x:Key="MainStyleButton">
             <Setter Property="Width" Value="100"/>
             <Setter Property="Height" Value="25"/>
             <Setter Property="FontSize" Value="15"/>
@@ -85,7 +85,7 @@
             <Setter Property="BorderBrush" Value="Gray"/>
         </Style>
 
-        <Style TargetType="Button" x:Key="MenuStyleButton">
+        <Style TargetType="{x:Type Button}" x:Key="MenuStyleButton">
             <Setter Property="FontSize" Value="18"/>
             <Setter Property="VerticalAlignment" Value="Stretch"/>
             <Setter Property="HorizontalAlignment" Value="Stretch"/>
@@ -95,56 +95,56 @@
             <Setter Property="BorderThickness" Value="1 1 1 1"/>
         </Style>
 
-        <Style TargetType="Button" x:Key="AcceptButton" BasedOn="{StaticResource MainStyleButton}">
+        <Style TargetType="{x:Type Button}"  x:Key="AcceptButton" BasedOn="{StaticResource MainStyleButton}">
             <Setter Property="Content" Value="Применить"/>
             <Setter Property="ToolTip" Value="Применить внесенные изменения"/>
         </Style>
 
-        <Style TargetType="Button" x:Key="CancelButton" BasedOn="{StaticResource MainStyleButton}">
+        <Style TargetType="{x:Type Button}"  x:Key="CancelButton" BasedOn="{StaticResource MainStyleButton}">
             <Setter Property="Content" Value="Отменить"/>
             <Setter Property="ToolTip" Value="Отменить внесенные изменения"/>
         </Style>
 
-        <Style TargetType="Button" x:Key="FindButton" BasedOn="{StaticResource MainStyleButton}">
+        <Style TargetType="{x:Type Button}"  x:Key="FindButton" BasedOn="{StaticResource MainStyleButton}">
             <Setter Property="Content" Value="Найти"/>
             <Setter Property="ToolTip" Value="Найти значение из строки поиска"/>
         </Style>
 
-        <Style TargetType="Button" x:Key="ClearButton" BasedOn="{StaticResource MainStyleButton}">
+        <Style TargetType="{x:Type Button}"  x:Key="ClearButton" BasedOn="{StaticResource MainStyleButton}">
             <Setter Property="Content" Value="X"/>
             <Setter Property="Width" Value="25"/>
             <Setter Property="ToolTip" Value="Очистить текущее заполненое поле"/>
         </Style>
 
         <!--Стили для полей для ввода-->
-        <Style TargetType="TextBox">
+        <Style TargetType="{x:Type TextBox}">
             <Setter Property="FontSize" Value="14"/>
             <Setter Property="Height" Value="25"/>
         </Style>
 
         <!--Стили для комбобоксов-->
-        <Style TargetType="ComboBox" x:Key="MainStyleCombobox">
+        <Style TargetType="{x:Type ComboBox}" x:Key="MainStyleCombobox">
             <Setter Property="FontSize" Value="14"/>
             <Setter Property="VerticalAlignment" Value="Center"/>
             <Setter Property="Height" Value="25"/>
         </Style>
 
-        <Style TargetType="ComboBox" x:Key="NotReadOnlyCombobox" BasedOn="{StaticResource MainStyleCombobox}">
+        <Style TargetType="{x:Type ComboBox}" x:Key="NotReadOnlyCombobox" BasedOn="{StaticResource MainStyleCombobox}">
             <Setter Property="IsEditable" Value="True"/>
         </Style>
 
-        <Style TargetType="ComboBox" x:Key="ReadOnlyCombobox" BasedOn="{StaticResource MainStyleCombobox}">
+        <Style TargetType="{x:Type ComboBox}" x:Key="ReadOnlyCombobox" BasedOn="{StaticResource MainStyleCombobox}">
             <Setter Property="Background" Value="LightGray"/>
             <Setter Property="IsReadOnly" Value="True"/>
         </Style>
 
         <!--Стиль для календаря-->
-        <Style TargetType="DatePicker">
+        <Style TargetType="{x:Type DatePicker}">
             <Setter Property="FontSize" Value="14"/>
         </Style>
 
         <!--Стиль для чекбоксов-->
-        <Style TargetType="CheckBox">
+        <Style TargetType="{x:Type CheckBox}">
             <Setter Property="FontSize" Value="14"/>
             <Setter Property="VerticalAlignment" Value="Center"/>
         </Style>

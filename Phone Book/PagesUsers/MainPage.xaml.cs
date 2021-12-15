@@ -17,8 +17,8 @@ namespace Phone_Book.Pages
             DataContext = new UserCollection();
         }
 
-        // Приветствие пользователя
-        private static string HelloUser()
+        // Приветствие пользователя и разрешение редактировать другие строки
+        private string HelloUser()
         {
             string nameUser = Environment.UserName;
             using (ApplicationContext db = new ApplicationContext())
@@ -26,6 +26,8 @@ namespace Phone_Book.Pages
                 var user = db.Users.Where(t => t.DomainName == nameUser).FirstOrDefault();
                 if (user != null)
                 {
+                    MainContextMenu.Visibility = Visibility.Visible;
+
                     nameUser = "Текущий пользователь: " + user.Name;
                     return nameUser;
                 }
