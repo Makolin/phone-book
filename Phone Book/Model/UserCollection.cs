@@ -22,6 +22,7 @@ namespace Phone_Book.Model
                     .OrderBy(t => t.Name)
                     .ToList());
             }
+
             CountUserString = $"В базе данных найдено {Users.Count} записей";
         }
         public UserCollection(string findString)
@@ -40,6 +41,7 @@ namespace Phone_Book.Model
                             || EF.Functions.Like(t.Department.DepartmentShortName.ToLower(), $"%{findString}%"))
                     .OrderBy(t => t.Name));
             }
+
             CountUserString = $"В базе данных найдено {Users.Count} записей";
         }
     }

@@ -1,28 +1,19 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace Phone_Book.PagesTechnicalSupport
 {
     public partial class EditTechnicalSupportWindow : Window
     {
         private TechnicalSupport insertTechnicalSupport;
+
         public EditTechnicalSupportWindow(TechnicalSupport technicalSupport)
         {
             InitializeComponent();
             InsertDataInComboBox(technicalSupport);
         }
+
         private void InsertDataInComboBox(TechnicalSupport technicalSupport)
         {
             using (ApplicationContext db = new())
@@ -35,6 +26,7 @@ namespace Phone_Book.PagesTechnicalSupport
                 {
                     insertTechnicalSupport = technicalSupport;
                     ComboBoxUser.SelectedIndex = UserList.FindIndex(t => t.UserId == technicalSupport.UserId);
+                    ComboBoxUser.IsEnabled = false;
 
                     // Заполнить checkbox
                     if (technicalSupport.SupportText.Contains("АСУП Eludia"))
@@ -80,6 +72,7 @@ namespace Phone_Book.PagesTechnicalSupport
             }
         }
 
+        // Проверка на ошибки
         private bool CheckTextInsert()
         {
             bool hasMistake = false;
@@ -130,63 +123,199 @@ namespace Phone_Book.PagesTechnicalSupport
             }
         }
 
+        // Добавить проверку на уже существующего в ТП
         private void CreatyNewTechnicalSupport()
         {
-            using (ApplicationContext db = new())
+            using (ApplicationContext db = new ApplicationContext())
             {
-                TechnicalSupport newTechnicalSupport = new();
-                newTechnicalSupport.UserId = insertTechnicalSupport.UserId;
-
-                // Заполняем техническую поддержку
-                if (CheckBoxEludia.IsChecked == true)
+                if (ComboBoxUser.SelectedIndex != -1)
                 {
-                    newTechnicalSupport.SupportText = "АСУП Eludia";
-                }
+                    var find = db.Users.Where(t => t.Name == ComboBoxUser.Text).FirstOrDefault();
+                    
+                    if (find != null)
+                    {
+                        string supportText = string.Empty;
 
-                if (CheckBoxDO.IsChecked == true)
-                {
-                    newTechnicalSupport.SupportText = "\n1C:Документооборот";
-                }
+                        TechnicalSupport newTechnicalSupport = new TechnicalSupport()
+                        {
+                            UserId = find.UserId
+                        };
 
-                if (CheckBoxUPP.IsChecked == true)
-                {
-                    newTechnicalSupport.SupportText = "\n1С:Управление производственным предприятием";
-                }
+                        // Заполняем техническую поддержку
+                        if (CheckBoxEludia.IsChecked == true)
+                        {
+                            supportText = "АСУП Eludia";
+                        }
 
-                if (CheckBoxCAD.IsChecked == true)
-                {
-                    newTechnicalSupport.SupportText = "\nT-FLEX CAD";
-                }
+                        if (CheckBoxDO.IsChecked == true)
+                        {
+                            if (supportText != string.Empty)
+                            {
+                                supportText += "\n";
+                            }
+                            supportText += "1C:Документооборот";
+                        }
 
-                if (CheckBoxDOCs.IsChecked == true)
-                {
-                    newTechnicalSupport.SupportText = "\nT-FLEX DOCs";
-                }
+                        if (CheckBoxUPP.IsChecked == true)
+                        {
+                            if (supportText != string.Empty)
+                            {
+                                supportText += "\n";
+                            }
+                            supportText += "1С:Управление производственным предприятием";
+                        }
 
-                if (CheckBoxDocsTechnology.IsChecked == true)
-                {
-                    newTechnicalSupport.SupportText = "\nT-FLEX DOCs Технология";
-                }
+                        if (CheckBoxCAD.IsChecked == true)
+                        {
+                            if (supportText != string.Empty)
+                            {
+                                supportText += "\n";
+                            }
+                            supportText += "T-FLEX CAD";
+                        }
 
-                if (CheckBoxDiadoc.IsChecked == true)
-                {
-                    newTechnicalSupport.SupportText = "\nСЭД Диадок";
-                }
+                        if (CheckBoxDOCs.IsChecked == true)
+                        {
+                            if (supportText != string.Empty)
+                            {
+                                supportText += "\n";
+                            }
+                            supportText += "T-FLEX DOCs";
+                        }
 
-                if (CheckBoxAllSupport.IsChecked == true)
-                {
-                    newTechnicalSupport.SupportText = "\nТехническая поддержка пользователей";
-                }
+                        if (CheckBoxDocsTechnology.IsChecked == true)
+                        {
+                            if (supportText != string.Empty)
+                            {
+                                supportText += "\n";
+                            }
+                            supportText += "T-FLEX DOCs Технология";
+                        }
 
-                TechnicalSupportPage.TechnicalSupports.Add(newTechnicalSupport);
-                db.Entry(newTechnicalSupport).State = EntityState.Added;
-                db.SaveChanges();
+                        if (CheckBoxDiadoc.IsChecked == true)
+                        {
+                            if (supportText != string.Empty)
+                            {
+                                supportText += "\n";
+                            }
+                            supportText += "СЭД Диадок";
+                        }
+
+                        if (CheckBoxAllSupport.IsChecked == true)
+                        {
+                            if (supportText != string.Empty)
+                            {
+                                supportText += "\n";
+                            }
+                            supportText += "Техническая поддержка пользователей";
+                        }
+
+                        if (supportText != string.Empty)
+                        {
+                            newTechnicalSupport.SupportText = supportText;
+                        }
+
+                        TechnicalSupportPage.TechnicalSupports.Add(newTechnicalSupport);
+                        db.Entry(newTechnicalSupport).State = EntityState.Added;
+                        db.SaveChanges();
+                    }
+                }
             }
         }
 
         private void EditCurrentTechnicalSupport()
         {
+            using (ApplicationContext db = new ApplicationContext())
+            {
+                if (ComboBoxUser.SelectedIndex != -1)
+                {
+                    var find = db.Users.Where(t => t.Name == ComboBoxUser.Text).FirstOrDefault();
 
+                    if (find != null)
+                    {
+                        string supportText = string.Empty;
+
+                        // Заполняем техническую поддержку c нуля
+                        if (CheckBoxEludia.IsChecked == true)
+                        {
+                            supportText = "АСУП Eludia";
+                        }
+
+                        if (CheckBoxDO.IsChecked == true)
+                        {
+                            if (supportText != string.Empty)
+                            {
+                                supportText += "\n";
+                            }
+                            supportText += "1C:Документооборот";
+                        }
+
+                        if (CheckBoxUPP.IsChecked == true)
+                        {
+                            if (supportText != string.Empty)
+                            {
+                                supportText += "\n";
+                            }
+                            supportText += "1С:Управление производственным предприятием";
+                        }
+
+                        if (CheckBoxCAD.IsChecked == true)
+                        {
+                            if (supportText != string.Empty)
+                            {
+                                supportText += "\n";
+                            }
+                            supportText += "T-FLEX CAD";
+                        }
+
+                        if (CheckBoxDOCs.IsChecked == true)
+                        {
+                            if (supportText != string.Empty)
+                            {
+                                supportText += "\n";
+                            }
+                            supportText += "T-FLEX DOCs";
+                        }
+
+                        if (CheckBoxDocsTechnology.IsChecked == true)
+                        {
+                            if (supportText != string.Empty)
+                            {
+                                supportText += "\n";
+                            }
+                            supportText += "T-FLEX DOCs Технология";
+                        }
+
+                        if (CheckBoxDiadoc.IsChecked == true)
+                        {
+                            if (supportText != string.Empty)
+                            {
+                                supportText += "\n";
+                            }
+                            supportText += "СЭД Диадок";
+                        }
+
+                        if (CheckBoxAllSupport.IsChecked == true)
+                        {
+                            if (supportText != string.Empty)
+                            {
+                                supportText += "\n";
+                            }
+                            supportText += "Техническая поддержка пользователей";
+                        }
+
+                        if (supportText != string.Empty)
+                        {
+                            insertTechnicalSupport.SupportText = supportText;
+                        }
+
+                        TechnicalSupportPage.TechnicalSupports.Remove(insertTechnicalSupport);
+                        db.Entry(insertTechnicalSupport).State = EntityState.Modified;
+                        db.SaveChanges();
+                        TechnicalSupportPage.TechnicalSupports.Add(insertTechnicalSupport);
+                    }
+                }
+            }
         }
     }
 }

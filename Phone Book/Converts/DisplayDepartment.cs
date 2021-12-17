@@ -16,6 +16,7 @@ namespace Phone_Book.Converts
                 using (ApplicationContext db = new ApplicationContext())
                 {
                     string nameDepartment = currentDepartment.DepartmentFullName;
+
                     if (currentDepartment.DepartmentNumber != null)
                     {
                         nameDepartment += $" ({currentDepartment.DepartmentNumber})";
@@ -25,6 +26,7 @@ namespace Phone_Book.Converts
                     {
                         return nameDepartment;
                     }
+
                     else
                     {
                         nameDepartment = currentDepartment.DepartmentShortName;

@@ -6,6 +6,7 @@ using System.Windows.Data;
 
 namespace Phone_Book.Converts
 {
+    // Выводит количество пользователей в подразделении
     class DisplayCountDepartment : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)

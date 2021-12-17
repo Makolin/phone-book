@@ -10,11 +10,13 @@ namespace Phone_Book.PagesPosition
     public partial class EditPositionWindow : Window
     {
         private Position insertPosition;
+
         public EditPositionWindow(Position currentPosition)
         {
             InitializeComponent();
             InsertDataInComboBox(currentPosition);
         }
+
         private void InsertDataInComboBox(Position position)
         {
             if (position != null)

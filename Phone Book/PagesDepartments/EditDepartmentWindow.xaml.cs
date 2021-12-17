@@ -74,8 +74,7 @@ namespace Phone_Book.PagesDepartments
             }
         }
 
-        // Проверка на заполнение обязательного поля
-        // Проверка на уникальность 
+        // Проверка на заполнение обязательных полей
         private bool CheckTextInsert()
         {
             bool hasMistake = false;
