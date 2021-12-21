@@ -12,7 +12,6 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="50"/>
             <RowDefinition Height="*"/>
-            <RowDefinition Height="45"/>
         </Grid.RowDefinitions>
         <Label Grid.Row="0" Margin="0,0,425,0" Content="Строка поиска" HorizontalAlignment="Right"/>
         <TextBox Grid.Row="0" Margin="0,0,150,0" Width="260" TextWrapping="Wrap" x:Name="FindString" HorizontalAlignment="Right" KeyDown="FindString_KeyDown"/>
@@ -46,7 +45,7 @@
         </DataGrid>
 
         <Label Grid.Row="0" x:Name="CommonNumber" HorizontalAlignment="Left" Margin="25,0,0,0" />
-        <Label Grid.Row="2" x:Name="CountUser" HorizontalAlignment="Left" Margin="25,0,0,0" Content="{Binding Path=CountUserString}"/>
-        <Label Grid.Row="2" x:Name="User" HorizontalAlignment="Right" Margin="0,0,25,0"/>
+        <!--<Label Grid.Row="2" x:Name="CountUser" HorizontalAlignment="Left" Margin="25,0,0,0" Content="{Binding Path=CountUserString}"/>
+        <Label Grid.Row="2" x:Name="User" HorizontalAlignment="Right" Margin="0,0,25,0"/>-->
     </Grid>
 </Page>

@@ -21,6 +21,11 @@ namespace Phone_Book.PagesPosition
             InitializeComponent();
             GetDataInDataBase();
             PositionGrid.ItemsSource = Positions;
+
+            if (Authorization.authorization)
+            {
+                MainContextMenu.Visibility = Visibility.Visible;
+            }
         }
 
         private void NewPositon_Click(object sender, RoutedEventArgs e)

@@ -13,7 +13,6 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="20"/>
             <RowDefinition Height="*"/>
-            <RowDefinition Height="40"/>
         </Grid.RowDefinitions>
 
         <DataGrid x:Name="TechnicalSupportGrid" ItemsSource="{Binding TechnicalSupportCollection}" Grid.Row="1" Margin="20,0,20,0" Style="{StaticResource UserDataGrid}">
@@ -25,7 +24,7 @@
                 <DataGridTextColumn Width="*" Header="Отсутствие" CellStyle="{StaticResource MainDataGridCell}"/>
             </DataGrid.Columns>
             <DataGrid.ContextMenu>
-                <ContextMenu>
+                <ContextMenu x:Name="MainContextMenu" Visibility="Hidden">
                     <MenuItem Header="Новый сотрудник ТП" x:Name="NewTechnicalSupport" Click="NewTechnicalSupport_Click"/>
                     <MenuItem Header="Редактировать сотрудника ТП" x:Name="EditTechnicalSupport" Click="EditTechnicalSupport_Click"/>
                     <MenuItem Header="Удалить" x:Name="DeleteTechnicalSupport" Click="DeleteTechnicalSupport_Click"/>

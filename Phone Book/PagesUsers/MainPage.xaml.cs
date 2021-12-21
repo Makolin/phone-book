@@ -1,9 +1,8 @@
+using Phone_Book.Model;
 using System;
-using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using Phone_Book.Model;
 
 namespace Phone_Book.Pages
 {
@@ -12,32 +11,17 @@ namespace Phone_Book.Pages
         public MainPage()
         {
             InitializeComponent();
-            CommonNumber.Content = "Общий многоканальный номер 499 - 080";
-            User.Content = HelloUser();
-            DataContext = new UserCollection();
-        }
 
-        // Приветствие пользователя и разрешение редактировать другие строки
-        private string HelloUser()
-        {
-            string nameUser = Environment.UserName;
-            using (ApplicationContext db = new ApplicationContext())
+            if (Authorization.authorization)
             {
-                var user = db.Users.Where(t => t.DomainName == nameUser).FirstOrDefault();
-                if (user != null)
-                {
-                    MainContextMenu.Visibility = Visibility.Visible;
-
-                    nameUser = "Текущий пользователь: " + user.Name;
-                    return nameUser;
-                }
-                else
-                {
-                    return string.Empty;
-                }
+                MainContextMenu.Visibility = Visibility.Visible;
             }
 
+            CommonNumber.Content = "Общий многоканальный номер 499 - 080";
+            DataContext = new UserCollection();
+            //MainWindow.CountUser.Content = CommonNumber.Content;
         }
+
         // Создание нового пользователя
         private void NewUser_Click(object sender, RoutedEventArgs e)
         {

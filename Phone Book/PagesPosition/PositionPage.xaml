@@ -13,7 +13,6 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="20"/>
             <RowDefinition Height="*"/>
-            <RowDefinition Height="40"/>
         </Grid.RowDefinitions>
 
         <DataGrid x:Name="PositionGrid" ItemsSource="{Binding Positions}" Grid.Row="1" Margin="20,0,20,0" Style="{StaticResource UserDataGrid}">
@@ -22,7 +21,7 @@
                 <DataGridTextColumn Width="*" Header="Количество сотрудников" Binding="{Binding Path=PositionId, Converter={StaticResource DisplayCountPosition} }" CellStyle="{StaticResource CenterDataGridCell}"/>
             </DataGrid.Columns>
             <DataGrid.ContextMenu>
-                <ContextMenu>
+                <ContextMenu x:Name="MainContextMenu" Visibility="Hidden">
                     <MenuItem Header="Новая должность" x:Name="NewPositon" Click="NewPositon_Click"/>
                     <MenuItem Header="Редактировать" x:Name="EditPosition" Click="EditPosition_Click"/>
                     <MenuItem Header="Удалить" x:Name="DeletePosition" Click="DeletePosition_Click"/>

@@ -1,11 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Phone_Book.Model;
 using System;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Input;
-using System.Windows.Media;
-using Phone_Book.Model;
 
 namespace Phone_Book.Pages
 {
@@ -96,7 +95,6 @@ namespace Phone_Book.Pages
         }
 
         // Проверка ввода значений в полях для ввода
-        // Не окрашивает ComboBox
         private bool CheckTextInsert()
         {
             bool hasMistake = false;
@@ -133,11 +131,19 @@ namespace Phone_Book.Pages
                 hasMistake = true;
             }
 
-            if (DatePickerBirhday.SelectedDate != default && DatePickerBirhday.SelectedDate > DateTime.Today)
+            if (DatePickerBirhday.SelectedDate != default)
             {
-                TextBoxDataBirthdayError.Content = "Дата рождения не может быть в будущем";
-                hasMistake = true;
+                if (DatePickerBirhday.SelectedDate > DateTime.Today)
+                {
+                    TextBoxDataBirthdayError.Content = "Дата рождения не может быть в будущем";
+                    hasMistake = true;
+                }
+                /*else if (DatePickerBirhday.SelectedDate > DateTime.Today.Subtract())
+                {
+
+                }*/
             }
+
 
             if (string.IsNullOrEmpty(ComboBoxPosition.Text))
             {

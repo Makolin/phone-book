@@ -20,6 +20,11 @@ namespace Phone_Book.PagesDepartments
             InitializeComponent();
             GetDataInDataBase();
             DepartmentGrid.ItemsSource = Departments;
+
+            if (Authorization.authorization)
+            {
+                MainContextMenu.Visibility = Visibility.Visible;
+            }
         }
 
         private void NewDepartment_Click(object sender, RoutedEventArgs e)

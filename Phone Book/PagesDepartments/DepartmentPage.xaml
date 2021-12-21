@@ -13,7 +13,6 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="20"/>
             <RowDefinition Height="*"/>
-            <RowDefinition Height="40"/>
         </Grid.RowDefinitions>
 
         <DataGrid x:Name="DepartmentGrid" ItemsSource="{Binding Departments}" Grid.Row="1" Margin="20,0,20,0" Style="{StaticResource UserDataGrid}">
@@ -24,7 +23,7 @@
                 <DataGridTextColumn Width="0.5*" Header="Количество сотрудников" Binding="{Binding DepartmentId, Converter={StaticResource DisplayCountDepartment}}" CellStyle="{StaticResource CenterDataGridCell}"/>
             </DataGrid.Columns>
             <DataGrid.ContextMenu>
-                <ContextMenu>
+                <ContextMenu x:Name="MainContextMenu" Visibility="Hidden">
                     <MenuItem Header="Новое подразделение" x:Name="NewDepartment" Click="NewDepartment_Click"/>
                     <MenuItem Header="Редактировать" x:Name="EditDepartment" Click="EditDepartment_Click"/>
                     <MenuItem Header="Удалить" x:Name="DeleteDepartment" Click="DeleteDepartment_Click"/>

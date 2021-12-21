@@ -32,6 +32,11 @@ namespace Phone_Book.PagesTechnicalSupport
             InitializeComponent();
             GetDataInDataBase();
             TechnicalSupportGrid.ItemsSource = TechnicalSupports;
+
+            if (Authorization.authorization)
+            {
+                MainContextMenu.Visibility = Visibility.Visible;
+            }
         }
 
         private void NewTechnicalSupport_Click(object sender, RoutedEventArgs e)
