@@ -56,7 +56,7 @@ namespace Phone_Book.Pages
                         DatePickerBirhday.SelectedDate = user.Birthday;
                     }
 
-                    if (user.MobileNumber != default)
+                    if (user.MobileNumber != null)
                     {
                         TextBoxMobile.Text = user.MobileNumber.ToString();
                     }
@@ -138,12 +138,12 @@ namespace Phone_Book.Pages
                     TextBoxDataBirthdayError.Content = "Дата рождения не может быть в будущем";
                     hasMistake = true;
                 }
-                /*else if (DatePickerBirhday.SelectedDate > DateTime.Today.Subtract())
+                else if (DatePickerBirhday.SelectedDate > DateTime.Today.AddYears(-18))
                 {
-
-                }*/
+                    TextBoxDataBirthdayError.Content = "Дата рождения не может быть раньше 18 лет назад";
+                    hasMistake = true;
+                }
             }
-
 
             if (string.IsNullOrEmpty(ComboBoxPosition.Text))
             {
@@ -201,13 +201,18 @@ namespace Phone_Book.Pages
                 {
                     if (insertUser == null)
                     {
-                        CreateNewUser();
+                        if (CreateNewUser())
+                        {
+                            Close();
+                        }
                     }
                     else
                     {
-                        EditCurrentUser();
+                        if (EditCurrentUser())
+                        {
+                            Close();
+                        }
                     }
-                    Close();
                 }
                 else
                 {
@@ -239,29 +244,11 @@ namespace Phone_Book.Pages
                 switch (insertObject)
                 {
                     case Position position:
-                        if (ComboBoxPosition.SelectedIndex == -1 && !string.IsNullOrEmpty(ComboBoxPosition.Text))
-                        {
-                            position = new Position { PositionName = ComboBoxPosition.Text };
-                            db.Positions.Add(position);
-                            db.SaveChanges();
-                        }
-                        else
-                        {
-                            position = (Position)ComboBoxPosition.SelectedItem;
-                        }
+                        position = (Position)ComboBoxPosition.SelectedItem;
                         return position;
 
                     case Department department:
-                        if (ComboBoxDepartment.SelectedIndex == -1 && !string.IsNullOrEmpty(ComboBoxDepartment.Text))
-                        {
-                            department = new Department { DepartmentFullName = ComboBoxDepartment.Text };
-                            db.Deparments.Add(department);
-                            db.SaveChanges();
-                        }
-                        else
-                        {
-                            department = (Department)ComboBoxDepartment.SelectedItem;
-                        }
+                        department = (Department)ComboBoxDepartment.SelectedItem;
                         return department;
 
                     case Local local:
@@ -289,6 +276,7 @@ namespace Phone_Book.Pages
                             city = (City)ComboBoxCity.SelectedItem;
                         }
                         return city;
+
                     case Computer online:
                         if (ComboBoxNameComputer.SelectedIndex == -1 && !string.IsNullOrEmpty(ComboBoxNameComputer.Text))
                         {
@@ -301,6 +289,7 @@ namespace Phone_Book.Pages
                             online = (Computer)ComboBoxNameComputer.SelectedItem;
                         }
                         return online;
+
                     default:
                         throw new Exception();
                 }
@@ -308,84 +297,108 @@ namespace Phone_Book.Pages
         }
 
         // Для внесения изменений для редактируемого пользователя
-        private void EditCurrentUser()
+        private bool EditCurrentUser()
         {
             using (ApplicationContext db = new ApplicationContext())
             {
-                UserCollection.Users.Remove(insertUser);
-
                 string nameUser = $"{TextBoxSurname.Text} {TextBoxName.Text} {TextBoxMiddleName.Text}";
-                insertUser.Name = nameUser;
+                var findUser = db.Users.Any(t => t.Name.ToLower() == nameUser.ToLower().Trim() && t.UserId != insertUser.UserId);
 
-                if (!string.IsNullOrEmpty(TextBoxMobile.Text))
+                if (findUser == false)
                 {
-                    insertUser.MobileNumber = Convert.ToInt64(TextBoxMobile.Text);
-                }
+                    UserCollection.Users.Remove(insertUser);
 
-                if (DatePickerBirhday.SelectedDate != default)
+                    insertUser.Name = nameUser;
+
+                    if (!string.IsNullOrEmpty(TextBoxMobile.Text))
+                    {
+                        insertUser.MobileNumber = Convert.ToInt64(TextBoxMobile.Text);
+                    }
+
+                    if (DatePickerBirhday.SelectedDate != default)
+                    {
+                        insertUser.Birthday = (DateTime)DatePickerBirhday.SelectedDate;
+                    }
+
+                    if (!string.IsNullOrEmpty(TextBoxDomainName.Text))
+                    {
+                        insertUser.DomainName = TextBoxDomainName.Text;
+                    }
+
+                    insertUser.Position = (Position)CreatyStringInTable(new Position());
+                    insertUser.PositionId = insertUser.Position?.PositionId;
+
+                    insertUser.Department = (Department)CreatyStringInTable(new Department());
+                    insertUser.DepartmentId = insertUser.Department?.DepartmentId;
+
+                    insertUser.LocalNumber = (Local)CreatyStringInTable(new Local());
+                    insertUser.LocalId = insertUser.LocalNumber?.LocalId;
+
+                    insertUser.CityNumber = (City)CreatyStringInTable(new City());
+                    insertUser.CityId = insertUser.CityNumber?.CityId;
+
+                    insertUser.ComputerStatus = (Computer)CreatyStringInTable(new Computer());
+                    insertUser.ComputerId = insertUser.ComputerStatus?.ComputerId;
+
+                    UserCollection.Users.Add(insertUser);
+                    db.Entry(insertUser).State = EntityState.Modified;
+                    db.SaveChanges();
+                    return true;
+                }
+                else
                 {
-                    insertUser.Birthday = (DateTime)DatePickerBirhday.SelectedDate;
+                    MessageBox.Show("Пользователь с данными ФИО уже существует в справочнике");
+                    return false;
                 }
-
-                if (!string.IsNullOrEmpty(TextBoxDomainName.Text))
-                {
-                    insertUser.DomainName = TextBoxDomainName.Text;
-                }
-
-                insertUser.Position = (Position)CreatyStringInTable(new Position());
-                insertUser.PositionId = insertUser.Position?.PositionId;
-
-                insertUser.Department = (Department)CreatyStringInTable(new Department());
-                insertUser.DepartmentId = insertUser.Department?.DepartmentId;
-
-                insertUser.LocalNumber = (Local)CreatyStringInTable(new Local());
-                insertUser.LocalId = insertUser.LocalNumber?.LocalId;
-
-                insertUser.CityNumber = (City)CreatyStringInTable(new City());
-                insertUser.CityId = insertUser.CityNumber?.CityId;
-
-                insertUser.ComputerStatus = (Computer)CreatyStringInTable(new Computer());
-                insertUser.ComputerId = insertUser.ComputerStatus?.ComputerId;
-
-                UserCollection.Users.Add(insertUser);
-                db.Entry(insertUser).State = EntityState.Modified;
-                db.SaveChanges();
             }
         }
 
         // Создание нового пользователя
-        private void CreateNewUser()
+        private bool CreateNewUser()
         {
             using (ApplicationContext db = new ApplicationContext())
             {
-                User newUser = new User();
                 string nameUser = $"{TextBoxSurname.Text} {TextBoxName.Text} {TextBoxMiddleName.Text}";
-                newUser.Name = nameUser;
 
-                newUser.Position = (Position)CreatyStringInTable(new Position());
-                newUser.Department = (Department)CreatyStringInTable(new Department());
-                newUser.LocalNumber = (Local)CreatyStringInTable(new Local());
-                newUser.CityNumber = (City)CreatyStringInTable(new City());
-                newUser.ComputerStatus = (Computer)CreatyStringInTable(new Computer());
+                var findUser = db.Users.Any(t => t.Name.ToLower() == nameUser.ToLower().Trim());
 
-                if (!string.IsNullOrEmpty(TextBoxMobile.Text))
+                if (findUser == false)
                 {
-                    newUser.MobileNumber = Convert.ToInt64(TextBoxMobile.Text);
-                }
+                    User newUser = new User()
+                    {
+                        Name = nameUser,
+                        Position = (Position)CreatyStringInTable(new Position()),
+                        Department = (Department)CreatyStringInTable(new Department()),
+                        LocalNumber = (Local)CreatyStringInTable(new Local()),
+                        CityNumber = (City)CreatyStringInTable(new City()),
+                        ComputerStatus = (Computer)CreatyStringInTable(new Computer())
+                    };
 
-                if (DatePickerBirhday.SelectedDate != default)
+                    if (!string.IsNullOrEmpty(TextBoxMobile.Text))
+                    {
+                        newUser.MobileNumber = Convert.ToInt64(TextBoxMobile.Text);
+                    }
+
+                    if (DatePickerBirhday.SelectedDate != default)
+                    {
+                        newUser.Birthday = (DateTime)DatePickerBirhday.SelectedDate;
+                    }
+
+                    if (!string.IsNullOrEmpty(TextBoxDomainName.Text))
+                    {
+                        newUser.DomainName = TextBoxDomainName.Text;
+                    }
+
+                    UserCollection.Users.Add(newUser);
+                    db.Entry(newUser).State = EntityState.Added;
+                    db.SaveChanges();
+                    return true;
+                }
+                else
                 {
-                    newUser.Birthday = (DateTime)DatePickerBirhday.SelectedDate;
+                    MessageBox.Show("Пользователь с данными ФИО уже существует в справочнике");
+                    return false;
                 }
-
-                if (!string.IsNullOrEmpty(TextBoxDomainName.Text))
-                {
-                    newUser.DomainName = TextBoxDomainName.Text;
-                }
-
-                UserCollection.Users.Add(newUser);
-                db.Entry(newUser).State = EntityState.Added;
-                db.SaveChanges();
             }
         }
 

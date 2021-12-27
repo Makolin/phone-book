@@ -23,7 +23,6 @@ namespace Phone_Book.Pages
         {
             using (ApplicationContext db = new ApplicationContext())
             {
-
                 var DepartmentList = db.Deparments.OrderBy(t => t.DepartmentFullName).ToList();
                 ComboBoxDepartment.ItemsSource = DepartmentList;
                 ComboBoxDepartment.DisplayMemberPath = "DepartmentFullName";
@@ -61,7 +60,6 @@ namespace Phone_Book.Pages
         }
 
         // Проверка на заполнение обязательного поля
-        // ДОБАВИТЬ! Проверка на уникальность 
         private bool CheckTextInsert()
         {
             bool hasMistake = false;
@@ -118,13 +116,18 @@ namespace Phone_Book.Pages
                 {
                     if (insertUser == null)
                     {
-                        CreatyNewUser();
+                        if (CreatyNewUser())
+                        {
+                            Close();
+                        }
                     }
                     else
                     {
-                        EditCurrentUser();
+                        if (EditCurrentUser())
+                        {
+                            Close();
+                        }
                     }
-                    Close();
                 }
                 else
                 {
@@ -156,16 +159,7 @@ namespace Phone_Book.Pages
                 switch (insertObject)
                 {
                     case Department department:
-                        if (ComboBoxDepartment.SelectedIndex == -1 && !string.IsNullOrEmpty(ComboBoxDepartment.Text))
-                        {
-                            department = new Department { DepartmentFullName = ComboBoxDepartment.Text };
-                            db.Deparments.Add(department);
-                            db.SaveChanges();
-                        }
-                        else
-                        {
-                            department = (Department)ComboBoxDepartment.SelectedItem;
-                        }
+                        department = (Department)ComboBoxDepartment.SelectedItem;
                         return department;
 
                     case Local local:
@@ -193,6 +187,7 @@ namespace Phone_Book.Pages
                             city = (City)ComboBoxCity.SelectedItem;
                         }
                         return city;
+
                     default:
                         throw new Exception();
                 }
@@ -200,43 +195,67 @@ namespace Phone_Book.Pages
         }
 
         // Метод для внесения изменений при сохранении изменений у пользователя
-        private void EditCurrentUser()
+        private bool EditCurrentUser()
         {
             using (ApplicationContext db = new ApplicationContext())
             {
-                insertUser.Name = TextBoxAbonent.Text;
+                string nameUser = TextBoxAbonent.Text;
+                var findUser = db.Users.Any(t => t.Name.ToLower() == nameUser.ToLower().Trim() && t.UserId != insertUser.UserId);
 
-                insertUser.Department = (Department)CreatyStringInTable(new Department());
-                insertUser.DepartmentId = insertUser.Department?.DepartmentId;
+                if (findUser == false)
+                {
+                    insertUser.Name = TextBoxAbonent.Text;
 
-                insertUser.LocalNumber = (Local)CreatyStringInTable(new Local());
-                insertUser.LocalId = insertUser.LocalNumber?.LocalId;
+                    insertUser.Department = (Department)CreatyStringInTable(new Department());
+                    insertUser.DepartmentId = insertUser.Department?.DepartmentId;
 
-                insertUser.CityNumber = (City)CreatyStringInTable(new City());
-                insertUser.CityId = insertUser.CityNumber?.CityId;
+                    insertUser.LocalNumber = (Local)CreatyStringInTable(new Local());
+                    insertUser.LocalId = insertUser.LocalNumber?.LocalId;
 
-                db.Entry(insertUser).State = EntityState.Modified;
-                db.SaveChanges();
+                    insertUser.CityNumber = (City)CreatyStringInTable(new City());
+                    insertUser.CityId = insertUser.CityNumber?.CityId;
+
+                    db.Entry(insertUser).State = EntityState.Modified;
+                    db.SaveChanges();
+                    return true;
+                }
+                else
+                {
+                    MessageBox.Show("Абонент с данным наименованием уже существует в справочнике");
+                    return false;
+                }
             }
         }
 
         // Создание нового пользователя
-        private void CreatyNewUser()
+        private bool CreatyNewUser()
         {
             using (ApplicationContext db = new ApplicationContext())
             {
-                User newUser = new User();
                 string nameUser = TextBoxAbonent.Text;
-                newUser.Name = nameUser;
-                newUser.Common = true;
+                var findUser = db.Users.Any(t => t.Name.ToLower() == nameUser.ToLower().Trim());
 
-                newUser.Department = (Department)CreatyStringInTable(new Department());
-                newUser.LocalNumber = (Local)CreatyStringInTable(new Local());
-                newUser.CityNumber = (City)CreatyStringInTable(new City());
+                if (findUser == false)
+                {
+                    User newUser = new User()
+                    {
+                        Name = nameUser,
+                        Common = true,
+                        Department = (Department)CreatyStringInTable(new Department()),
+                        LocalNumber = (Local)CreatyStringInTable(new Local()),
+                        CityNumber = (City)CreatyStringInTable(new City())
+                    };
 
-                UserCollection.Users.Add(newUser);
-                db.Entry(newUser).State = EntityState.Added;
-                db.SaveChanges();
+                    UserCollection.Users.Add(newUser);
+                    db.Entry(newUser).State = EntityState.Added;
+                    db.SaveChanges();
+                    return true;
+                }
+                else
+                {
+                    MessageBox.Show("Абонент с данным наименованием уже существует в справочнике");
+                    return false;
+                }     
             }
         }
 

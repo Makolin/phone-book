@@ -16,7 +16,7 @@ namespace Phone_Book.PagesTechnicalSupport
 
         private void InsertDataInComboBox(TechnicalSupport technicalSupport)
         {
-            using (ApplicationContext db = new())
+            using (ApplicationContext db = new ApplicationContext())
             {
                 var UserList = db.Users.OrderBy(t => t.Name).ToList();
                 ComboBoxUser.ItemsSource = UserList;
@@ -76,6 +76,20 @@ namespace Phone_Book.PagesTechnicalSupport
         private bool CheckTextInsert()
         {
             bool hasMistake = false;
+            ComboBoxUserError.Content = string.Empty;
+
+            if (string.IsNullOrEmpty(ComboBoxUser.Text))
+            {
+                ComboBoxUserError.Content = "Обязательное поле";
+                hasMistake = true;
+            }
+
+            else if (CheckBoxEludia.IsChecked == false && CheckBoxDO.IsChecked == false && CheckBoxDOCs.IsChecked == false && CheckBoxCAD.IsChecked == false
+                && CheckBoxDocsTechnology.IsChecked == false && CheckBoxUPP.IsChecked == false && CheckBoxAllSupport.IsChecked == false)
+            {
+                MessageBox.Show("Не выбрано не одной технической поддержки");
+                hasMistake = true;
+            }
 
             return !hasMistake;
         }
@@ -128,97 +142,94 @@ namespace Phone_Book.PagesTechnicalSupport
         {
             using (ApplicationContext db = new ApplicationContext())
             {
-                if (ComboBoxUser.SelectedIndex != -1)
+                var find = db.Users.Where(t => t.Name == ComboBoxUser.Text).FirstOrDefault();
+
+                if (find != null)
                 {
-                    var find = db.Users.Where(t => t.Name == ComboBoxUser.Text).FirstOrDefault();
-                    
-                    if (find != null)
+                    string supportText = string.Empty;
+
+                    TechnicalSupport newTechnicalSupport = new TechnicalSupport()
                     {
-                        string supportText = string.Empty;
+                        UserId = find.UserId
+                    };
 
-                        TechnicalSupport newTechnicalSupport = new TechnicalSupport()
-                        {
-                            UserId = find.UserId
-                        };
+                    // Заполняем техническую поддержку
+                    if (CheckBoxEludia.IsChecked == true)
+                    {
+                        supportText = "АСУП Eludia";
+                    }
 
-                        // Заполняем техническую поддержку
-                        if (CheckBoxEludia.IsChecked == true)
-                        {
-                            supportText = "АСУП Eludia";
-                        }
-
-                        if (CheckBoxDO.IsChecked == true)
-                        {
-                            if (supportText != string.Empty)
-                            {
-                                supportText += "\n";
-                            }
-                            supportText += "1C:Документооборот";
-                        }
-
-                        if (CheckBoxUPP.IsChecked == true)
-                        {
-                            if (supportText != string.Empty)
-                            {
-                                supportText += "\n";
-                            }
-                            supportText += "1С:Управление производственным предприятием";
-                        }
-
-                        if (CheckBoxCAD.IsChecked == true)
-                        {
-                            if (supportText != string.Empty)
-                            {
-                                supportText += "\n";
-                            }
-                            supportText += "T-FLEX CAD";
-                        }
-
-                        if (CheckBoxDOCs.IsChecked == true)
-                        {
-                            if (supportText != string.Empty)
-                            {
-                                supportText += "\n";
-                            }
-                            supportText += "T-FLEX DOCs";
-                        }
-
-                        if (CheckBoxDocsTechnology.IsChecked == true)
-                        {
-                            if (supportText != string.Empty)
-                            {
-                                supportText += "\n";
-                            }
-                            supportText += "T-FLEX DOCs Технология";
-                        }
-
-                        if (CheckBoxDiadoc.IsChecked == true)
-                        {
-                            if (supportText != string.Empty)
-                            {
-                                supportText += "\n";
-                            }
-                            supportText += "СЭД Диадок";
-                        }
-
-                        if (CheckBoxAllSupport.IsChecked == true)
-                        {
-                            if (supportText != string.Empty)
-                            {
-                                supportText += "\n";
-                            }
-                            supportText += "Техническая поддержка пользователей";
-                        }
-
+                    if (CheckBoxDO.IsChecked == true)
+                    {
                         if (supportText != string.Empty)
                         {
-                            newTechnicalSupport.SupportText = supportText;
+                            supportText += "\n";
                         }
-
-                        TechnicalSupportPage.TechnicalSupports.Add(newTechnicalSupport);
-                        db.Entry(newTechnicalSupport).State = EntityState.Added;
-                        db.SaveChanges();
+                        supportText += "1C:Документооборот";
                     }
+
+                    if (CheckBoxUPP.IsChecked == true)
+                    {
+                        if (supportText != string.Empty)
+                        {
+                            supportText += "\n";
+                        }
+                        supportText += "1С:Управление производственным предприятием";
+                    }
+
+                    if (CheckBoxCAD.IsChecked == true)
+                    {
+                        if (supportText != string.Empty)
+                        {
+                            supportText += "\n";
+                        }
+                        supportText += "T-FLEX CAD";
+                    }
+
+                    if (CheckBoxDOCs.IsChecked == true)
+                    {
+                        if (supportText != string.Empty)
+                        {
+                            supportText += "\n";
+                        }
+                        supportText += "T-FLEX DOCs";
+                    }
+
+                    if (CheckBoxDocsTechnology.IsChecked == true)
+                    {
+                        if (supportText != string.Empty)
+                        {
+                            supportText += "\n";
+                        }
+                        supportText += "T-FLEX DOCs Технология";
+                    }
+
+                    if (CheckBoxDiadoc.IsChecked == true)
+                    {
+                        if (supportText != string.Empty)
+                        {
+                            supportText += "\n";
+                        }
+                        supportText += "СЭД Диадок";
+                    }
+
+                    if (CheckBoxAllSupport.IsChecked == true)
+                    {
+                        if (supportText != string.Empty)
+                        {
+                            supportText += "\n";
+                        }
+                        supportText += "Техническая поддержка пользователей";
+                    }
+
+                    if (supportText != string.Empty)
+                    {
+                        newTechnicalSupport.SupportText = supportText;
+                    }
+
+                    TechnicalSupportPage.TechnicalSupports.Add(newTechnicalSupport);
+                    db.Entry(newTechnicalSupport).State = EntityState.Added;
+                    db.SaveChanges();
                 }
             }
         }

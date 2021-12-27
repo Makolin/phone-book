@@ -35,6 +35,10 @@
         </Grid.RowDefinitions>
 
         <Label Grid.Row="0" Grid.Column="1" Content="Сотрудник" FontWeight="Bold"/>
+        <ComboBox Grid.Row="0" Grid.Column="2" x:Name="ComboBoxUser" Style="{StaticResource ReadOnlyCombobox}"/>
+
+        <Label Grid.Row="1" Grid.Column="2" x:Name="ComboBoxUserError" Style="{StaticResource ErrorLabel}"/>
+
         <CheckBox Grid.Row="2" Grid.Column="2" x:Name="CheckBoxEludia" Content="АСУП Eludia" />
         <CheckBox Grid.Row="3" Grid.Column="2" x:Name="CheckBoxDO" Content="1C:Документооборот" />
         <CheckBox Grid.Row="4" Grid.Column="2" x:Name="CheckBoxUPP" Content="1С:Управление производственным предприятием" />
@@ -43,8 +47,6 @@
         <CheckBox Grid.Row="7" Grid.Column="2" x:Name="CheckBoxDocsTechnology" Content="T-FLEX DOCs Технология" />
         <CheckBox Grid.Row="8" Grid.Column="2" x:Name="CheckBoxDiadoc" Content="СЭД Диадок" />
         <CheckBox Grid.Row="9" Grid.Column="2" x:Name="CheckBoxAllSupport" Content="Техническая поддержка пользователей" />
-
-        <ComboBox Grid.Row="0" Grid.Column="2" x:Name="ComboBoxUser" Style="{StaticResource ReadOnlyCombobox}"/>
 
         <Button Grid.Row="11" Grid.Column="2" x:Name="Accept" HorizontalAlignment="Right" Margin="0,0,150,0" Click="Accept_Click" Style="{StaticResource AcceptButton}"/>
         <Button Grid.Row="11" Grid.Column="2" x:Name="Cancel" HorizontalAlignment="Right" Margin="0,0,0,0" Click="Cancel_Click" Style="{StaticResource CancelButton}"/>

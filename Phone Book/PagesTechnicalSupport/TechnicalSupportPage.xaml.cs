@@ -22,7 +22,7 @@ namespace Phone_Book.PagesTechnicalSupport
         public static ObservableCollection<TechnicalSupport> TechnicalSupports = new();
         private static void GetDataInDataBase()
         {
-            using (ApplicationContext db = new())
+            using (ApplicationContext db = new ApplicationContext())
             {
                 TechnicalSupports = new ObservableCollection<TechnicalSupport>(db.TechnicalSupports.Include(t => t.UserSupport));
             }
@@ -68,7 +68,7 @@ namespace Phone_Book.PagesTechnicalSupport
 
                 if (result == MessageBoxResult.Yes)
                 {
-                    using (ApplicationContext db = new())
+                    using (ApplicationContext db = new ApplicationContext())
                     {
                         TechnicalSupports.Remove(deleteTechnicalSupport);
                         db.TechnicalSupports.Remove(deleteTechnicalSupport);
