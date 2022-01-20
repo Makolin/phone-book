@@ -90,6 +90,7 @@ namespace Phone_Book
         public string Name { get; set; }
         public string DomainName { get; set; }
         public DateTime Birthday { get; set; }
+        [Required]
         public bool Common { get; set; }
 
         public int? PositionId { get; set; }

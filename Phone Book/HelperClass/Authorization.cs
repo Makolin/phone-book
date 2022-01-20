@@ -5,8 +5,8 @@ namespace Phone_Book
 {
     internal static class Authorization
     {
+        // Приветствие пользователя и разрешение редактировать данные в справочнике
         public static bool authorization = false;
-        // Приветствие пользователя и разрешение редактировать другие строки
         public static string HelloUser()
         {
             string nameUser = Environment.UserName;
@@ -24,7 +24,6 @@ namespace Phone_Book
                     return string.Empty;
                 }
             }
-
         }
     }
 }

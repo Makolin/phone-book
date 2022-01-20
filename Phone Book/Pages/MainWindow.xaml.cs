@@ -21,9 +21,6 @@ namespace Phone_Book.Pages
             }
 
             mainFrame.Content = new MainPage();
-
-
-
             //CountUser.Content = UserCollection.Users.Count;
             
         }
@@ -39,7 +36,6 @@ namespace Phone_Book.Pages
             {
                 mainFrame.Content = new DepartmentPage();
             }
-
         }
 
         private void PositionButton_Click(object sender, RoutedEventArgs e)

@@ -1,5 +1,6 @@
 using Phone_Book.Model;
 using System;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -110,6 +111,26 @@ namespace Phone_Book.Pages
             {
                 /*ViewUser editAbsence = new ViewUser(editUser);
                 editAbsence.ShowDialog();*/
+            }
+        }
+
+        // Выводим список важных дней рождений
+        private void DataBirthday_Click(object sender, RoutedEventArgs e)
+        {
+            using (ApplicationContext db = new ApplicationContext())
+            {
+                var listBirthday = db.Users.Where(t => t.Birthday != default);
+
+                if (listBirthday != null)
+                {
+                    string exitText = string.Empty;
+                    foreach (var people in listBirthday)
+                    {
+                        exitText += $"{people.Name} \t\t {people.Birthday} \n";
+                    }
+
+                    MessageBox.Show(exitText);
+                }
             }
         }
     }

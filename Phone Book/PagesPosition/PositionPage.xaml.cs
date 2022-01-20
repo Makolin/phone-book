@@ -52,7 +52,7 @@ namespace Phone_Book.PagesPosition
                 // Проверка на наличие пользователей с данной должностью
                 using (ApplicationContext db = new ApplicationContext())
                 {
-                    var countPosition = 0;
+                    int countPosition = default;
                     var find = db.Users.Where(t => t.PositionId == deletePosition.PositionId);
                     if (find != null)
                     {

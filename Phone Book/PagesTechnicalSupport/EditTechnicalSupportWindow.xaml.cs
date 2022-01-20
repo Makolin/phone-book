@@ -28,7 +28,6 @@ namespace Phone_Book.PagesTechnicalSupport
                     ComboBoxUser.SelectedIndex = UserList.FindIndex(t => t.UserId == technicalSupport.UserId);
                     ComboBoxUser.IsEnabled = false;
 
-                    // Заполнить checkbox
                     if (technicalSupport.SupportText.Contains("АСУП Eludia"))
                     {
                         CheckBoxEludia.IsChecked = true;
@@ -72,7 +71,7 @@ namespace Phone_Book.PagesTechnicalSupport
             }
         }
 
-        // Проверка на ошибки
+        // Проверка на заполнение обязательного поля, хотя бы одного пункта технической поддержки и дублирования человека в тех. поддержке
         private bool CheckTextInsert()
         {
             bool hasMistake = false;
@@ -89,6 +88,20 @@ namespace Phone_Book.PagesTechnicalSupport
             {
                 MessageBox.Show("Не выбрано не одной технической поддержки");
                 hasMistake = true;
+            }
+
+            else if (insertTechnicalSupport == null)
+            {
+                using (ApplicationContext db = new ApplicationContext())
+                {
+                    var find = db.TechnicalSupports.Where(t => t.UserSupport == ComboBoxUser.SelectedItem).FirstOrDefault();
+
+                    if (find != null)
+                    {
+                        MessageBox.Show("Данный пользователь уже есть в списке технической поддержки");
+                        hasMistake = true;
+                    }
+                }
             }
 
             return !hasMistake;
@@ -137,7 +150,81 @@ namespace Phone_Book.PagesTechnicalSupport
             }
         }
 
-        // Добавить проверку на уже существующего в ТП
+        private string InsertStringSupport()
+        {
+            string supportText = string.Empty;
+
+            if (CheckBoxEludia.IsChecked == true)
+            {
+                supportText = "АСУП Eludia";
+            }
+
+            if (CheckBoxDO.IsChecked == true)
+            {
+                if (supportText != string.Empty)
+                {
+                    supportText += "\n";
+                }
+                supportText += "1C:Документооборот";
+            }
+
+            if (CheckBoxUPP.IsChecked == true)
+            {
+                if (supportText != string.Empty)
+                {
+                    supportText += "\n";
+                }
+                supportText += "1С:Управление производственным предприятием";
+            }
+
+            if (CheckBoxCAD.IsChecked == true)
+            {
+                if (supportText != string.Empty)
+                {
+                    supportText += "\n";
+                }
+                supportText += "T-FLEX CAD";
+            }
+
+            if (CheckBoxDOCs.IsChecked == true)
+            {
+                if (supportText != string.Empty)
+                {
+                    supportText += "\n";
+                }
+                supportText += "T-FLEX DOCs";
+            }
+
+            if (CheckBoxDocsTechnology.IsChecked == true)
+            {
+                if (supportText != string.Empty)
+                {
+                    supportText += "\n";
+                }
+                supportText += "T-FLEX DOCs Технология";
+            }
+
+            if (CheckBoxDiadoc.IsChecked == true)
+            {
+                if (supportText != string.Empty)
+                {
+                    supportText += "\n";
+                }
+                supportText += "СЭД Диадок";
+            }
+
+            if (CheckBoxAllSupport.IsChecked == true)
+            {
+                if (supportText != string.Empty)
+                {
+                    supportText += "\n";
+                }
+                supportText += "Техническая поддержка пользователей";
+            }
+
+            return supportText;
+        }
+
         private void CreatyNewTechnicalSupport()
         {
             using (ApplicationContext db = new ApplicationContext())
@@ -146,81 +233,12 @@ namespace Phone_Book.PagesTechnicalSupport
 
                 if (find != null)
                 {
-                    string supportText = string.Empty;
-
                     TechnicalSupport newTechnicalSupport = new TechnicalSupport()
                     {
                         UserId = find.UserId
                     };
 
-                    // Заполняем техническую поддержку
-                    if (CheckBoxEludia.IsChecked == true)
-                    {
-                        supportText = "АСУП Eludia";
-                    }
-
-                    if (CheckBoxDO.IsChecked == true)
-                    {
-                        if (supportText != string.Empty)
-                        {
-                            supportText += "\n";
-                        }
-                        supportText += "1C:Документооборот";
-                    }
-
-                    if (CheckBoxUPP.IsChecked == true)
-                    {
-                        if (supportText != string.Empty)
-                        {
-                            supportText += "\n";
-                        }
-                        supportText += "1С:Управление производственным предприятием";
-                    }
-
-                    if (CheckBoxCAD.IsChecked == true)
-                    {
-                        if (supportText != string.Empty)
-                        {
-                            supportText += "\n";
-                        }
-                        supportText += "T-FLEX CAD";
-                    }
-
-                    if (CheckBoxDOCs.IsChecked == true)
-                    {
-                        if (supportText != string.Empty)
-                        {
-                            supportText += "\n";
-                        }
-                        supportText += "T-FLEX DOCs";
-                    }
-
-                    if (CheckBoxDocsTechnology.IsChecked == true)
-                    {
-                        if (supportText != string.Empty)
-                        {
-                            supportText += "\n";
-                        }
-                        supportText += "T-FLEX DOCs Технология";
-                    }
-
-                    if (CheckBoxDiadoc.IsChecked == true)
-                    {
-                        if (supportText != string.Empty)
-                        {
-                            supportText += "\n";
-                        }
-                        supportText += "СЭД Диадок";
-                    }
-
-                    if (CheckBoxAllSupport.IsChecked == true)
-                    {
-                        if (supportText != string.Empty)
-                        {
-                            supportText += "\n";
-                        }
-                        supportText += "Техническая поддержка пользователей";
-                    }
+                    string supportText = InsertStringSupport();
 
                     if (supportText != string.Empty)
                     {
@@ -244,76 +262,7 @@ namespace Phone_Book.PagesTechnicalSupport
 
                     if (find != null)
                     {
-                        string supportText = string.Empty;
-
-                        // Заполняем техническую поддержку c нуля
-                        if (CheckBoxEludia.IsChecked == true)
-                        {
-                            supportText = "АСУП Eludia";
-                        }
-
-                        if (CheckBoxDO.IsChecked == true)
-                        {
-                            if (supportText != string.Empty)
-                            {
-                                supportText += "\n";
-                            }
-                            supportText += "1C:Документооборот";
-                        }
-
-                        if (CheckBoxUPP.IsChecked == true)
-                        {
-                            if (supportText != string.Empty)
-                            {
-                                supportText += "\n";
-                            }
-                            supportText += "1С:Управление производственным предприятием";
-                        }
-
-                        if (CheckBoxCAD.IsChecked == true)
-                        {
-                            if (supportText != string.Empty)
-                            {
-                                supportText += "\n";
-                            }
-                            supportText += "T-FLEX CAD";
-                        }
-
-                        if (CheckBoxDOCs.IsChecked == true)
-                        {
-                            if (supportText != string.Empty)
-                            {
-                                supportText += "\n";
-                            }
-                            supportText += "T-FLEX DOCs";
-                        }
-
-                        if (CheckBoxDocsTechnology.IsChecked == true)
-                        {
-                            if (supportText != string.Empty)
-                            {
-                                supportText += "\n";
-                            }
-                            supportText += "T-FLEX DOCs Технология";
-                        }
-
-                        if (CheckBoxDiadoc.IsChecked == true)
-                        {
-                            if (supportText != string.Empty)
-                            {
-                                supportText += "\n";
-                            }
-                            supportText += "СЭД Диадок";
-                        }
-
-                        if (CheckBoxAllSupport.IsChecked == true)
-                        {
-                            if (supportText != string.Empty)
-                            {
-                                supportText += "\n";
-                            }
-                            supportText += "Техническая поддержка пользователей";
-                        }
+                        string supportText = InsertStringSupport();
 
                         if (supportText != string.Empty)
                         {

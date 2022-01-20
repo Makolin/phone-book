@@ -39,6 +39,7 @@
                     <MenuItem Header="Новый общий номер" x:Name="NewCommon" Click="NewCommon_Click"/>
                     <MenuItem Header="Редактировать" x:Name="EditUser" Click="EditUser_Click"/>
                     <MenuItem Header="Удалить" x:Name="DeleteUser" Click="DeleteUser_Click"/>
+                    <MenuItem Header="Дни рождения в отделе" x:Name="DataBirthday" Click="DataBirthday_Click"/>
                     <MenuItem Header="Обновить статус" x:Name="UpdateStatus" Click="UpdateStatus_Click"/>
                 </ContextMenu>
             </DataGrid.ContextMenu>
