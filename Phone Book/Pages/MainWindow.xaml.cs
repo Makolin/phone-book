@@ -61,5 +61,13 @@ namespace Phone_Book.Pages
         {
             mainFrame.Content = new TechnicalSupportPage();
         }
+
+        private void ReferenceButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (Authorization.authorization)
+            {
+                mainFrame.Content = new ReferencesPage();
+            }
+        }
     }
 }

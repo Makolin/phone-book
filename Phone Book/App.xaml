@@ -149,5 +149,15 @@
             <Setter Property="VerticalAlignment" Value="Center"/>
         </Style>
 
+        <Style TargetType="{x:Type ListBox}">
+            <Setter Property="SelectionMode" Value="Single"/>
+            <Setter Property="BorderThickness" Value="0"/>
+        </Style>
+
+        <Style TargetType="{x:Type TextBlock}">
+            <Setter Property="FontSize" Value="16"/>
+            
+        </Style>
+
     </Application.Resources>
 </Application>
