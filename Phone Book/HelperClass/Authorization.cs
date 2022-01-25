@@ -3,10 +3,12 @@ using System.Linq;
 
 namespace Phone_Book
 {
+    // Приветствие пользователя и дает разрешение редактировать данные в справочнике
     internal static class Authorization
     {
-        // Приветствие пользователя и разрешение редактировать данные в справочнике
+        
         public static bool authorization = false;
+
         public static string HelloUser()
         {
             string nameUser = Environment.UserName;

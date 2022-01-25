@@ -10,7 +10,7 @@
 
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="200"/>
+            <ColumnDefinition Width="250"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
@@ -23,6 +23,11 @@
             <ListBoxItem Name="Department">
                 <StackPanel Orientation="Horizontal">
                     <TextBlock Text="Подразделения"/>
+                </StackPanel>
+            </ListBoxItem>
+            <ListBoxItem Name="Authorization">
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="Авторизации пользователей"/>
                 </StackPanel>
             </ListBoxItem>
 

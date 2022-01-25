@@ -1,10 +1,7 @@
-using Phone_Book.Model;
 using Phone_Book.PagesDepartments;
 using Phone_Book.PagesPosition;
 using Phone_Book.PagesTechnicalSupport;
-using System;
 using System.Windows;
-using System.Windows.Data;
 
 namespace Phone_Book.Pages
 {
@@ -28,22 +25,6 @@ namespace Phone_Book.Pages
         private void MainButton_Click(object sender, RoutedEventArgs e)
         {
             mainFrame.Content = new MainPage();
-        }
-
-        private void DepartmentButton_Click(object sender, RoutedEventArgs e)
-        {
-            if (Authorization.authorization)
-            {
-                mainFrame.Content = new DepartmentPage();
-            }
-        }
-
-        private void PositionButton_Click(object sender, RoutedEventArgs e)
-        {
-            if (Authorization.authorization)
-            {
-                mainFrame.Content = new PositionPage();
-            }
         }
 
         private void InfoButton_Click(object sender, RoutedEventArgs e)

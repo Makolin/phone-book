@@ -16,26 +16,21 @@ namespace Phone_Book.Converts
                 using (ApplicationContext db = new ApplicationContext())
                 {
                     string nameDepartment = currentDepartment.DepartmentFullName;
-
                     if (currentDepartment.DepartmentNumber != null)
                     {
                         nameDepartment += $" ({currentDepartment.DepartmentNumber})";
                     }
-
                     if (nameDepartment.Length < 40)
                     {
                         return nameDepartment;
                     }
-
                     else
                     {
                         nameDepartment = currentDepartment.DepartmentShortName;
-
                         if (currentDepartment.DepartmentNumber != null)
                         {
                             nameDepartment += $" ({currentDepartment.DepartmentNumber})";
                         }
-
                         return nameDepartment;
                     }
                 }

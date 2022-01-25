@@ -16,6 +16,7 @@ namespace Phone_Book.Pages
                 AbcensesCollection = new ObservableCollection<Absence>(db.Absences.ToList());
             }
         }
+
         public EditAbsence(User currentUser)
         {
             InitializeComponent();

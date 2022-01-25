@@ -15,6 +15,7 @@ namespace Phone_Book.PagesDepartments
                 Departments = new ObservableCollection<Department>(db.Deparments);
             }
         }
+
         public DepartmentPage()
         {
             InitializeComponent();
@@ -48,7 +49,6 @@ namespace Phone_Book.PagesDepartments
             var deleteDepartment = (Department)DepartmentGrid.SelectedItem;
             if (deleteDepartment != null)
             {
-                // Проверка на наличие пользователей с данной должностью
                 using (ApplicationContext db = new ApplicationContext())
                 {
                     int countDepartment = 0;
@@ -57,7 +57,6 @@ namespace Phone_Book.PagesDepartments
                     {
                         countDepartment = find.Count();
                     }
-
                     if (countDepartment == 0)
                     {
                         MessageBoxResult result = MessageBox.Show(

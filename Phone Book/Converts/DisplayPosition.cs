@@ -13,7 +13,7 @@ namespace Phone_Book.Converts
         {
             if (value != null)
             {
-                using (ApplicationContext db = new())
+                using (ApplicationContext db = new ApplicationContext())
                 {
                     var user = db.Users.Where(t => t.UserId == (int)value).FirstOrDefault();
                     if (user != null)

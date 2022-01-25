@@ -3,7 +3,6 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Input;
-using System.Windows.Media;
 
 namespace Phone_Book.PagesPosition
 {
@@ -55,7 +54,7 @@ namespace Phone_Book.PagesPosition
             }
         }
 
-        // Проверка на заполнение обязательного поля и уникальность наименования ложности
+        // Проверка на заполнение обязательного поля и уникальность наименования должности
         private bool CheckTextInsert()
         {
             bool hasMistake = false;

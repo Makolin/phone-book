@@ -15,7 +15,6 @@ namespace Phone_Book.Pages
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            // Загрузка переменных в окно
             Versions.TextWrapping = TextWrapping.Wrap;
             Version.Text = "Версия приложения - 0.04";
             MainText.Text = "Phone Book разработан @makolin и распространяется по MIT License. " +
@@ -23,7 +22,6 @@ namespace Phone_Book.Pages
 
             ImageAbout.Source = new BitmapImage(new Uri("pack://application:,,,/Resources/About.png"));
 
-            // Загрузка описания версий приложения
             StreamReader streamReader = new StreamReader(Directory.GetCurrentDirectory() + @"\Resources\Versions.txt");
             string stringInsert = string.Empty;
 

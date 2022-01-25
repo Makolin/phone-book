@@ -77,6 +77,7 @@ namespace Phone_Book
     public class TechnicalSupport
     {
         public int TechnicalSupportId { get; set; }
+        [Required]
         public int UserId { get; set; }
         public User UserSupport { get; set; }
         public string SupportText { get; set; }
